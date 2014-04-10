@@ -8,9 +8,25 @@ angular.module('myApp', [
   'myApp.services',
   'myApp.directives',
   'myApp.controllers'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'Alert'});
-  $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'Alert'});
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+])
+.config(['$routeProvider', function($routeProvider) {
+  $routeProvider
+  .when('/', {
+    templateUrl: 'partials/partial1.html',
+    controller: AlertListController
+  })
+  .when('/about', {
+    templateUrl: 'partials/about.html',
+    controller: AboutController
+  })
+  .when('/alerts', {
+    templateUrl: 'partials/partial1.html',
+    controller: AlertListController
+  })
+  .when('/alert/:id', {
+    templateUrl: 'partials/partial2.html',
+    controller: AlertDetailController
+  })
+  .otherwise({
+    redirectTo: '/'
+  });
