@@ -11,22 +11,20 @@ angular.module('myApp', [
 ])
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider
-  .when('/', {
-    templateUrl: 'partials/partial1.html',
-    controller: AlertListController
-  })
-  .when('/about', {
-    templateUrl: 'partials/about.html',
-    controller: AboutController
-  })
   .when('/alerts', {
     templateUrl: 'partials/partial1.html',
-    controller: AlertListController
+    controller: 'AlertListController'
   })
   .when('/alert/:id', {
     templateUrl: 'partials/partial2.html',
-    controller: AlertDetailController
+    controller: 'AlertDetailController'
+  })
+  .when('/about', {
+    templateUrl: 'partials/about.html',
+    controller: 'AboutController'
   })
   .otherwise({
-    redirectTo: '/'
+    redirectTo: '/alerts'
   });
+
+}]);
