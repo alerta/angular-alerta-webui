@@ -18,12 +18,11 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams',
     });
   }]);
 
-alertaControllers.controller('AlertLinkController', ['$scope',
-  function($scope) {
+alertaControllers.controller('AlertLinkController', ['$scope', '$location',
+  function($scope, $location) {
 
     $scope.getDetails = function(alert) {
-      var hash = '/alert/' + alert.id;
-      console.log(hash);
+      $location.url('/alert/' + alert.id);
     };
 
   }]);
