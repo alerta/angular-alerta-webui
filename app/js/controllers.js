@@ -2,19 +2,18 @@
 
 /* Controllers */
 
-var myAppControllers = angular.module('myAppControllers', []);
+var alertaControllers = angular.module('alertaControllers', []);
 
-
-myAppControllers.controller('AlertListController', ['$scope', 'Alert',
+alertaControllers.controller('AlertListController', ['$scope', 'Alert',
   function($scope, Alert){
-      $scope.alerts = Alert.query(function(response) {
+      Alert.query(function(response) {
         $scope.alerts = response.alerts;
       });
-  }])
+  }]);
 
-myAppControllers.controller('AlertDetailController', ['$scope', '$routeParams', 'Alert',
+alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams', 'Alert',
   function($scope, $routeParams, Alert){
-    $scope.alert = Alert.get({id: $routeParams.id}, function(response) {
+    Alert.get({id: $routeParams.id}, function(response) {
       $scope.alert = response.alert;
-    })
+    });
   }]);
