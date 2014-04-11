@@ -18,25 +18,29 @@ status = {{ status }}
 
       <table class="table">
         <tr>
-          <th>Last Updated</th>
           <th>Severity</th>
           <th>Status</th>
-          <th>Service</th>
+          <th>Last Receive Time</th>
+          <th>Dupl.</th>
           <th>Environment</th>
+          <th>Service</th>
           <th>Resource</th>
           <th>Event</th>
+          <th>Value</th>
           <th>Text</th>
         </tr>
         <tr ng-repeat="alert in alerts | filter:query | orderBy:orderProp"
             class="severity severity-{{ alert.severity}}"
             ng-controller="AlertLinkController" ng-click="getDetails(alert);">
-          <td>{{ alert.lastReceiveTime | date:'mediumTime' }}</td>
-          <td>{{ alert.severity | uppercase }}</td>
-          <td>{{ alert.status }}</td>
-          <td>{{ alert.service.join(', ') }}</td>
+          <td><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
+          <td><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
+          <td>{{ alert.lastReceiveTime | date:'EEE d MMM HH:mm' }}</td>
+          <td>{{ alert.duplicateCount }}</td>
           <td>{{ alert.environment }}</td>
+          <td>{{ alert.service.join(', ') }}</td>
           <td>{{ alert.resource }}</td>
           <td>{{ alert.event }}</td>
+          <td>{{ alert.value }}</td>
           <td>{{ alert.text }}</td>
         </tr>
       </table>

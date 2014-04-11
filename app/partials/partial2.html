@@ -3,9 +3,9 @@
 <table class="table table-condensed table-striped">
   <tr><td><b>Alert ID</b></td><td>{{ alert.id }}</td></tr>
   <tr><td><b>Last Receive Alert ID</b></td><td>{{ alert.lastReceiveId }}</td></tr>
-  <tr><td><b>Create Time</b></td><td>{{ alert.createTime }}</td></tr>
-  <tr><td><b>Receive Time</b></td><td>{{ alert.receiveTime }}</td></tr>
-  <tr><td><b>Last Receive Time</b></td><td>{{ alert.lastReceiveTime }}</td></tr>
+  <tr><td><b>Create Time</b></td><td>{{ alert.createTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td></tr>
+  <tr><td><b>Receive Time</b></td><td>{{ alert.receiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td></tr>
+  <tr><td><b>Last Receive Time</b></td><td>{{ alert.lastReceiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td></tr>
   <tr><td><b>Service</b></td><td>{{ alert.service.join(', ') }}</td></tr>
   <tr><td><b>Environment</b></td><td>{{ alert.environment }}</td></tr>
   <tr><td><b>Resource</b></td><td>{{ alert.resource }}</td></tr>
@@ -42,7 +42,7 @@
   </tr>
   <tr ng-repeat="history in alert.history | orderBy:'updateTime':true">
     <td>{{ history.id }}</td>
-    <td>{{ history.updateTime }}</td>
+    <td>{{ history.updateTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td>
     <td><span class="label label-{{ history.status || history.severity }}">{{ history.status || history.severity }}</span></td>
     <td>{{ history.event }}</td>
     <td>{{ history.value }}</td>
