@@ -14,11 +14,11 @@ alertaApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider
     .when('/alerts', {
-      templateUrl: 'partials/partial1.html',
+      templateUrl: 'partials/alert-list.html',
       controller: 'AlertListController'
     })
     .when('/alert/:id', {
-      templateUrl: 'partials/partial2.html',
+      templateUrl: 'partials/alert-details.html',
       controller: 'AlertDetailController'
     })
     .when('/about', {
