@@ -3,29 +3,28 @@
 <div class="container-fluid">
   <div class="row-fluid">
 
-<div class="btn-toolbar" role="toolbar">
-  <div class="btn-group">
-    <button type="button" class="btn btn-default">Open</button>
-    <button type="button" class="btn btn-default">Ack</button>
-    <button type="button" class="btn btn-default">Closed</button>
-  </div>
-  <div class="btn-group">
-    <button type="button" class="btn btn-default">Ack</button>
-    <button type="button" class="btn btn-default">Close</button>
-    <button type="button" class="btn btn-default">Delete</button>
-  </div>
-  <div class="btn-group">
-    <button type="button" class="btn btn-default">5m</button>
-    <button type="button" class="btn btn-default">15m</button>
-    <button type="button" class="btn btn-default">1h</button>
-    <button type="button" class="btn btn-default">1d</button>
-    <button type="button" class="btn btn-default">All</button>
-  </div>
-  <div class="btn-group">
-    <button type="button" class="btn btn-default" ng-click="getAlerts()">Refresh</button>
-  </div>
-</div>
-
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default">Open</button>
+        <button type="button" class="btn btn-default">Ack</button>
+        <button type="button" class="btn btn-default">Closed</button>
+      </div>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default">Ack</button>
+        <button type="button" class="btn btn-default">Close</button>
+        <button type="button" class="btn btn-default">Delete</button>
+      </div>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default">5m</button>
+        <button type="button" class="btn btn-default">15m</button>
+        <button type="button" class="btn btn-default">1h</button>
+        <button type="button" class="btn btn-default">1d</button>
+        <button type="button" class="btn btn-default">All</button>
+      </div>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default" ng-click="getAlerts()">Refresh</button>
+      </div>
+    </div>
 
   </div>
   <hr>
@@ -33,12 +32,14 @@
   <div class="row-fluid">
     <div class="span12">
 
-      <select ng-model="environment" ng-options="e.environment for e in environments">
+      <select ng-model="environment" ng-options="e.environment as e.environment for e in environments">
         <option value="">-- choose environment --</option>
       </select>
-      <select ng-model="service" ng-options="s.service group by s.environment for s in services">
+      <select ng-model="service" ng-options="s.service as s.service group by s.environment for s in services">
         <option value="">-- choose service --</option>
       </select>
+
+      {{ environment }} {{ service }}
 
       Limit: <input type="integer" ng-model="alertLimit">
       Search: <input ng-model="query">

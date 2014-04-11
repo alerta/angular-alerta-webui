@@ -6,6 +6,7 @@ var alertaControllers = angular.module('alertaControllers', []);
 
 alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'Service', 'Alert',
   function($scope, Environment, Service, Alert){
+
     Environment.all(function(response) {
       $scope.environments = response.environments;
     });
@@ -15,6 +16,7 @@ alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'S
     });
 
     $scope.getAlerts = function() {
+      console.log('env=' + $scope.environment + ' svc=' + $scope.service);
       Alert.query(function(response) {
         $scope.alerts = response.alerts;
       });
