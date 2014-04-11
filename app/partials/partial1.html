@@ -1,4 +1,30 @@
-<p>This is the partial for view 1.</p>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+      <!--Sidebar content-->
+
+      Search: <input ng-model="query">
+      Sort by:
+      <select ng-model="orderProp">
+        <option value="name">Alphabetical</option>
+        <option value="age">Newest</option>
+      </select>
+
+    </div>
+    <div class="span10">
+      <!--Body content-->
 
 status = {{ status }}
-alerts = {{ alerts | json }}
+
+      <ul class="phones">
+        <li ng-repeat="alert in alerts | filter:query | orderBy:orderProp"
+            class="thumbnail phone-listing">
+          <a href="#/alert/{{alert.id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>
+          <a href="#/alert/{{alert.id}}">{{alert.event}}</a>
+          <p>{{phone.text}}</p>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
