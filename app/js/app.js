@@ -29,3 +29,4 @@ alertaApp.config(['$routeProvider',
       redirectTo: '/alerts'
     });
   }]);
+

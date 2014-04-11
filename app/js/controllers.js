@@ -17,3 +17,13 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams',
       $scope.alert = response.alert;
     });
   }]);
+
+alertaControllers.controller('AlertLinkController', ['$scope',
+  function($scope) {
+
+    $scope.getDetails = function(alert) {
+      var hash = '/alert/' + alert.id;
+      console.log(hash);
+    };
+
+  }]);

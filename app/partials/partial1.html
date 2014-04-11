@@ -16,14 +16,30 @@
 
 status = {{ status }}
 
-      <ul class="phones">
-        <li ng-repeat="alert in alerts | filter:query | orderBy:orderProp"
-            class="thumbnail phone-listing">
-          <a href="#/alert/{{alert.id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>
-          <a href="#/alert/{{alert.id}}">{{alert.event}}</a>
-          <p>{{phone.text}}</p>
-        </li>
-      </ul>
+      <table class="table">
+        <tr>
+          <th>Last Updated</th>
+          <th>Severity</th>
+          <th>Status</th>
+          <th>Service</th>
+          <th>Environment</th>
+          <th>Resource</th>
+          <th>Event</th>
+          <th>Text</th>
+        </tr>
+        <tr ng-repeat="alert in alerts | filter:query | orderBy:orderProp"
+            class="severity severity-{{ alert.severity}}"
+            ng-controller="AlertLinkController" ng-click="getDetails(alert);">
+          <td>{{ alert.lastReceiveTime | date:'mediumTime' }}</td>
+          <td>{{ alert.severity | uppercase }}</td>
+          <td>{{ alert.status }}</td>
+          <td>{{ alert.service }}</td>
+          <td>{{ alert.environment }}</td>
+          <td>{{ alert.resource }}</td>
+          <td>{{ alert.event }}</td>
+          <td>{{ alert.text }}</td>
+        </tr>
+      </table>
 
     </div>
   </div>
