@@ -33,7 +33,7 @@ status = {{ status }}
           <td>{{ alert.lastReceiveTime | date:'mediumTime' }}</td>
           <td>{{ alert.severity | uppercase }}</td>
           <td>{{ alert.status }}</td>
-          <td>{{ alert.service }}</td>
+          <td>{{ alert.service.join(', ') }}</td>
           <td>{{ alert.environment }}</td>
           <td>{{ alert.resource }}</td>
           <td>{{ alert.event }}</td>
