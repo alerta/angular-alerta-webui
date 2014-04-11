@@ -25,3 +25,22 @@
   <tr ng-repeat="(key, value) in alert.attributes"><td><b>{{ key | capitalize }}</b></td><td>{{ value }}</td></tr>
 </table>
 
+
+<table class="table table-condensed table-striped">
+  <tr>
+    <th><b>Alert ID</b></th>
+    <th><b>Update Time</b></th>
+    <th><b>Change</b></th>
+    <th><b>Event</b></th>
+    <th><b>Value</b></th>
+    <th><b>Text</b></th>
+  </tr>
+  <tr ng-repeat="history in alert.history | orderBy:'updateTime':true">
+    <td>{{ history.id }}</td>
+    <td>{{ history.updateTime }}</td>
+    <td>{{ history.status || history.severity }}</td>
+    <td>{{ history.event }}</td>
+    <td>{{ history.value }}</td>
+    <td>{{ history.text }}</td>
+  </tr>
+</table>
