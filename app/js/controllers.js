@@ -9,6 +9,7 @@ alertaControllers.controller('AlertListController', ['$scope', 'Alert',
       Alert.query(function(response) {
         $scope.alerts = response.alerts;
       });
+   $scope.alertLimit = 10;
   }]);
 
 alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams', 'Alert',

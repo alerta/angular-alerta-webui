@@ -3,6 +3,7 @@
     <div class="span2">
       <!--Sidebar content-->
 
+      Limit: <input type="integer" ng-model="alertLimit">
       Search: <input ng-model="query">
       Sort by:
       <select ng-model="orderProp">
@@ -13,8 +14,6 @@
     </div>
     <div class="span10">
       <!--Body content-->
-
-status = {{ status }}
 
       <table class="table">
         <tr>
@@ -29,7 +28,7 @@ status = {{ status }}
           <th>Value</th>
           <th>Text</th>
         </tr>
-        <tr ng-repeat="alert in alerts | filter:query | orderBy:orderProp"
+        <tr ng-repeat="alert in alerts | filter:query | orderBy:orderProp | limitTo:alertLimit"
             class="severity severity-{{ alert.severity}}"
             ng-controller="AlertLinkController" ng-click="getDetails(alert);">
           <td><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
