@@ -1,120 +1,27 @@
-<div class="phone-images">
-  <img ng-src="{{img}}"
-       class="phone"
-       ng-repeat="img in phone.images"
-       ng-class="{active: mainImageUrl==img}">
-</div>
 
-stauts = {{ status }}
 
-<h1>{{ alert.resource }} {{alert.event}}</h1>
+<table class="table table-condensed table-striped">
+  <tr class="odd"><td><b>Alert ID</b></td><td>{{ alert.id }}</td></tr>
+  <tr class="even"><td><b>Last Receive ID</b></td><td>{{ alert.lastReceiveId }}</td></tr>
+  <tr class="odd"><td><b>Create Time</b></td><td>{{ alert.createTime }}</td></tr>
+  <tr class="even"><td><b>Receive Time</b></td><td>{{ alert.receiveTime }}</td></tr>
+  <tr class="odd"><td><b>Last Receive Time</b></td><td>{{ alert.lastReceiveTime }}</td></tr>
+  <tr class="even"><td><b>Service</b></td><td>{{ alert.service.join(', ') }}</td></tr>
+  <tr class="odd"><td><b>Environment</b></td><td>{{ alert.environment }}</td></tr>
+  <tr class="even"><td><b>Resource</b></td><td>{{ alert.resource }}</td></tr>
+  <tr class="odd"><td><b>Event</b></td><td>{{ alert.event }}</td></tr>
+  <tr class="even"><td><b>Group</b></td><td>{{ alert.group }}</td></tr>
+  <tr class="odd"><td><b>Severity</b></td><td>{{ alert.severity }}</td></tr>
+  <tr class="even"><td><b>Value</b></td><td>{{ alert.value }}</td></tr>
+  <tr class="odd"><td><b>Text</b></td><td>{{ alert.text }}</td></tr>
+  <tr class="even"><td><b>Trend Indication</b></td><td>{{ alert.trendIndication }}</td></tr>
+  <tr class="odd"><td><b>Timeout</b></td><td>{{ alert.timeout }}</td></tr>
+  <tr class="even"><td><b>Type</b></td><td>{{ alert.type }}</td></tr>
+  <tr class="odd"><td><b>Repeat</b></td><td>{{ alert.repeat }}</td></tr>
+  <tr class="even"><td><b>Origin</b></td><td>{{ alert.origin }}</td></tr>
+  <tr class="odd"><td><b>Tags</b></td>
+    <td><span ng-repeat="tag in alert.tags"><span class="label label-primary">{{ tag }}</span> </span></td>
+  </tr>
+  <tr class="even"><td><b>Attributes</b></td><td>{{ alert.attributes }}</td></tr>
+</table>
 
-<p>{{alert.text}}</p>
-
-<ul class="phone-thumbs">
-  <li ng-repeat="img in phone.images">
-    <img ng-src="{{img}}" ng-click="setImage(img)">
-  </li>
-</ul>
-
-<ul class="specs">
-  <li>
-    <span>Availability and Networks</span>
-    <dl>
-      <dt>Availability</dt>
-      <dd ng-repeat="availability in phone.availability">{{availability}}</dd>
-    </dl>
-  </li>
-  <li>
-    <span>Battery</span>
-    <dl>
-      <dt>Type</dt>
-      <dd>{{phone.battery.type}}</dd>
-      <dt>Talk Time</dt>
-      <dd>{{phone.battery.talkTime}}</dd>
-      <dt>Standby time (max)</dt>
-      <dd>{{phone.battery.standbyTime}}</dd>
-    </dl>
-  </li>
-  <li>
-    <span>Storage and Memory</span>
-    <dl>
-      <dt>RAM</dt>
-      <dd>{{phone.storage.ram}}</dd>
-      <dt>Internal Storage</dt>
-      <dd>{{phone.storage.flash}}</dd>
-    </dl>
-  </li>
-  <li>
-    <span>Connectivity</span>
-    <dl>
-      <dt>Network Support</dt>
-      <dd>{{phone.connectivity.cell}}</dd>
-      <dt>WiFi</dt>
-      <dd>{{phone.connectivity.wifi}}</dd>
-      <dt>Bluetooth</dt>
-      <dd>{{phone.connectivity.bluetooth}}</dd>
-      <dt>Infrared</dt>
-      <dd>{{phone.connectivity.infrared }}</dd>
-      <dt>GPS</dt>
-      <dd>{{phone.connectivity.gps }}</dd>
-    </dl>
-  </li>
-  <li>
-    <span>Android</span>
-    <dl>
-      <dt>OS Version</dt>
-      <dd>{{phone.android.os}}</dd>
-      <dt>UI</dt>
-      <dd>{{phone.android.ui}}</dd>
-    </dl>
-  </li>
-  <li>
-    <span>Size and Weight</span>
-    <dl>
-      <dt>Dimensions</dt>
-      <dd ng-repeat="dim in phone.sizeAndWeight.dimensions">{{dim}}</dd>
-      <dt>Weight</dt>
-      <dd>{{phone.sizeAndWeight.weight}}</dd>
-    </dl>
-  </li>
-  <li>
-    <span>Display</span>
-    <dl>
-      <dt>Screen size</dt>
-      <dd>{{phone.display.screenSize}}</dd>
-      <dt>Screen resolution</dt>
-      <dd>{{phone.display.screenResolution}}</dd>
-      <dt>Touch screen</dt>
-      <dd>{{phone.display.touchScreen }}</dd>
-    </dl>
-  </li>
-  <li>
-    <span>Hardware</span>
-    <dl>
-      <dt>CPU</dt>
-      <dd>{{phone.hardware.cpu}}</dd>
-      <dt>USB</dt>
-      <dd>{{phone.hardware.usb}}</dd>
-      <dt>Audio / headphone jack</dt>
-      <dd>{{phone.hardware.audioJack}}</dd>
-      <dt>FM Radio</dt>
-      <dd>{{phone.hardware.fmRadio }}</dd>
-      <dt>Accelerometer</dt>
-      <dd>{{phone.hardware.accelerometer }}</dd>
-    </dl>
-  </li>
-  <li>
-    <span>Camera</span>
-    <dl>
-      <dt>Primary</dt>
-      <dd>{{phone.camera.primary}}</dd>
-      <dt>Features</dt>
-      <dd>{{phone.camera.features.join(', ')}}</dd>
-    </dl>
-  </li>
-  <li>
-    <span>Additional Features</span>
-    <dd>{{phone.additionalFeatures}}</dd>
-  </li>
-</ul>
