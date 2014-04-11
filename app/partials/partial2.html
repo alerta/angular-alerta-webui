@@ -22,6 +22,6 @@
   <tr class="odd"><td><b>Tags</b></td>
     <td><span ng-repeat="tag in alert.tags"><span class="label label-primary">{{ tag }}</span> </span></td>
   </tr>
-  <tr class="even"><td><b>Attributes</b></td><td>{{ alert.attributes }}</td></tr>
+  <tr ng-repeat="(key, value) in alert.attributes"><td><b>{{ key | capitalize }}</b></td><td>{{ value }}</td></tr>
 </table>
 
