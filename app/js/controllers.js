@@ -7,6 +7,9 @@ var alertaControllers = angular.module('alertaControllers', []);
 alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'Service', 'Alert',
   function($scope, Environment, Service, Alert){
 
+    $scope.status = 'open';
+    $scope.options = ['open', 'ack', 'closed'];
+
     $scope.q = {};
 
     Environment.all(function(response) {
@@ -21,6 +24,7 @@ alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'S
 
       $scope.q['environment'] = $scope.environment;
       $scope.q['service'] = $scope.service;
+      $scope.q['status'] = $scope.status;
 
       console.log('q=' + $scope.q)
       console.log('env=' + $scope.environment + ' svc=' + $scope.service);

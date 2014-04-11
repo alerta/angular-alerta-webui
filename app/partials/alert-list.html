@@ -4,16 +4,10 @@
   <div class="row-fluid">
 
     <div class="btn-toolbar" role="toolbar">
-      <div class="btn-group">
-        <button type="button" class="btn btn-default">Open</button>
-        <button type="button" class="btn btn-default">Ack</button>
-        <button type="button" class="btn btn-default">Closed</button>
-      </div>
-      <div class="btn-group">
-        <button type="button" class="btn btn-default">Ack</button>
-        <button type="button" class="btn btn-default">Close</button>
-        <button type="button" class="btn btn-default">Delete</button>
-      </div>
+      <buttons-radio class="btn-group" data-toggle="buttons-checkbox"
+               model="status" options="options">
+      </buttons-radio>
+
       <div class="btn-group">
         <button type="button" class="btn btn-default">5m</button>
         <button type="button" class="btn btn-default">15m</button>
