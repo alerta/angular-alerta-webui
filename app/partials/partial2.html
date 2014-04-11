@@ -2,7 +2,7 @@
 
 <table class="table table-condensed table-striped">
   <tr><td><b>Alert ID</b></td><td>{{ alert.id }}</td></tr>
-  <tr><td><b>Last Receive ID</b></td><td>{{ alert.lastReceiveId }}</td></tr>
+  <tr><td><b>Last Receive Alert ID</b></td><td>{{ alert.lastReceiveId }}</td></tr>
   <tr><td><b>Create Time</b></td><td>{{ alert.createTime }}</td></tr>
   <tr><td><b>Receive Time</b></td><td>{{ alert.receiveTime }}</td></tr>
   <tr><td><b>Last Receive Time</b></td><td>{{ alert.lastReceiveTime }}</td></tr>
@@ -11,7 +11,13 @@
   <tr><td><b>Resource</b></td><td>{{ alert.resource }}</td></tr>
   <tr><td><b>Event</b></td><td>{{ alert.event }}</td></tr>
   <tr><td><b>Group</b></td><td>{{ alert.group }}</td></tr>
-  <tr><td><b>Severity</b></td><td>{{ alert.severity }}</td></tr>
+  <tr><td><b>Severity</b></td>
+    <td>
+      <span class="label label-{{ alert.previousSeverity }}">{{ alert.previousSeverity }}</span>&nbsp;->&nbsp;
+      <span class="label label-{{ alert.severity }}">{{ alert.severity }}</span>
+    </td>
+  </tr>
+  <tr><td><b>Status</b></td><td><span class="label label-{{ alert.status }}">{{ alert.status }}</span></td></tr>
   <tr><td><b>Value</b></td><td>{{ alert.value }}</td></tr>
   <tr><td><b>Text</b></td><td>{{ alert.text }}</td></tr>
   <tr><td><b>Trend Indication</b></td><td>{{ alert.trendIndication }}</td></tr>
@@ -25,7 +31,6 @@
   <tr ng-repeat="(key, value) in alert.attributes"><td><b>{{ key | capitalize }}</b></td><td>{{ value }}</td></tr>
 </table>
 
-
 <table class="table table-condensed table-striped">
   <tr>
     <th><b>Alert ID</b></th>
@@ -38,7 +43,7 @@
   <tr ng-repeat="history in alert.history | orderBy:'updateTime':true">
     <td>{{ history.id }}</td>
     <td>{{ history.updateTime }}</td>
-    <td>{{ history.status || history.severity }}</td>
+    <td><span class="label label-{{ history.status || history.severity }}">{{ history.status || history.severity }}</span></td>
     <td>{{ history.event }}</td>
     <td>{{ history.value }}</td>
     <td>{{ history.text }}</td>
