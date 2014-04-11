@@ -32,7 +32,9 @@
 
   <div class="row-fluid">
     <div class="span12">
-      <!--Sidebar content-->
+
+      <select ng-model="environment" ng-options="e.environment for e in environments"></select>
+      <select ng-model="service" ng-options="s.service group by s.environment for s in services"></select>
 
       Limit: <input type="integer" ng-model="alertLimit">
       Search: <input ng-model="query">

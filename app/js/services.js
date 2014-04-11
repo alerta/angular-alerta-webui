@@ -17,3 +17,17 @@ alertaServices.factory('Alert', ['$resource',
       'delete': {method: 'DELETE', params:{id:''}}
     });
   }]);
+
+alertaServices.factory('Environment', ['$resource',
+  function($resource) {
+    return $resource('http://localhost:8080/api/environments', {}, {
+      'all':  {method: 'GET'},
+    });
+  }]);
+
+alertaServices.factory('Service', ['$resource',
+  function($resource) {
+    return $resource('http://localhost:8080/api/services', {}, {
+      'all':  {method: 'GET'},
+    });
+  }]);
