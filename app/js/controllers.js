@@ -14,11 +14,14 @@ alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'S
       $scope.services = response.services;
     });
 
-    Alert.query(function(response) {
-      $scope.alerts = response.alerts;
-    });
+    $scope.getAlerts = function() {
+      Alert.query(function(response) {
+        $scope.alerts = response.alerts;
+      });
+    };
 
     $scope.alertLimit = 10;
+    $scope.getAlerts();
   }]);
 
 alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams', 'Alert',
