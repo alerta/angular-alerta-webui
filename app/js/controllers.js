@@ -38,8 +38,8 @@ alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'S
     $scope.getAlerts();
   }]);
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams', '$location', 'Alert',
-  function($scope, $routeParams, $location, Alert){
+alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Alert',
+  function($scope, $route, $routeParams, $location, Alert){
 
     Alert.get({id: $routeParams.id}, function(response) {
       $scope.alert = response.alert;
@@ -47,17 +47,23 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams',
 
     $scope.openAlert = function(id) {
       console.log('Alert.open({id: ' + id + '});')
-      Alert.status({id: id}, {status: 'open', text: 'status change via console'});
+      Alert.status({id: id}, {status: 'open', text: 'status change via console'}, function(data) {
+        $route.reload();
+      });
     };
 
     $scope.ackAlert = function(id) {
       console.log('Alert.ack({id: ' + id + '});')
-      Alert.status({id: id}, {status: 'ack', text: 'status change via console'});
+      Alert.status({id: id}, {status: 'ack', text: 'status change via console'}, function(data) {
+        $route.reload();
+      });
     };
 
     $scope.closeAlert = function(id) {
       console.log('Alert.close({id: ' + id + '});')
-      Alert.status({id: id}, {status: 'closed', text: 'status change via console'});
+      Alert.status({id: id}, {status: 'closed', text: 'status change via console'}, function(data) {
+        $route.reload();
+      });
     };
 
     $scope.deleteAlert = function(id) {
