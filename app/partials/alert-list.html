@@ -5,9 +5,9 @@
     <div class="span12">
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group">
-        <button type="button" class="btn btn-default" ng-click="">Open&nbsp;<span class="badge">{{ statusCounts.open || 0 }}</span></button>
-        <button type="button" class="btn btn-default" ng-click="activate(option)">Ack&nbsp;<span class="badge">{{ statusCounts.ack || 0 }}</span></button>
-        <button type="button" class="btn btn-default" ng-click="activate(option)">Closed&nbsp;<span class="badge">{{ statusCounts.closed || 0 }}</span></button>
+        <button type="button" class="btn btn-default" ng-click="status = 'open'" ng-class="{ 'active' : status == 'open' }">Open&nbsp;<span class="badge">{{ statusCounts.open || 0 }}</span></button>
+        <button type="button" class="btn btn-default" ng-click="status = 'ack'" ng-class="{ 'active' : status == 'ack' }">Ack&nbsp;<span class="badge">{{ statusCounts.ack || 0 }}</span></button>
+        <button type="button" class="btn btn-default" ng-click="status = 'closed'" ng-class="{ 'active' : status == 'closed' }">Closed&nbsp;<span class="badge">{{ statusCounts.closed || 0 }}</span></button>
       </div>
 
       <select ng-model="environment" ng-options="e.environment as e.environment for e in environments">
