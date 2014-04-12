@@ -47,17 +47,17 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams',
 
     $scope.openAlert = function(id) {
       console.log('Alert.open({id: ' + id + '});')
-      Alert.status({id: id}, {status: 'open'});
+      Alert.status({id: id}, {status: 'open', text: 'status change via console'});
     };
 
     $scope.ackAlert = function(id) {
       console.log('Alert.ack({id: ' + id + '});')
-      Alert.status({id: id}, {status: 'ack'});
+      Alert.status({id: id}, {status: 'ack', text: 'status change via console'});
     };
 
     $scope.closeAlert = function(id) {
       console.log('Alert.close({id: ' + id + '});')
-      Alert.status({id: id}, {status: 'closed'});
+      Alert.status({id: id}, {status: 'closed', text: 'status change via console'});
     };
 
     $scope.deleteAlert = function(id) {
