@@ -34,7 +34,7 @@
       </select>
 
       Limit: <input type="integer" ng-model="alertLimit">
-      Search: <input ng-model="query">
+      Search: <input ng-model="query"> {{(alerts|filter:query).length | showing:alertLimit }}
       Sort by:
       <select ng-model="orderProp">
         <option value="severity">Severity</option>

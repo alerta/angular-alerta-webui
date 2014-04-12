@@ -30,3 +30,12 @@ alertaFilters.filter('capitalize', function() {
   };
 });
 
+alertaFilters.filter('showing', function() {
+  return function(input, limit) {
+    if (input > limit) {
+      return 'Showing ' + limit + ' out of ' + input;
+    } else {
+      return 'Showing ' + input + ' out of ' + input;
+    };
+  };
+});
