@@ -11,27 +11,23 @@
       <div class="btn-group pull-right">
         <button type="button" class="btn btn-default btn-info" ng-click="getAlerts()">Refresh</button>
       </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="row-fluid">
-    <div class="span12">
 
       <select ng-model="environment" ng-options="e.environment as e.environment for e in environments">
-        <option value="">-- choose environment --</option>
+        <option value="">-- environment --</option>
       </select>
       <select ng-model="service" ng-options="s.service as s.service group by s.environment for s in services">
-        <option value="">-- choose service --</option>
+        <option value="">-- service --</option>
       </select>
 
-      Limit: <input type="integer" ng-model="alertLimit">
-      Search: <input ng-model="query"> {{(alerts|filter:query).length | showing:alertLimit }}
+      Limit: <input type="integer" ng-model="alertLimit" size="4">
+      Search: <input ng-model="query" size="8">
+      {{(alerts|filter:query).length | showing:alertLimit }}
       Sort by:
       <select ng-model="orderProp">
         <option value="severity">Severity</option>
         <option value="lastReceiveTime">Newest</option>
       </select>
+    </div>
     </div>
   </div>
 
