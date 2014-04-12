@@ -10,12 +10,16 @@
         <button type="button" class="btn btn-default" ng-click="status = 'closed'" ng-class="{ 'active' : status == 'closed' }">Closed&nbsp;<span class="badge">{{ statusCounts.closed || 0 }}</span></button>
       </div>
 
-      <select ng-model="environment" ng-options="e.environment as e.environment for e in environments">
-        <option value="">-- environment --</option>
+      <div class="col-xs-2">
+      <select class="form-control" ng-model="environment" ng-options="e.environment as e.environment for e in environments">
+        <option value="">-- choose environment --</option>
       </select>
-      <select ng-model="service" ng-options="s.service as s.service group by s.environment for s in services">
-        <option value="">-- service --</option>
+      </div>
+      <div class="col-xs-3">
+      <select class="form-control" ng-model="service" ng-options="s.service as s.service group by s.environment for s in services">
+        <option value="">-- choose service --</option>
       </select>
+      </div>
 
       Limit: <input type="integer" ng-model="alertLimit" size="4">
       Search: <input ng-model="query" size="8">
