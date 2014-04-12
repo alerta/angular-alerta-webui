@@ -18,6 +18,7 @@ alertaDirectives.directive('buttonsRadio', function() {
                     "ng-class='{active: option == model}'"+
                     "ng-repeat='option in options' "+
                     "ng-click='activate(option)'>{{option | capitalize }} "+
+                    " <span class='badge'>0</span>"+
                   "</button>"
     };
   });
