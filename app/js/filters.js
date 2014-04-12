@@ -32,10 +32,13 @@ alertaFilters.filter('capitalize', function() {
 
 alertaFilters.filter('showing', function() {
   return function(input, limit) {
+    if (!input) {
+      return 'Showing 0 out of 0 alerts';
+    }
     if (input > limit) {
-      return 'Showing ' + limit + ' out of ' + input;
+      return 'Showing ' + limit + ' out of ' + input + ' alerts';
     } else {
-      return 'Showing ' + input + ' out of ' + input;
+      return 'Showing ' + input + ' out of ' + input + ' alerts';
     };
   };
 });
