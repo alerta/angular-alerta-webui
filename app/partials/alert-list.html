@@ -65,7 +65,7 @@
             ng-controller="AlertLinkController" ng-click="getDetails(alert);">
           <td><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
           <td><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
-          <td>{{ alert.lastReceiveTime | date:'EEE d MMM HH:mm' }}</td>
+          <td>{{ alert.lastReceiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
           <td>{{ alert.duplicateCount }}</td>
           <td>{{ alert.environment }}</td>
           <td>{{ alert.service.join(', ') }}</td>
