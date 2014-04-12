@@ -38,31 +38,33 @@ alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'S
     $scope.getAlerts();
   }]);
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams', 'Alert', 'AlertStatus',
-  function($scope, $routeParams, Alert, AlertStatus){
+alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams', '$location', 'Alert', 'AlertStatus',
+  function($scope, $routeParams, $location, Alert, AlertStatus){
 
     Alert.get({id: $routeParams.id}, function(response) {
       $scope.alert = response.alert;
     });
 
-    $scope.openAlert = function(alertId) {
-      console.log('AlertStatus.open({id: ' + alertId + '});')
-      AlertStatus.open({id: alertId});
+    $scope.openAlert = function(id) {
+      console.log('AlertStatus.open({id: ' + id + '});')
+      AlertStatus.open({id: id});
     };
 
-    $scope.ackAlert = function(alertId) {
-      console.log('AlertStatus.ack({id: ' + alertId + '});')
-      AlertStatus.ack({id: alertId});
+    $scope.ackAlert = function(id) {
+      console.log('AlertStatus.ack({id: ' + id + '});')
+      AlertStatus.ack({id: id});
     };
 
-    $scope.closeAlert = function(alertId) {
-      console.log('AlertStatus.delete({id: ' + alertId + '});')
-      AlertStatus.close({id: alertId});
+    $scope.closeAlert = function(id) {
+      console.log('AlertStatus.delete({id: ' + id + '});')
+      AlertStatus.close({id: id});
     };
 
-    $scope.deleteAlert = function(alertId) {
-      console.log('Alert.delete({id: ' + alertId + '});')
-      Alert.delete({id: alertId});
+    $scope.deleteAlert = function(id) {
+      console.log('Alert.delete({id: ' + id + '});')
+      Alert.delete({id: id}, {}, function(data) {
+        $location.path('/');
+      });
     };
 
   }]);

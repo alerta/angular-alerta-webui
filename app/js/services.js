@@ -31,6 +31,7 @@ alertaServices.factory('AlertStatus', ['$resource',
       'close':   {method: 'POST', url: 'http://localhost:8080/api/alert/:id/status', params:{id:'', status:'close'}},
     });
   }]);
+
 alertaServices.factory('Environment', ['$resource',
   function($resource) {
     return $resource('http://localhost:8080/api/environments', {}, {
