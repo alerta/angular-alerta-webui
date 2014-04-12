@@ -38,26 +38,26 @@ alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'S
     $scope.getAlerts();
   }]);
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams', '$location', 'Alert', 'AlertStatus',
-  function($scope, $routeParams, $location, Alert, AlertStatus){
+alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams', '$location', 'Alert',
+  function($scope, $routeParams, $location, Alert){
 
     Alert.get({id: $routeParams.id}, function(response) {
       $scope.alert = response.alert;
     });
 
     $scope.openAlert = function(id) {
-      console.log('AlertStatus.open({id: ' + id + '});')
-      AlertStatus.open({id: id});
+      console.log('Alert.open({id: ' + id + '});')
+      Alert.status({id: id}, {status: 'open'});
     };
 
     $scope.ackAlert = function(id) {
-      console.log('AlertStatus.ack({id: ' + id + '});')
-      AlertStatus.ack({id: id});
+      console.log('Alert.ack({id: ' + id + '});')
+      Alert.status({id: id}, {status: 'ack'});
     };
 
     $scope.closeAlert = function(id) {
-      console.log('AlertStatus.delete({id: ' + id + '});')
-      AlertStatus.close({id: id});
+      console.log('Alert.close({id: ' + id + '});')
+      Alert.status({id: id}, {status: 'closed'});
     };
 
     $scope.deleteAlert = function(id) {

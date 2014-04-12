@@ -10,25 +10,12 @@ var alertaServices = angular.module('alertaServices', ['ngResource']);
 alertaServices.factory('Alert', ['$resource',
   function($resource) {
     return $resource('http://localhost:8080/api/alert/:id', {}, {
-      'query':  {method: 'GET', url: 'http://localhost:8080/api/alerts'},
-      'save':   {method: 'POST'},
-      'get':    {method: 'GET', params:{id:''}},
-      'remove': {method: 'DELETE', params:{id:''}},
-      'delete': {method: 'DELETE', params:{id:''}}
-    });
-  }]);
-
-alertaServices.factory('AlertStatus', ['$resource',
-  function($resource) {
-    return $resource('http://localhost:8080/api/alert/:id', {}, {
-      'open':   {method: 'POST', url: 'http://localhost:8080/api/alert/:id/status', params:{id:'', status:'open'}},
-      'ack':    {
-        method: 'POST',
-        url: 'http://localhost:8080/api/alert/:id/status',
-        params:{status:'ack'},
-        headers: {'Content-Type': 'application/json'}
-      },
-      'close':   {method: 'POST', url: 'http://localhost:8080/api/alert/:id/status', params:{id:'', status:'close'}},
+      'query':  {method:'GET', url: 'http://localhost:8080/api/alerts'},
+      'save':   {method:'POST'},
+      'get':    {method:'GET'},
+      'status': {method:'POST', url:'http://localhost:8080/api/alert/:id/status'},
+      'remove': {method:'DELETE'},
+      'delete': {method:'DELETE'}
     });
   }]);
 
