@@ -40,6 +40,12 @@ alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'S
 
 alertaControllers.controller('AlertDetailController', ['$scope', '$routeParams', 'Alert',
   function($scope, $routeParams, Alert){
+
+    $scope.deleteAlert = function(alertId) {
+      console.log('Alert.delete({id: ' + alertId + '});')
+      Alert.delete({id: alertId});
+    };
+
     Alert.get({id: $routeParams.id}, function(response) {
       $scope.alert = response.alert;
     });
