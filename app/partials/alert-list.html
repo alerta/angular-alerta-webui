@@ -4,9 +4,11 @@
   <div class="row-fluid">
     <div class="span12">
     <div class="btn-toolbar" role="toolbar">
-      <buttons-radio class="btn-group" data-toggle="buttons-checkbox"
-               model="status" options="options">
-      </buttons-radio>
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary">Open&nbsp;<span class="badge">{{ statusCounts.open || 0 }}</span></button>
+        <button type="button" class="btn btn-primary">Ack&nbsp;<span class="badge">{{ statusCounts.ack || 0 }}</span></button>
+        <button type="button" class="btn btn-primary">Closed&nbsp;<span class="badge">{{ statusCounts.closed || 0 }}</span></button>
+      </div>
 
       <div class="btn-group pull-right">
         <button type="button" class="btn btn-default btn-info" ng-click="getAlerts()">Refresh</button>

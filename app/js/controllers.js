@@ -4,11 +4,17 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('AlertListController', ['$scope', 'Environment', 'Service', 'Alert',
-  function($scope, Environment, Service, Alert){
+alertaControllers.controller('AlertListController', ['$scope', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, Count, Environment, Service, Alert){
 
     $scope.status = 'open';
     $scope.options = ['open', 'ack', 'closed'];
+
+    Count.query($scope.q, function(response) {
+      $scope.statusCounts = response.statusCounts;
+      $scope.severityCounts = response.severityCounts;
+      console.log($scope.statusCounts);
+    });
 
     $scope.q = {};
 

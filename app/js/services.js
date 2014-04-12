@@ -7,6 +7,13 @@
 // In this case it is a simple value service.
 var alertaServices = angular.module('alertaServices', ['ngResource']);
 
+alertaServices.factory('Count', ['$resource',
+  function($resource) {
+    return $resource('http://localhost:8080/api/alerts/count', {}, {
+      'query': {method:'GET'}
+    });
+  }]);
+
 alertaServices.factory('Alert', ['$resource',
   function($resource) {
     return $resource('http://localhost:8080/api/alert/:id', {}, {
