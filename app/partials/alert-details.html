@@ -1,9 +1,8 @@
 
 <div>
-  <button type="button" class="btn btn-default">Open</button>
-  <button type="button" class="btn btn-default">Ack</button>
-  <button type="button" class="btn btn-default">Close</button>
-
+  <button type="button" class="btn btn-default" ng-click="openAlert(alert.id)">Open</button>
+  <button type="button" class="btn btn-primary" ng-click="ackAlert(alert.id)">Ack</button>
+  <button type="button" class="btn btn-warning" ng-click="closeAlert(alert.id)">Close</button>
   <button type="button" class="btn btn-danger" ng-click="deleteAlert(alert.id)">Delete</button>
 </div>
 

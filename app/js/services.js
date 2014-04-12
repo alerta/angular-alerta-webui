@@ -18,6 +18,19 @@ alertaServices.factory('Alert', ['$resource',
     });
   }]);
 
+alertaServices.factory('AlertStatus', ['$resource',
+  function($resource) {
+    return $resource('http://localhost:8080/api/alert/:id', {}, {
+      'open':   {method: 'POST', url: 'http://localhost:8080/api/alert/:id/status', params:{id:'', status:'open'}},
+      'ack':    {
+        method: 'POST',
+        url: 'http://localhost:8080/api/alert/:id/status',
+        params:{status:'ack'},
+        headers: {'Content-Type': 'application/json'}
+      },
+      'close':   {method: 'POST', url: 'http://localhost:8080/api/alert/:id/status', params:{id:'', status:'close'}},
+    });
+  }]);
 alertaServices.factory('Environment', ['$resource',
   function($resource) {
     return $resource('http://localhost:8080/api/environments', {}, {
