@@ -27,7 +27,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
       $scope.services = response.services;
     });
 
-    $scope.getAlerts = function() {
+    $scope.refreshAlerts = function(timer) {
 
       $scope.q['environment'] = $scope.environment;
       $scope.q['service'] = $scope.service;
@@ -37,23 +37,13 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
       Alert.query($scope.combined, function(response) {
         $scope.alerts = response.alerts;
       });
-    };
-
-    $scope.autorefreshAlerts = function() {
-
-      $scope.q['environment'] = $scope.environment;
-      $scope.q['service'] = $scope.service;
-      $scope.q['status'] = $scope.status;
-
-      $scope.combined = angular.extend({}, $scope.q, $scope.widget);
-      Alert.query($scope.combined, function(response) {
-        $scope.alerts = response.alerts;
-      });
-      $scope.timer = $timeout($scope.autorefreshAlerts, 5000);
+      if (timer) {
+        $timeout(function() { $scope.refreshAlerts(true); }, 5000);
+      };
     };
 
     $scope.alertLimit = 10;
-    $scope.autorefreshAlerts();
+    $scope.refreshAlerts(true);
 
     var SEVERITY_MAP = {
         'critical': 1,
