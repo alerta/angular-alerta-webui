@@ -13,7 +13,6 @@ alertaControllers.controller('AlertListController', ['$scope', 'Count', 'Environ
     Count.query($scope.q, function(response) {
       $scope.statusCounts = response.statusCounts;
       $scope.severityCounts = response.severityCounts;
-      console.log($scope.statusCounts);
     });
 
     $scope.q = {};
@@ -31,9 +30,6 @@ alertaControllers.controller('AlertListController', ['$scope', 'Count', 'Environ
       $scope.q['environment'] = $scope.environment;
       $scope.q['service'] = $scope.service;
       $scope.q['status'] = $scope.status;
-
-      console.log('q=' + $scope.q)
-      console.log('env=' + $scope.environment + ' svc=' + $scope.service);
 
       Alert.query($scope.q, function(response) {
         $scope.alerts = response.alerts;
@@ -58,7 +54,6 @@ alertaControllers.controller('AlertListController', ['$scope', 'Count', 'Environ
     };
 
     $scope.severityCode = function(alert) {
-      console.log(alert);
       return SEVERITY_MAP[alert.severity];
     };
 
@@ -72,28 +67,24 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     });
 
     $scope.openAlert = function(id) {
-      console.log('Alert.open({id: ' + id + '});')
       Alert.status({id: id}, {status: 'open', text: 'status change via console'}, function(data) {
         $route.reload();
       });
     };
 
     $scope.ackAlert = function(id) {
-      console.log('Alert.ack({id: ' + id + '});')
       Alert.status({id: id}, {status: 'ack', text: 'status change via console'}, function(data) {
         $route.reload();
       });
     };
 
     $scope.closeAlert = function(id) {
-      console.log('Alert.close({id: ' + id + '});')
       Alert.status({id: id}, {status: 'closed', text: 'status change via console'}, function(data) {
         $route.reload();
       });
     };
 
     $scope.deleteAlert = function(id) {
-      console.log('Alert.delete({id: ' + id + '});')
       Alert.delete({id: id}, {}, function(data) {
         $location.path('/');
       });
