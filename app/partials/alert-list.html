@@ -58,7 +58,7 @@
           <th>Value</th>
           <th>Text</th>
         </tr>
-        <tr ng-repeat="alert in alerts | filter:query | orderBy:['severity', '-lastReceiveTime'] | limitTo:alertLimit"
+        <tr ng-repeat="alert in alerts | filter:query | orderBy:severityCode | limitTo:alertLimit"
             class="severity severity-{{ alert.severity}}"
             ng-controller="AlertLinkController" ng-click="getDetails(alert);">
           <td><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>

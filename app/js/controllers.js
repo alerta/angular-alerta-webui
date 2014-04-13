@@ -42,6 +42,26 @@ alertaControllers.controller('AlertListController', ['$scope', 'Count', 'Environ
 
     $scope.alertLimit = 10;
     $scope.getAlerts();
+
+    var SEVERITY_MAP = {
+        'critical': 1,
+        'major': 2,
+        'minor': 3,
+        'warning': 4,
+        'indeterminate': 5,
+        'cleared': 5,
+        'normal': 5,
+        'informational': 6,
+        'debug': 7,
+        'auth': 8,
+        'unknown': 9
+    };
+
+    $scope.severityCode = function(alert) {
+      console.log(alert);
+      return SEVERITY_MAP[alert.severity];
+    };
+
   }]);
 
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Alert',

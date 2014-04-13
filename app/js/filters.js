@@ -42,5 +42,3 @@ alertaFilters.filter('showing', function() {
     };
   };
 });
-
-
