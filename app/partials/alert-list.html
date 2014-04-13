@@ -21,11 +21,19 @@
       </select>
       </div>
 
+      <div class="col-xs-2">
+      <select class="form-control input-sm" ng-model="query" ng-options="c.query as c.name group by c.group for c in config.widgets">
+        <option value="">--- Query ---</option>
+      </select>
+      </div>
+
+      {{ config }}
+
       <div class="col-xs-1">
       <input class="form-control input-sm" type="integer" ng-model="alertLimit" size="4">
       </div>
       <div class="col-xs-2">
-      <input class="form-control input-sm" ng-model="query" size="8" placeholder="Search">
+      <input class="form-control input-sm" ng-model="search" size="8" placeholder="Search">
       </div>
 
       <div class="col-xs-1">
@@ -40,12 +48,12 @@
 
   <div class="row-fluid">
     <div class="span12">
-      {{(alerts|filter:query).length | showing:alertLimit }}
+      {{(alerts|filter:search).length | showing:alertLimit }}
     </div>
   </div>
 
   <div class="check-element animate-show" ng-show="debug">
-    <pre>{{ q | json }}</pre>
+    <pre>{{ query | json }}</pre>
   </div>
 
   <div class="check-element animate-show" ng-show="debug">
@@ -69,7 +77,7 @@
           <th>Value</th>
           <th>Text</th>
         </tr>
-        <tr ng-repeat="alert in alerts | filter:query | orderBy:[severityCode,'-lastReceiveTime'] | limitTo:alertLimit"
+        <tr ng-repeat="alert in alerts | filter:search | orderBy:[severityCode,'-lastReceiveTime'] | limitTo:alertLimit"
             class="severity severity-{{ alert.severity}}"
             ng-controller="AlertLinkController" ng-click="getDetails(alert);">
           <td><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
