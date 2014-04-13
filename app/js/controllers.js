@@ -14,11 +14,6 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
       $scope.config = response;
     });
 
-    Count.query($scope.q, function(response) {
-      $scope.statusCounts = response.statusCounts;
-      $scope.severityCounts = response.severityCounts;
-    });
-
     Environment.all(function(response) {
       $scope.environments = response.environments;
     });
@@ -31,9 +26,15 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
 
       $scope.q['environment'] = $scope.environment;
       $scope.q['service'] = $scope.service;
-      $scope.q['status'] = $scope.status;
-
       $scope.combined = angular.extend({}, $scope.q, $scope.widget);
+
+      Count.query($scope.combined, function(response) {
+        $scope.statusCounts = response.statusCounts;
+        $scope.severityCounts = response.severityCounts;
+      });
+
+      $scope.combined['status'] = $scope.status;
+
       Alert.query($scope.combined, function(response) {
         $scope.alerts = response.alerts;
       });
