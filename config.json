@@ -2,10 +2,32 @@
     "widgets": [
         {
             "group": "websys",
-            "name": "prism all status",
+            "name": "Prism - all status",
             "query": {
                 "status": [ "open", "closed", "ack" ],
                 "service": "Prism"
+            }
+        },
+        {
+            "group": "websys",
+            "name": "Database",
+            "query": {
+                "event": "~Ora|Pg|Mongo"
+            }
+        },
+        {
+            "group": "content-api",
+            "name": "Content API",
+            "query": {
+                "service": "~contentapi"
+            }
+        },
+        {
+            "group": "websys",
+            "name": "infra alerts",
+            "query": {
+                "severity": ["critical", "major" ],
+                "group": "~Puppet|Ganglia|OS"
             }
         }
     ]

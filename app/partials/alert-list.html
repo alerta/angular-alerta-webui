@@ -22,12 +22,10 @@
       </div>
 
       <div class="col-xs-2">
-      <select class="form-control input-sm" ng-model="query" ng-options="c.query as c.name group by c.group for c in config.widgets">
+      <select class="form-control input-sm" ng-model="widget" ng-options="c.query as c.name group by c.group for c in config.widgets">
         <option value="">--- Query ---</option>
       </select>
       </div>
-
-      {{ config }}
 
       <div class="col-xs-1">
       <input class="form-control input-sm" type="integer" ng-model="alertLimit" size="4">
@@ -53,11 +51,11 @@
   </div>
 
   <div class="check-element animate-show" ng-show="debug">
-    <pre>{{ query | json }}</pre>
+    <pre>{{ q | json }}</pre>
   </div>
 
   <div class="check-element animate-show" ng-show="debug">
-    <pre>{{ config | json }}</pre>
+    <pre>{{ widget | json }}</pre>
   </div>
 
   <div class="row-fluid">

@@ -7,19 +7,17 @@ var alertaControllers = angular.module('alertaControllers', []);
 alertaControllers.controller('AlertListController', ['$scope', 'Config', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, Config, Count, Environment, Service, Alert){
 
+    $scope.q = {};
+    $scope.status = 'open';
+
     Config.query(function(response) {
       $scope.config = response;
     });
-
-    $scope.status = 'open';
-    $scope.options = ['open', 'ack', 'closed'];
 
     Count.query($scope.q, function(response) {
       $scope.statusCounts = response.statusCounts;
       $scope.severityCounts = response.severityCounts;
     });
-
-    $scope.q = {};
 
     Environment.all(function(response) {
       $scope.environments = response.environments;
@@ -35,6 +33,7 @@ alertaControllers.controller('AlertListController', ['$scope', 'Config', 'Count'
       $scope.q['service'] = $scope.service;
       $scope.q['status'] = $scope.status;
 
+      $scope.q = angular.extend({}, $scope.q, $scope.widget);
       Alert.query($scope.q, function(response) {
         $scope.alerts = response.alerts;
       });
