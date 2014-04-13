@@ -4,8 +4,12 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('AlertListController', ['$scope', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, Count, Environment, Service, Alert){
+alertaControllers.controller('AlertListController', ['$scope', 'Config', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, Config, Count, Environment, Service, Alert){
+
+    Config.query(function(response) {
+      $scope.config = response;
+    });
 
     $scope.status = 'open';
     $scope.options = ['open', 'ack', 'closed'];

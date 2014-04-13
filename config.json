@@ -1,0 +1,12 @@
+{
+    "widgets": [
+        {
+            "group": "websys",
+            "name": "prism all status",
+            "query": {
+                "status": [ "open", "closed", "ack" ],
+                "service": "Prism"
+            }
+        }
+    ]
+}

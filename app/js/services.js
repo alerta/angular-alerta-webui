@@ -39,3 +39,10 @@ alertaServices.factory('Service', ['$resource',
       'all':  {method: 'GET'},
     });
   }]);
+
+alertaServices.factory('Config', ['$resource',
+  function($resource) {
+    return $resource('/~nsatterl/angular-alerta-webui/config.json', {}, {
+      'query':  {method: 'GET'},
+    });
+  }]);
