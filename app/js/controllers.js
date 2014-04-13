@@ -33,8 +33,8 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
       $scope.q['service'] = $scope.service;
       $scope.q['status'] = $scope.status;
 
-      $scope.q = angular.extend({}, $scope.q, $scope.widget);
-      Alert.query($scope.q, function(response) {
+      $scope.combined = angular.extend({}, $scope.q, $scope.widget);
+      Alert.query($scope.combined, function(response) {
         $scope.alerts = response.alerts;
       });
     };
@@ -45,8 +45,8 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
       $scope.q['service'] = $scope.service;
       $scope.q['status'] = $scope.status;
 
-      $scope.q = angular.extend({}, $scope.q, $scope.widget);
-      Alert.query($scope.q, function(response) {
+      $scope.combined = angular.extend({}, $scope.q, $scope.widget);
+      Alert.query($scope.combined, function(response) {
         $scope.alerts = response.alerts;
       });
       $scope.timer = $timeout($scope.autorefreshAlerts, 5000);
