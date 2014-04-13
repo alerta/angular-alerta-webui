@@ -53,3 +53,13 @@ alertaServices.factory('Heartbeat', ['$resource',
       'query':  {method:'GET'}
     });
   }]);
+
+alertaServices.factory('Management', ['$resource',
+  function($resource) {
+    return $resource('http://localhost:8080/management/manifest', {}, {
+      'manifest': {method:'GET'},
+      'status':  {method:'GET', url:'http://localhost:8080/management/status'}
+    });
+  }]);
+
+

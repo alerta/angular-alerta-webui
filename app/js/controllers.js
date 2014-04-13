@@ -111,14 +111,24 @@ alertaControllers.controller('AlertLinkController', ['$scope', '$location',
     };
   }]);
 
-alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Heartbeat',
-  function($scope, $timeout, Heartbeat) {
-    $scope.refreshHeartbeats = function() {
+alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Management', 'Heartbeat',
+  function($scope, $timeout, Management, Heartbeat) {
+
+    Management.manifest(function(response) {
+      $scope.manifest = response;
+    });
+
+    $scope.refreshAbout = function() {
+      Management.status(function(response) {
+        $scope.metrics = response.metrics;
+        $scope.lastTime = response.time;
+      });
+
       Heartbeat.query(function(response) {
         $scope.heartbeats = response.heartbeats;
       });
-      $timeout($scope.refreshHeartbeats, 5000);
+      $timeout($scope.refreshAbout, 5000);
     };
 
-    $scope.refreshHeartbeats();
+    $scope.refreshAbout();
   }]);
