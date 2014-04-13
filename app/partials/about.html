@@ -31,7 +31,7 @@
         </tr>
         <tr ng-repeat="metric in metrics">
           <td>{{ metric.title }}</td>
-          <td>{{ metric.type }}</td>
+          <td>{{ metric.type | capitalize }}</td>
           <td>{{ metric.group }}.{{ metric.name }}</td>
           <td>{{ metric.value || metric.count }}</td>
           <td>{{ metric.totalTime / metric.count | number:2 }} ms</td>
