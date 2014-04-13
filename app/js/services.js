@@ -42,7 +42,14 @@ alertaServices.factory('Service', ['$resource',
 
 alertaServices.factory('Config', ['$resource',
   function($resource) {
-    return $resource('/~nsatterl/angular-alerta-webui/config.json', {}, {
+    return $resource('../config.json', {}, {
       'query':  {method: 'GET'},
+    });
+  }]);
+
+alertaServices.factory('Heartbeat', ['$resource',
+  function($resource) {
+    return $resource('http://localhost:8080/api/heartbeats', {}, {
+      'query':  {method:'GET'}
     });
   }]);

@@ -42,3 +42,16 @@ alertaFilters.filter('showing', function() {
     };
   };
 });
+
+alertaFilters.filter('since', function() {
+  return function(input) {
+    var diff = (new Date().getTime() - new Date(input).getTime()) /1000;
+    var mins = Math.floor(diff / 60);
+    var secs = Math.floor(diff % 60);
+    if (mins > 0) {
+        return mins + ' minutes ' + secs + ' seconds';
+    } else {
+        return secs + ' seconds';
+    };
+  };
+});

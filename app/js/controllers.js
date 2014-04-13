@@ -110,3 +110,15 @@ alertaControllers.controller('AlertLinkController', ['$scope', '$location',
       $location.url('/alert/' + alert.id);
     };
   }]);
+
+alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Heartbeat',
+  function($scope, $timeout, Heartbeat) {
+    $scope.refreshHeartbeats = function() {
+      Heartbeat.query(function(response) {
+        $scope.heartbeats = response.heartbeats;
+      });
+      $timeout($scope.refreshHeartbeats, 5000);
+    };
+
+    $scope.refreshHeartbeats();
+  }]);
