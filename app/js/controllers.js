@@ -4,8 +4,8 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('AlertListController', ['$scope', 'Config', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, Config, Count, Environment, Service, Alert){
+alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $timeout, Config, Count, Environment, Service, Alert){
 
     $scope.q = {};
     $scope.status = 'open';
@@ -39,8 +39,21 @@ alertaControllers.controller('AlertListController', ['$scope', 'Config', 'Count'
       });
     };
 
+    $scope.autorefreshAlerts = function() {
+
+      $scope.q['environment'] = $scope.environment;
+      $scope.q['service'] = $scope.service;
+      $scope.q['status'] = $scope.status;
+
+      $scope.q = angular.extend({}, $scope.q, $scope.widget);
+      Alert.query($scope.q, function(response) {
+        $scope.alerts = response.alerts;
+      });
+      $scope.timer = $timeout($scope.autorefreshAlerts, 5000);
+    };
+
     $scope.alertLimit = 10;
-    $scope.getAlerts();
+    $scope.autorefreshAlerts();
 
     var SEVERITY_MAP = {
         'critical': 1,
@@ -91,6 +104,10 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       Alert.delete({id: id}, {}, function(data) {
         $location.path('/');
       });
+    };
+
+    $scope.back = function() {
+      window.history.back();
     };
 
   }]);
