@@ -43,7 +43,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
       };
     };
 
-    $scope.alertLimit = 10;
+    $scope.alertLimit = 20;
     $scope.refreshAlerts(true);
 
     var SEVERITY_MAP = {
