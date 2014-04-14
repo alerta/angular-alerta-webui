@@ -27,6 +27,7 @@
   <tr><td><b>Environment</b></td><td>{{ alert.environment }}</td></tr>
   <tr><td><b>Resource</b></td><td>{{ alert.resource }}</td></tr>
   <tr><td><b>Event</b></td><td>{{ alert.event }}</td></tr>
+  <tr><td><b>Correlate</b></td><td>{{ alert.correlate.join(', ') }}</td></tr>
   <tr><td><b>Group</b></td><td>{{ alert.group }}</td></tr>
   <tr><td><b>Severity</b></td>
     <td>
@@ -40,6 +41,7 @@
   <tr><td><b>Trend Indication</b></td><td>{{ alert.trendIndication }}</td></tr>
   <tr><td><b>Timeout</b></td><td>{{ alert.timeout }}</td></tr>
   <tr><td><b>Type</b></td><td>{{ alert.type }}</td></tr>
+  <tr><td><b>Duplicate Count</b></td><td>{{ alert.duplicateCount }}</td></tr>
   <tr><td><b>Repeat</b></td><td>{{ alert.repeat }}</td></tr>
   <tr><td><b>Origin</b></td><td>{{ alert.origin }}</td></tr>
   <tr><td><b>Tags</b></td>
@@ -47,6 +49,16 @@
   </tr>
   <tr ng-repeat="(key, value) in alert.attributes"><td><b>{{ key | capitalize }}</b></td><td>{{ value }}</td></tr>
 </table>
+
+<label><input type="checkbox" ng-model="raw"> Raw Data</label>
+<div class="animate-show" ng-show="raw">
+  <pre>{{ alert.rawData | json }}</pre>
+</div>
+
+<label><input type="checkbox" ng-model="json"> JSON-format</label>
+<div class="animate-show" ng-show="json">
+  <pre>{{ alert | json }}</pre>
+</div>
 
 <table class="table table-condensed table-striped">
   <tr>
