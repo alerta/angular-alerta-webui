@@ -99,7 +99,7 @@
       </div>
 
       <div ng-show="alerts.length == 0">
-          <center>Sorry, no alerts match query.</center>
+          <center>{{ response_status | uppercase }} - {{ response_message }}</center>
       </div>
 
     </div>

@@ -37,6 +37,8 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
 
       Alert.query($scope.combined, function(response) {
         $scope.alerts = response.alerts;
+        $scope.response_status = response.status;
+        $scope.response_message = response.message;
       });
       if (timer) {
         $timeout(function() { $scope.refreshAlerts(true); }, 5000);
