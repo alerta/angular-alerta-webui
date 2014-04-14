@@ -1,69 +1,79 @@
 
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span12">
-    <div class="btn-toolbar" role="toolbar">
+<div class="container">
+  <div class="row">
+
+    <div class="col-xs-3">
       <div class="btn-group btn-group-sm">
         <button type="button" class="btn btn-default" ng-click="status = 'open'" ng-class="{ 'active' : status == 'open' }">Open&nbsp;<span class="badge">{{ statusCounts.open || 0 }}</span></button>
         <button type="button" class="btn btn-default" ng-click="status = 'ack'" ng-class="{ 'active' : status == 'ack' }">Ack&nbsp;<span class="badge">{{ statusCounts.ack || 0 }}</span></button>
         <button type="button" class="btn btn-default" ng-click="status = 'closed'" ng-class="{ 'active' : status == 'closed' }">Closed&nbsp;<span class="badge">{{ statusCounts.closed || 0 }}</span></button>
       </div>
+    </div>
 
-      <div class="col-xs-2">
+    <div class="col-xs-2">
       <select class="form-control input-sm" ng-model="environment" ng-options="e.environment as e.environment for e in environments">
         <option value="">--- Environment ---</option>
       </select>
-      </div>
-      <div class="col-xs-2">
+    </div>
+
+    <div class="col-xs-2">
       <select class="form-control input-sm" ng-model="service" ng-options="s.service as s.service group by s.environment for s in services">
         <option value="">--- Service ---</option>
       </select>
-      </div>
+    </div>
 
-      <div class="col-xs-2">
+    <div class="col-xs-2">
       <select class="form-control input-sm" ng-model="canned" ng-options="c.query as c.name group by c.group for c in config.queries">
         <option value="">--- Query ---</option>
       </select>
-      </div>
+    </div>
 
-      <div class="col-xs-1">
+    <div class="col-xs-1">
       <input class="form-control input-sm" type="integer" ng-model="alertLimit" size="4">
-      </div>
-      <div class="col-xs-2">
+    </div>
+
+    <div class="col-xs-1">
       <input class="form-control input-sm" ng-model="search" size="8" placeholder="Search">
-      </div>
+    </div>
 
-      <div class="col-xs-1">
-        <label><input type="checkbox" ng-model="debug"> Debug</label>
-      </div>
-
+    <div class="col-xs-1">
       <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default btn-primary btn-sm" ng-click="refreshAlerts(false)">Refresh</button>
+        <button type="button" class="btn btn-default btn-primary btn-sm" ng-click="refreshAlerts(false)"><i class="glyphicon glyphicon-refresh"></i>&nbsp;Refresh</button>
       </div>
     </div>
-    </div>
-  </div>
+  </div> <!-- row -->
 
-  <div class="row-fluid">
-    <div class="span12">
+  <div class="row">
+    <div class="col-xs-3">
       {{(alerts|filter:search).length | showing:alertLimit }}&nbsp;<a href="#/about"><i class="glyphicon glyphicon-question-sign"></i></a>
-
     </div>
-  </div>
+  </div> <!-- row -->
 
-  <div class="check-element animate-show" ng-show="debug">
-    <pre>{{ combined | json }}</pre>
-  </div>
+  <div class="row">
+    <div class="col-xs-2">
+        <label><input type="checkbox" ng-model="debug"> Debug</label>
+     </div>
+  </div> <!-- row -->
 
-  <div class="check-element animate-show" ng-show="debug">
-    <pre>{{ canned | json }}</pre>
-  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="check-element animate-show" ng-show="debug">
+        <pre>{{ combined | json }}</pre>
+      </div>
+    </div>
+  </div> <!-- row -->
 
-  <div class="row-fluid">
-    <div class="span12">
-      <!--Body content-->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="check-element animate-show" ng-show="debug">
+        <pre>{{ canned | json }}</pre>
+      </div>
+    </div>
+  </div> <!-- row -->
 
+  <div class="row">
+    <div class="col-xs-12">
       <table class="table">
         <tr>
           <th>Severity</th>
@@ -103,6 +113,6 @@
       </div>
 
     </div>
-  </div>
+  </div> <!-- row -->
 
-</div>
+</div> <!-- container -->
