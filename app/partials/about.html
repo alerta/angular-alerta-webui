@@ -1,0 +1,67 @@
+
+
+<div class="container-fluid">
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--Body content-->
+
+      <table class="table">
+        <tr>
+          <th>API</th>
+          <th>Build</th>
+          <th>Date</th>
+          <th>Revision</th>
+        </tr>
+        <tr>
+          <td>{{ manifest.alerta.label }} {{ manifest.alerta.release }}</td>
+          <td>{{ manifest.alerta.build }}</td>
+          <td>{{ manifest.alerta.date }}</td>
+          <td>{{ manifest.alerta.revision }}</td>
+        </tr>
+      </table>
+
+      <table class="table">
+        <tr>
+          <th>Metric</th>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Value</th>
+          <th>Avg. Time</th>
+        </tr>
+        <tr ng-repeat="metric in metrics">
+          <td>{{ metric.title }}</td>
+          <td>{{ metric.type | capitalize }}</td>
+          <td>{{ metric.group }}.{{ metric.name }}</td>
+          <td>{{ metric.value || metric.count }}</td>
+          <td>{{ metric.totalTime / metric.count | number:2 }} ms</td>
+        </tr>
+      </table>
+
+      <table class="table">
+        <tr>
+          <th>Origin</th>
+          <th>Tags</th>
+          <th>Create Time</th>
+          <th>Receive Time</th>
+          <th>Latency</th>
+          <th>Timeout</th>
+          <th>Since</th>
+        </tr>
+        <tr ng-repeat="heartbeat in heartbeats | orderBy:'-receiveTime'"
+            class="heartbeat heartbeat-stale">
+          <td>{{ heartbeat.origin }}</td>
+          <td><span ng-repeat="tag in heartbeat.tags"><span class="label label-primary">{{ tag }}</span> </span></td>
+          <td>{{ heartbeat.createTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
+          <td>{{ heartbeat.receiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
+          <td>{{ heartbeat.receiveTime - heartbeat.createTime }}</td>
+          <td>{{ heartbeat.timeout }} seconds</td>
+          <td>{{ heartbeat.receiveTime  | since }}</td>
+        </tr>
+      </table>
+
+      Last Update: {{ lastTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss'}}
+    </div>
+  </div>
+
+</div>

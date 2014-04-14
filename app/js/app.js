@@ -2,15 +2,31 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', [
+var alertaApp = angular.module('alertaApp', [
   'ngRoute',
-  'myApp.filters',
-  'myApp.services',
-  'myApp.directives',
-  'myApp.controllers'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
-  $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+  'alertaFilters',
+  'alertaServices',
+  'alertaDirectives',
+  'alertaControllers'
+])
+
+alertaApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider
+    .when('/alerts', {
+      templateUrl: 'partials/alert-list.html',
+      controller: 'AlertListController'
+    })
+    .when('/alert/:id', {
+      templateUrl: 'partials/alert-details.html',
+      controller: 'AlertDetailController'
+    })
+    .when('/about', {
+      templateUrl: 'partials/about.html',
+      controller: 'AboutController'
+    })
+    .otherwise({
+      redirectTo: '/alerts'
+    });
+  }]);
+
