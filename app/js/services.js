@@ -42,7 +42,7 @@ alertaServices.factory('Service', ['$resource',
 
 alertaServices.factory('Config', ['$resource',
   function($resource) {
-    return $resource('../config.json', {}, {
+    return $resource('config.json', {}, {
       'query':  {method: 'GET'},
     });
   }]);

@@ -26,7 +26,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
 
       $scope.q['environment'] = $scope.environment;
       $scope.q['service'] = $scope.service;
-      $scope.combined = angular.extend({}, $scope.q, $scope.widget);
+      $scope.combined = angular.extend({}, $scope.q, $scope.canned);
 
       Count.query($scope.combined, function(response) {
         $scope.statusCounts = response.statusCounts;
