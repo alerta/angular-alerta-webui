@@ -36,7 +36,11 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
       $scope.combined['status'] = $scope.status;
 
       Alert.query($scope.combined, function(response) {
-        $scope.alerts = response.alerts;
+        if (response.status == 'ok') {
+          $scope.alerts = response.alerts;
+        } else {
+          $scope.alerts = [];
+        }
         $scope.response_status = response.status;
         $scope.response_message = response.message;
       });
