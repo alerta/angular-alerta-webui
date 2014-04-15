@@ -21,6 +21,10 @@ alertaApp.config(['$routeProvider',
       templateUrl: 'partials/alert-details.html',
       controller: 'AlertDetailController'
     })
+    .when('/top10', {
+      templateUrl: 'partials/alert-top10.html',
+      controller: 'AlertTop10Controller'
+    })
     .when('/about', {
       templateUrl: 'partials/about.html',
       controller: 'AboutController'

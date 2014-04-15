@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table">
+        <tr>
+          <th>Event</th>
+          <th>Count</th>
+          <th>Duplicate Count</th>
+          <th>Environments</th>
+          <th>Services</th>
+          <th>Resources</th>
+        </tr>
+
+        <tr ng-repeat="event in top10">
+          <td>{{ event.event }}</td>
+          <td>{{ event.count }}</td>
+          <td>{{ event.duplicateCount }}</td>
+          <td>{{ event.environments.join(', ') }}</td>
+          <td>{{ event.services.join(', ') }}</td>
+          <td>{{ event.resources.join(', ') }}</td>
+        </tr>
+      </table>
+
+      <div ng-show="!top10">
+          <center><img src="img/loading.gif"/></center>
+      </div>
+
+      <div ng-show="top10.length == 0">
+          <center>{{ response_status | uppercase }} - {{ response_message }}</center>
+      </div>
+
+    </div>
+  </div> <!-- row -->
+
+</div> <!-- container -->

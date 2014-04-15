@@ -109,6 +109,21 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 
   }]);
 
+alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Alert',
+  function($scope, $timeout, Alert){
+
+    Alert.top10(function(response) {
+      if (response.status == 'ok') {
+        $scope.top10 = response.top10;
+      } else {
+        $scope.top10 = [];
+      }
+      $scope.response_status = response.status;
+      $scope.response_message = response.message;
+    });
+
+  }]);
+
 alertaControllers.controller('AlertLinkController', ['$scope', '$location',
   function($scope, $location) {
 
