@@ -130,6 +130,29 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Ale
 
   }]);
 
+alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Alert',
+  function($scope, $timeout, Alert){
+
+    $scope.refreshWatches = function(timer) {
+
+      Alert.query({'tags':'watch:me'}, function(response) {
+        if (response.status == 'ok') {
+          $scope.watches = response.alerts;
+        } else {
+          $scope.watches = [];
+        }
+        $scope.response_status = response.status;
+        $scope.response_message = response.message;
+      });
+      if (timer) {
+        $timeout(function() { $scope.refreshWatches(true); }, 5000);
+      };
+    };
+
+    $scope.refreshWatches(true);
+
+  }]);
+
 alertaControllers.controller('AlertLinkController', ['$scope', '$location',
   function($scope, $location) {
 

@@ -5,6 +5,8 @@
           ng-disabled="alert.status == 'open'">Open</button>
   <button type="button" class="btn btn-default"
           ng-click="tagAlert(alert.id, ['foo'])">Tag</button>
+  <button type="button" class="btn btn-default"
+          ng-click="tagAlert(alert.id, ['watch:me'])">Watch</button>
   <button type="button" class="btn btn-primary"
           ng-click="ackAlert(alert.id)"
           ng-disabled="alert.status == 'ack'">Ack</button>

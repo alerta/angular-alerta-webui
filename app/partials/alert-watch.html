@@ -1,0 +1,45 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table">
+        <tr>
+          <th>Severity</th>
+          <th>Status</th>
+          <th>Last Receive Time</th>
+          <th>Dupl.</th>
+          <th>Environment</th>
+          <th>Service</th>
+          <th>Resource</th>
+          <th>Event</th>
+          <th>Value</th>
+          <th>Text</th>
+        </tr>
+
+        <tr ng-repeat="alert in watches | orderBy:[severityCode,'-lastReceiveTime']"
+            class="severity severity-{{ alert.severity}}"
+            ng-controller="AlertLinkController" ng-click="getDetails(alert);">
+          <td><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
+          <td><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
+          <td>{{ alert.lastReceiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
+          <td>{{ alert.duplicateCount }}</td>
+          <td>{{ alert.environment }}</td>
+          <td>{{ alert.service.join(', ') }}</td>
+          <td>{{ alert.resource }}</td>
+          <td>{{ alert.event }}</td>
+          <td>{{ alert.value }}</td>
+          <td>{{ alert.text }}</td>
+        </tr>
+      </table>
+
+      <div ng-show="!watches">
+          <center><img src="img/loading.gif"/></center>
+      </div>
+
+      <div ng-show="alerts.watches == 0">
+          <center>You're not watching any alerts.</center>
+      </div>
+
+    </div>
+  </div> <!-- row -->
+</div> <!-- container -->
