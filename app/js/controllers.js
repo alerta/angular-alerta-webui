@@ -85,6 +85,12 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       });
     };
 
+    $scope.tagAlert = function(id, tags) {
+      Alert.tag({id: id}, {tags: tags}, function(data) {
+        $route.reload();
+      });
+    };
+
     $scope.ackAlert = function(id) {
       Alert.status({id: id}, {status: 'ack', text: 'status change via console'}, function(data) {
         $route.reload();
