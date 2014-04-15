@@ -4,6 +4,11 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
+alertaControllers.controller('MenuController', ['$scope', 'Properties',
+  function($scope, Properties) {
+    $scope.user = Properties.getUser();
+  }]);
+
 alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $timeout, Config, Count, Environment, Service, Alert){
 
@@ -72,8 +77,10 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
 
   }]);
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Alert',
-  function($scope, $route, $routeParams, $location, Alert){
+alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Properties', 'Alert',
+  function($scope, $route, $routeParams, $location, Properties, Alert){
+
+    $scope.user = Properties.getUser();
 
     Alert.get({id: $routeParams.id}, function(response) {
       $scope.alert = response.alert;
@@ -87,6 +94,12 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 
     $scope.tagAlert = function(id, tags) {
       Alert.tag({id: id}, {tags: tags}, function(data) {
+        $route.reload();
+      });
+    };
+
+    $scope.watchAlert = function(id) {
+      Alert.tag({id: id}, {tags: ['watch:' + $scope.user]}, function(data) {
         $route.reload();
       });
     };
@@ -130,12 +143,14 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Ale
 
   }]);
 
-alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Alert',
-  function($scope, $timeout, Alert){
+alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Properties', 'Alert',
+  function($scope, $timeout, Properties, Alert){
+
+    $scope.user = Properties.getUser();
 
     $scope.refreshWatches = function(timer) {
 
-      Alert.query({'tags':'watch:me'}, function(response) {
+      Alert.query({'tags':'watch:' + $scope.user}, function(response) {
         if (response.status == 'ok') {
           $scope.watches = response.alerts;
         } else {

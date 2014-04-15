@@ -43,6 +43,22 @@ alertaServices.factory('Service', ['$resource',
     });
   }]);
 
+alertaServices.factory('Properties', [
+  function() {
+    var props = {
+      'user': 'unknown'
+    };
+
+    return {
+      getUser: function() {
+        return props.user;
+      },
+      setUser: function(name) {
+        props.user = name;
+      }
+    };
+  }]);
+
 alertaServices.factory('Config', ['$resource',
   function($resource) {
     return $resource('config.json', {}, {

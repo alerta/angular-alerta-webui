@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <div class="container-fluid">
+  <div class="container-fluid" ng-controller="MenuController">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -28,6 +28,7 @@
         <li class="active"><a href="#/watch">Watch</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="glyphicon glyphicon-user"></i> {{ user }}</a></li>
         <li><a href="#/about">About</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
