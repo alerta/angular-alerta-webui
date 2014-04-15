@@ -99,7 +99,7 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 
     $scope.deleteAlert = function(id) {
       Alert.delete({id: id}, {}, function(data) {
-        $location.path('/');
+        window.history.back();
       });
     };
 
