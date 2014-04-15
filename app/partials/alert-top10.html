@@ -17,7 +17,7 @@
           <td>{{ event.duplicateCount }}</td>
           <td>{{ event.environments.join(', ') }}</td>
           <td>{{ event.services.join(', ') }}</td>
-          <td>{{ event.resources.join(', ') }}</td>
+          <td><a ng-repeat="resource in event.resources" href="#/alert/{{ resource.id }}">{{ resource.resource }} </a></td>
         </tr>
       </table>
 
