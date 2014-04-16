@@ -17,11 +17,8 @@ alertaControllers.controller('MenuController', ['$scope', '$route', 'Properties'
 
   }]);
 
-alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, $timeout, Config, Count, Environment, Service, Alert){
-
-    $scope.q = {};
-    $scope.status = 'open';
+alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $location, $timeout, Config, Count, Environment, Service, Alert){
 
     Config.query(function(response) {
       $scope.config = response;
@@ -35,11 +32,14 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
       $scope.services = response.services;
     });
 
+    $scope.status = 'open';
+
     $scope.refreshAlerts = function(timer) {
 
-      $scope.q['environment'] = $scope.environment;
-      $scope.q['service'] = $scope.service;
-      $scope.combined = angular.extend({}, $scope.q, $scope.canned);
+      $scope.combined = {};
+      $scope.combined['environment'] = $scope.environment;
+      $scope.combined['service'] = $scope.service;
+      $scope.combined = angular.extend({}, $scope.combined, $scope.canned);
 
       Count.query($scope.combined, function(response) {
         $scope.statusCounts = response.statusCounts;
@@ -82,6 +82,14 @@ alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Conf
     $scope.severityCode = function(alert) {
       return SEVERITY_MAP[alert.severity];
     };
+
+    $location.search({
+      'status': $scope.status,
+      'environment': $scope.environment,
+      'service': $scope.service,
+      'query': $scope.canned,
+      'limit': $scope.alertLimit
+    });
 
   }]);
 
