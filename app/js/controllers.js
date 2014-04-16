@@ -4,9 +4,17 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('MenuController', ['$scope', 'Properties',
-  function($scope, Properties) {
+alertaControllers.controller('MenuController', ['$scope', '$route', 'Properties',
+  function($scope, $route, Properties) {
+
     $scope.user = Properties.getUser();
+
+    $scope.setUser = function(user) {
+      Properties.setUser(user, function(data) {
+        $route.reload();
+      });
+    };
+
   }]);
 
 alertaControllers.controller('AlertListController', ['$scope', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
@@ -98,8 +106,8 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       });
     };
 
-    $scope.watchAlert = function(id) {
-      Alert.tag({id: id}, {tags: ['watch:' + $scope.user]}, function(data) {
+    $scope.watchAlert = function(id, user) {
+      Alert.tag({id: id}, {tags: ['watch:' + user]}, function(data) {
         $route.reload();
       });
     };
@@ -146,18 +154,14 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Ale
 alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Properties', 'Alert',
   function($scope, $timeout, Properties, Alert){
 
-    $scope.user = Properties.getUser();
-
     $scope.refreshWatches = function(timer) {
 
-      Alert.query({'tags':'watch:' + $scope.user}, function(response) {
+      Alert.query({'tags':'watch:' + Properties.getUser()}, function(response) {
         if (response.status == 'ok') {
           $scope.watches = response.alerts;
         } else {
           $scope.watches = [];
         }
-        $scope.response_status = response.status;
-        $scope.response_message = response.message;
       });
       if (timer) {
         $timeout(function() { $scope.refreshWatches(true); }, 5000);
@@ -194,6 +198,5 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
       });
       $timeout($scope.refreshAbout, 5000);
     };
-
     $scope.refreshAbout();
   }]);

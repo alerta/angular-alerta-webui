@@ -28,7 +28,10 @@
         <li class="active"><a href="#/watch">Watch</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><i class="glyphicon glyphicon-user"></i> {{ user }}</a></li>
+        <li>
+            <input type="text" ng-model="user"/>
+            <button ng-click="setUser(user)"><i class="glyphicon glyphicon-ok"></i></button>
+        </li>
         <li><a href="#/about">About</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
