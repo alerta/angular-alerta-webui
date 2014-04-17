@@ -7,6 +7,8 @@
           ng-click="tagAlert(alert.id, ['foo'])">Tag</button>
   <button type="button" class="btn btn-default"
           ng-click="watchAlert(alert.id, user)">Watch</button>
+  <button type="button" class="btn btn-default" ng-show=""
+          ng-click="watchAlert(alert.id, user)">Unwatch</button>
   <button type="button" class="btn btn-primary"
           ng-click="ackAlert(alert.id)"
           ng-disabled="alert.status == 'ack'">Ack</button>
