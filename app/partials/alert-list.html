@@ -3,13 +3,13 @@
 <div class="container-fluid">
   <div class="row">
 
-    <div class="col-md-3">
+    <!-- div class="col-md-3">
       <div class="btn-group">
         <button type="button" class="btn btn-default" ng-click="status = 'open'" ng-class="{ 'active' : status == 'open' }">Open&nbsp;<span class="badge">{{ statusCounts.open || 0 }}</span></button>
         <button type="button" class="btn btn-default" ng-click="status = 'ack'" ng-class="{ 'active' : status == 'ack' }">Ack&nbsp;<span class="badge">{{ statusCounts.ack || 0 }}</span></button>
         <button type="button" class="btn btn-default" ng-click="status = 'closed'" ng-class="{ 'active' : status == 'closed' }">Closed&nbsp;<span class="badge">{{ statusCounts.closed || 0 }}</span></button>
       </div>
-    </div>
+    </div -->
 
     <div class="col-md-3">
       <select class="form-control input-sm" ng-model="service" ng-options="s.service as s.service group by s.environment for s in services">
@@ -27,7 +27,7 @@
       </select>
     </div -->
 
-    <div class="col-md-1">
+    <div class="col-md-1 pull-right" >
       <div class="btn-group pull-right">
         <button type="button" class="btn btn-default btn-primary btn" ng-click="refreshAlerts(false)"><i class="glyphicon glyphicon-refresh"></i>&nbsp;Refresh</button>
       </div>
@@ -37,8 +37,8 @@
   <div class="row">
     <div class="col-md-12">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#">ALL</a></li>
-      <li ng-class="{active: environment == e.environment}" ng-repeat="e in environments"><a data-toggle="tab" ng-click="setEnv(e.environment)">{{ e.environment }}</a></li>
+      <li ng-class="{active: !environment}"><a data-toggle="tab" ng-click="undefined(environment)">ALL</a></li> <!-- FIXME: how to unset a var ? -->
+      <li ng-class="{active: environment == e.environment}" ng-repeat="e in environments"><a data-toggle="tab" ng-click="setEnv(e.environment)">{{ e.environment }}&nbsp;<span class="badge">{{ e.count || 0 }}</span></a></li>
     </ul>
     </div>
   </div> <!-- row -->

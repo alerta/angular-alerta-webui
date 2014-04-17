@@ -31,7 +31,7 @@ alertaServices.factory('Alert', ['$resource',
 
 alertaServices.factory('Environment', ['$resource',
   function($resource) {
-    return $resource('http://localhost:8080/api/environments', {}, {
+    return $resource('http://localhost:8080/api/environments?status=open', {}, {
       'all':  {method: 'GET'},
     });
   }]);
