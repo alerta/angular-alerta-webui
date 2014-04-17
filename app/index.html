@@ -24,9 +24,9 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#/">Recent</a></li>
-        <li><a href="#/top10">Top 10</a></li>
-        <li><a href="#/watch">Watch</a></li>
+        <li ng-class="{active: isActive('/alerts')}"><a href="#/">Recent</a></li>
+        <li ng-class="{active: isActive('/top10')}"><a href="#/top10">Top 10</a></li>
+        <li ng-class="{active: isActive('/watch')}"><a href="#/watch">Watch</a></li>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">

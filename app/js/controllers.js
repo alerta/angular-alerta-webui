@@ -4,8 +4,12 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('MenuController', ['$scope', '$route', 'Properties',
-  function($scope, $route, Properties) {
+alertaControllers.controller('MenuController', ['$scope', '$location', '$route', 'Properties',
+  function($scope, $location, $route, Properties) {
+
+    $scope.isActive = function (viewLocation) {
+        return viewLocation === $location.path();
+    };
 
     $scope.user = Properties.getUser();
 
