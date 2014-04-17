@@ -133,6 +133,12 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       });
     };
 
+    $scope.unwatchAlert = function(id, user) {
+      Alert.untag({id: id}, {tags: ['watch:' + user]}, function(data) {
+        $route.reload();
+      });
+    };
+
     $scope.ackAlert = function(id) {
       Alert.status({id: id}, {status: 'ack', text: 'status change via console'}, function(data) {
         $route.reload();
@@ -148,6 +154,15 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     $scope.deleteAlert = function(id) {
       Alert.delete({id: id}, {}, function(data) {
         window.history.back();
+      });
+    };
+
+    $scope.tagged = function(tags, tagged) {
+      angular.forEach(tags, function(tag) {
+        if (tag == tagged) {
+          return true;
+        };
+        return false;
       });
     };
 

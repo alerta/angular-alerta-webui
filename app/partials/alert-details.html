@@ -5,10 +5,10 @@
           ng-disabled="alert.status == 'open'">Open</button>
   <button type="button" class="btn btn-default"
           ng-click="tagAlert(alert.id, ['foo'])">Tag</button>
-  <button type="button" class="btn btn-default"
+  <button type="button" class="btn btn-default" ng-show="tagged(alert,'watch:'+user)"
           ng-click="watchAlert(alert.id, user)">Watch</button>
-  <button type="button" class="btn btn-default" ng-show=""
-          ng-click="watchAlert(alert.id, user)">Unwatch</button>
+  <button type="button" class="btn btn-default" ng-show="!tagged(alert,'watch:'+user)"
+          ng-click="unwatchAlert(alert.id, user)">Unwatch</button>
   <button type="button" class="btn btn-primary"
           ng-click="ackAlert(alert.id)"
           ng-disabled="alert.status == 'ack'">Ack</button>

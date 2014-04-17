@@ -24,7 +24,7 @@ alertaServices.factory('Alert', ['$resource',
       'remove': {method:'DELETE'},
       'delete': {method:'DELETE'},
       'tag':    {method:'POST', url:'http://localhost:8080/api/alert/:id/tag'},
-      'watch':  {method:'POST', url:'http://localhost:8080/api/alert/:id/tag'},
+      'untag':  {method:'POST', url:'http://localhost:8080/api/alert/:id/untag'},
       'top10':  {method:'GET', url:'http://localhost:8080/api/alerts/top10?status!=closed'}
     });
   }]);
