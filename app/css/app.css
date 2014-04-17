@@ -97,3 +97,7 @@ table {
 .label-inverse {
     background-color: #333333;
 }
+
+.full-width {
+    width: 100%;
+}

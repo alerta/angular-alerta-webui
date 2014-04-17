@@ -28,6 +28,10 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       $scope.environments = response.environments;
     });
 
+    $scope.setEnv = function(env) {
+      $scope.environment = env;
+    };
+
     Service.all(function(response) {
       $scope.services = response.services;
     });
