@@ -41,6 +41,8 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     });
 
     $scope.showAll = false;
+    $scope.predicate = [$scope.severityCode,'-lastReceiveTime'];
+    $scope.reverse = false;
 
     $scope.refreshAlerts = function(timer) {
 
@@ -58,8 +60,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         $scope.combined['status'] = ["open", "ack"];
       } else {
         $scope.combined['status'] = "open";
-      }
-
+      };
 
       Alert.query($scope.combined, function(response) {
         if (response.status == 'ok') {

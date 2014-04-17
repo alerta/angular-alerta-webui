@@ -79,19 +79,19 @@
     <div class="col-md-12">
       <table class="table">
         <tr>
-          <th>Severity</th>
-          <th>Status</th>
-          <th>Last Receive Time</th>
-          <th>Dupl.</th>
-          <th>Environment</th>
-          <th>Service</th>
-          <th>Resource</th>
-          <th>Event</th>
-          <th>Value</th>
-          <th>Text</th>
+          <th><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity</a></th>
+          <th><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status</a></th>
+          <th><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time</a></th>
+          <th><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.</a></th>
+          <th><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment</a></th>
+          <th><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service</a></th>
+          <th><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource</a></th>
+          <th><a href="" ng-click="predicate = 'event'; reverse=!reverse">Event</a></th>
+          <th><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value</a></th>
+          <th><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text</a></th>
         </tr>
 
-        <tr ng-repeat="alert in alerts | filter:search | orderBy:[severityCode,'-lastReceiveTime'] | limitTo:alertLimit"
+        <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
             class="severity severity-{{ alert.severity}}"
             ng-controller="AlertLinkController" ng-click="getDetails(alert);">
           <td><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
