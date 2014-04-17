@@ -52,15 +52,17 @@
             class="heartbeat heartbeat-stale">
           <td>{{ heartbeat.origin }}</td>
           <td><span ng-repeat="tag in heartbeat.tags"><span class="label label-primary">{{ tag }}</span> </span></td>
-          <td>{{ heartbeat.createTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
-          <td>{{ heartbeat.receiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
-          <td>{{ heartbeat.receiveTime - heartbeat.createTime }}</td>
+          <td>{{ heartbeat.createTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss' }}</td>
+          <td>{{ heartbeat.receiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss' }}</td>
+          <td>{{ heartbeat.receiveTime | diff:heartbeat.createTime }} ms</td>
           <td>{{ heartbeat.timeout }} seconds</td>
-          <td>{{ heartbeat.receiveTime  | since }}</td>
+          <td>{{ heartbeat.receiveTime | since }}</td>
         </tr>
       </table>
 
-      Last Update: {{ lastTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss'}}
+      <div>
+        <p>Last Update: {{ lastTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss'}}
+      </div>
     </div>
   </div>
 

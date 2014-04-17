@@ -55,3 +55,9 @@ alertaFilters.filter('since', function() {
     };
   };
 });
+
+alertaFilters.filter('diff', function() {
+  return function(receive, create) {
+    return new Date(receive).getTime() - new Date(create).getTime();
+  };
+});
