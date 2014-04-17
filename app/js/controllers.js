@@ -36,7 +36,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       $scope.services = response.services;
     });
 
-    $scope.status = 'open';
+    $scope.showAll = false;
 
     $scope.refreshAlerts = function(timer) {
 
@@ -50,7 +50,12 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         $scope.severityCounts = response.severityCounts;
       });
 
-      $scope.combined['status'] = $scope.status;
+      if ($scope.showAll) {
+        $scope.combined['status'] = ["open", "ack"];
+      } else {
+        $scope.combined['status'] = "open";
+      }
+
 
       Alert.query($scope.combined, function(response) {
         if (response.status == 'ok') {
@@ -92,7 +97,6 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       'environment': $scope.environment,
       'service': $scope.service,
       'query': $scope.canned,
-      'limit': $scope.alertLimit
     });
 
   }]);

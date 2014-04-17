@@ -32,6 +32,16 @@
         <button type="button" class="btn btn-default btn-primary btn" ng-click="refreshAlerts(false)"><i class="glyphicon glyphicon-refresh"></i>&nbsp;Refresh</button>
       </div>
     </div>
+
+    <div class="col-md-1 pull-right" >
+      <div class="btn-group pull-right">
+        <button type="radio" class="btn btn-default btn-primary btn" ng-click="showAll=!showAll">
+          <span ng-show="!showAll"><i class="glyphicon glyphicon-plus"></i>&nbsp;Open &amp; Ack</span>
+          <span ng-show="showAll"><i class="glyphicon glyphicon-minus"></i>&nbsp;Open only</span>
+        </button>
+      </div>
+    </div>
+
   </div> <!-- row -->
 
   <div class="row">
