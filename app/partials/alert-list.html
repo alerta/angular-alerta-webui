@@ -11,14 +11,14 @@
       </div>
     </div -->
 
-    <div class="col-md-3">
+    <div class="col-md-3 col-xs-4">
       <select class="form-control input-sm" ng-model="service"
       ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
-        <option value="">--- Service ---</option>
+        <option value="">Service</option>
       </select>
     </div>
 
-    <div class="col-xs-5">
+    <div class="col-md-5 col-xs-4">
       <input class="form-control input" ng-model="search" size="8" placeholder="Search">
     </div>
 
@@ -28,17 +28,17 @@
       </select>
     </div -->
 
-    <div class="col-md-1 pull-right" >
+    <div class="col-md-1 col-xs-2 pull-right" >
       <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default btn-primary btn" ng-click="refreshAlerts(false)"><i class="glyphicon glyphicon-refresh"></i>&nbsp;Refresh</button>
+        <button type="button" class="btn btn-default btn-primary btn" ng-click="refreshAlerts(false)"><i class="glyphicon glyphicon-refresh"></i><span class="hidden-xs">&nbsp;Refresh</span></button>
       </div>
     </div>
 
-    <div class="col-md-1 pull-right" >
+    <div class="col-md-1 col-xs-2 pull-right" >
       <div class="btn-group pull-right">
         <button type="radio" class="btn btn-default btn-primary btn" ng-click="showAll=!showAll">
-          <span ng-show="!showAll"><i class="glyphicon glyphicon-plus"></i>&nbsp;Open &amp; Ack</span>
-          <span ng-show="showAll"><i class="glyphicon glyphicon-minus"></i>&nbsp;Open only</span>
+          <span ng-show="!showAll"><i class="glyphicon glyphicon-plus"></i><span class="hidden-xs">&nbsp;Open &amp; Ack</span></span>
+          <span ng-show="showAll"><i class="glyphicon glyphicon-minus"></i><span class="hidden-xs">&nbsp;Open only</span></span>
         </button>
       </div>
     </div>
@@ -80,31 +80,33 @@
     <div class="col-md-12">
       <table class="table">
         <tr ng-init="predicate = [reverseSeverityCode,'lastReceiveTime']">
-          <th><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="hidden-xs"><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
+          <th class="hidden-xs"><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="hidden-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="visible-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="visible-lg"><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="hidden-xs"><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="hidden-xs"><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource&nbsp;<span ng-hide="predicate != 'resource'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th><a href="" ng-click="predicate = 'event'; reverse=!reverse">Event&nbsp;<span ng-hide="predicate != 'event'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value&nbsp;<span ng-hide="predicate != 'value'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="hidden-xs"><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value&nbsp;<span ng-hide="predicate != 'value'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="hidden-xs"><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
         </tr>
 
         <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
             class="severity severity-{{ alert.severity}}"
             ng-controller="AlertLinkController" ng-click="getDetails(alert);">
-          <td><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
-          <td><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
-          <td>{{ alert.lastReceiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
-          <td>{{ alert.duplicateCount }}</td>
-          <td>{{ alert.environment }}</td>
-          <td>{{ alert.service.join(', ') }}</td>
+          <td class="hidden-xs"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
+          <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
+          <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
+          <td class="visible-lg">{{ alert.lastReceiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
+          <td class="visible-lg">{{ alert.duplicateCount }}</td>
+          <td class="hidden-xs">{{ alert.environment }}</td>
+          <td class="hidden-xs">{{ alert.service.join(', ') }}</td>
           <td>{{ alert.resource }}</td>
           <td>{{ alert.event }}</td>
-          <td>{{ alert.value }}</td>
-          <td>{{ alert.text }}</td>
+          <td class="hidden-xs">{{ alert.value }}</td>
+          <td class="hidden-xs">{{ alert.text }}</td>
         </tr>
       </table>
 
