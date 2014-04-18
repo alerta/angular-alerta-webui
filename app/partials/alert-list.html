@@ -12,7 +12,8 @@
     </div -->
 
     <div class="col-md-3">
-      <select class="form-control input-sm" ng-model="service" ng-options="s.service as s.service group by s.environment for s in services">
+      <select class="form-control input-sm" ng-model="service"
+      ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
         <option value="">--- Service ---</option>
       </select>
     </div>
@@ -78,27 +79,17 @@
   <div class="row">
     <div class="col-md-12">
       <table class="table">
-        <tr>
-          <th><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity
-            <span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status
-            <span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time
-            <span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.
-            <span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment
-            <span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service
-            <span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource
-            <span ng-hide="predicate != 'resource'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'event'; reverse=!reverse">Event
-            <span ng-hide="predicate != 'event'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value
-            <span ng-hide="predicate != 'value'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text
-            <span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+        <tr ng-init="predicate = [severityCode,'lastReceiveTime']">
+          <th><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
+          <th><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource&nbsp;<span ng-hide="predicate != 'resource'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th><a href="" ng-click="predicate = 'event'; reverse=!reverse">Event&nbsp;<span ng-hide="predicate != 'event'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value&nbsp;<span ng-hide="predicate != 'value'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
         </tr>
 
         <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"

@@ -41,8 +41,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     });
 
     $scope.showAll = false;
-    $scope.predicate = [$scope.severityCode,'-lastReceiveTime'];
-    $scope.reverse = false;
+    $scope.reverse = true;
 
     $scope.refreshAlerts = function(timer) {
 
@@ -94,7 +93,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     };
 
     $scope.severityCode = function(alert) {
-      return SEVERITY_MAP[alert.severity];
+      return SEVERITY_MAP[alert.severity];   // FIXME - initial sort needs to reverse
     };
 
     $location.search({
