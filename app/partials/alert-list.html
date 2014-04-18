@@ -79,7 +79,7 @@
   <div class="row">
     <div class="col-md-12">
       <table class="table">
-        <tr ng-init="predicate = [severityCode,'lastReceiveTime']">
+        <tr ng-init="predicate = [reverseSeverityCode,'lastReceiveTime']">
           <th><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
           <th><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>

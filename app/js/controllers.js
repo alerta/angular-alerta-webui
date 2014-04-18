@@ -92,8 +92,12 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         'unknown': 9
     };
 
+    $scope.reverseSeverityCode = function(alert) {
+      return -SEVERITY_MAP[alert.severity];
+    };
+
     $scope.severityCode = function(alert) {
-      return SEVERITY_MAP[alert.severity];   // FIXME - initial sort needs to reverse
+      return SEVERITY_MAP[alert.severity];
     };
 
     $location.search({
