@@ -62,4 +62,8 @@ alertaFilters.filter('diff', function() {
   };
 });
 
-
+alertaFilters.filter('shortid', function() {
+  return function(id) {
+    return String(id).substring(0,8);
+  };
+});
