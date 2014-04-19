@@ -24,9 +24,9 @@
 <hr>
 
 <table class="table table-condensed table-striped">
-  <tr class="hidden-lg"><td><b>Alert ID</b></td><td>{{ alert.id | shortid }}</td></tr>
+  <tr class="visible-xs"><td><b>Alert ID</b></td><td>{{ alert.id | shortid }}</td></tr>
   <tr class="hidden-xs"><td><b>Alert ID</b></td><td>{{ alert.id }}</td></tr>
-  <tr class="hidden-lg"><td><b>Last Receive Alert ID</b></td><td>{{ alert.lastReceiveId | shortid }}</td></tr>
+  <tr class="visible-xs"><td><b>Last Receive Alert ID</b></td><td>{{ alert.lastReceiveId | shortid }}</td></tr>
   <tr class="hidden-xs"><td><b>Last Receive Alert ID</b></td><td>{{ alert.lastReceiveId }}</td></tr>
   <tr><td><b>Create Time</b></td><td>{{ alert.createTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td></tr>
   <tr><td><b>Receive Time</b></td><td>{{ alert.receiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td></tr>
@@ -70,8 +70,9 @@
 
 <table class="table table-condensed table-striped">
   <tr>
-    <th class="hidden-xs"><b>Alert ID</b></th>
-    <th class="hidden-lg"><b>Time</b></th>
+    <th class="hidden-lg"><b>Alert ID</b></th>
+    <th class="visible-lg"><b>Alert ID</b></th>
+    <th class="visible-xs"><b>Time</b></th>
     <th class="hidden-xs"><b>Update Time</b></th>
     <th><b>Change</b></th>
     <th><b>Event</b></th>
@@ -79,8 +80,9 @@
     <th class="hidden-xs"><b>Text</b></th>
   </tr>
   <tr ng-repeat="history in alert.history | orderBy:'updateTime':true">
-    <td class="hidden-xs">{{ history.id }}</td>
-    <td class="hidden-lg">{{ history.updateTime | date:'HH:mm' }}</td>
+    <td class="hidden-lg">{{ history.id | shortid }}</td>
+    <td class="visible-lg">{{ history.id }}</td>
+    <td class="visible-xs">{{ history.updateTime | date:'HH:mm' }}</td>
     <td class="hidden-xs">{{ history.updateTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td>
     <td><span class="label label-{{ history.status || history.severity }}">{{ history.status || history.severity }}</span></td>
     <td>{{ history.event }}</td>
