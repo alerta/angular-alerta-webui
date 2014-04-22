@@ -56,7 +56,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       });
 
       if ($scope.showAll) {
-        $scope.combined['status'] = ["open", "ack"];
+        $scope.combined['status!'] = ["closed", "expired"];
       } else {
         $scope.combined['status'] = "open";
       };
