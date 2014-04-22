@@ -1,48 +1,24 @@
 
 
 <div class="container-fluid">
+
   <div class="row">
-
-    <!-- div class="col-md-3">
-      <div class="btn-group">
-        <button type="button" class="btn btn-default" ng-click="status = 'open'" ng-class="{ 'active' : status == 'open' }">Open&nbsp;<span class="badge">{{ statusCounts.open || 0 }}</span></button>
-        <button type="button" class="btn btn-default" ng-click="status = 'ack'" ng-class="{ 'active' : status == 'ack' }">Ack&nbsp;<span class="badge">{{ statusCounts.ack || 0 }}</span></button>
-        <button type="button" class="btn btn-default" ng-click="status = 'closed'" ng-class="{ 'active' : status == 'closed' }">Closed&nbsp;<span class="badge">{{ statusCounts.closed || 0 }}</span></button>
-      </div>
-    </div -->
-
-    <div class="col-md-3 col-xs-4">
-      <select class="form-control input-sm" ng-model="service"
-      ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
-        <option value="">Service</option>
-      </select>
+    <div class="col-md-3">
+        <select class="form-control input-sm" ng-model="service"
+        ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
+          <option value="">Service</option>
+        </select>
     </div>
-
-    <div class="col-md-5 col-xs-4">
+    <div class="col-md-5">
       <input class="form-control input" ng-model="search" size="8" placeholder="Search">
     </div>
-
-    <!-- div class="col-xs-2">
-      <select class="form-control input-sm" ng-model="canned" ng-options="c.query as c.name group by c.group for c in config.queries">
-        <option value="">--- Query ---</option>
-      </select>
-    </div -->
-
-    <div class="col-md-1 col-xs-2 pull-right" >
-      <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default btn-primary btn" ng-click="refreshAlerts(false)"><i class="glyphicon glyphicon-refresh"></i><span class="hidden-xs">&nbsp;Refresh</span></button>
-      </div>
+    <div class="col-md-2">
+      <button type="button" ng-show="!showAll" class="btn btn-primary btn-block" ng-click="" ng-click="showAll =! showAll">Open</button>
+      <button type="button" ng-show="showAll" class="btn btn-primary btn-block" ng-click="" ng-click="showAll =! showAll">Active</button>
     </div>
-
-    <div class="col-md-1 col-xs-2 pull-right" >
-      <div class="btn-group pull-right">
-        <button type="radio" class="btn btn-default btn-primary btn" ng-click="showAll=!showAll">
-          <span ng-show="!showAll"><i class="glyphicon glyphicon-plus"></i><span class="hidden-xs">&nbsp;Open &amp; Ack</span></span>
-          <span ng-show="showAll"><i class="glyphicon glyphicon-minus"></i><span class="hidden-xs">&nbsp;Open only</span></span>
-        </button>
-      </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-primary btn-block" ng-click="refreshAlerts(false)">Refresh</button>
     </div>
-
   </div> <!-- row -->
 
   <div class="row">
