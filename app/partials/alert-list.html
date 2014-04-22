@@ -13,8 +13,10 @@
       <input class="form-control input" ng-model="search" size="8" placeholder="Search">
     </div>
     <div class="col-md-2">
-      <button type="button" ng-show="!showAll" class="btn btn-primary btn-block" ng-click="" ng-click="showAll =! showAll">Open</button>
-      <button type="button" ng-show="showAll" class="btn btn-primary btn-block" ng-click="" ng-click="showAll =! showAll">Active</button>
+      <button type="button" class="btn btn-primary btn-block" ng-click="showAll =! showAll">
+        <span ng-show="!showAll">Open</span>
+        <span ng-show="showAll">Active</span>
+      </button>
     </div>
     <div class="col-md-2">
       <button type="button" class="btn btn-primary btn-block" ng-click="refreshAlerts(false)">Refresh</button>
