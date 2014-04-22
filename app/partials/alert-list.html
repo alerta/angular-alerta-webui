@@ -33,28 +33,6 @@
   </div> <!-- row -->
 
   <div class="row">
-    <div class="col-md-2 pull-right">
-        <label><input type="checkbox" ng-model="debug"> Show Query</label>
-     </div>
-  </div> <!-- row -->
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="check-element animate-show" ng-show="debug">
-        <pre>{{ combined | json }}</pre>
-      </div>
-    </div>
-  </div> <!-- row -->
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="check-element animate-show" ng-show="debug">
-        <pre>{{ canned | json }}</pre>
-      </div>
-    </div>
-  </div> <!-- row -->
-
-  <div class="row">
     <div class="col-md-12">
       <table class="table">
         <tr ng-init="predicate = [reverseSeverityCode,'lastReceiveTime']">

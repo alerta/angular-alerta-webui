@@ -43,40 +43,26 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     $scope.showAll = false;
     $scope.reverse = true;
 
-    $scope.refreshAlerts = function(timer) {
-
-      $scope.combined = {};
-      $scope.combined['environment'] = $scope.environment;
-      $scope.combined['service'] = $scope.service;
-      $scope.combined = angular.extend({}, $scope.combined, $scope.canned);
-
-      Count.query($scope.combined, function(response) {
-        $scope.statusCounts = response.statusCounts;
-        $scope.severityCounts = response.severityCounts;
-      });
-
-      if ($scope.showAll) {
-        $scope.combined['status!'] = ["closed", "expired"];
-      } else {
-        $scope.combined['status'] = "open";
-      };
-
-      Alert.query($scope.combined, function(response) {
-        if (response.status == 'ok') {
+    var timer;
+    var refresh = function() {
+      $timeout(function repeat() {
+        Alert.query({}, function(response) {
           $scope.alerts = response.alerts;
-        } else {
-          $scope.alerts = [];
-        }
-        $scope.response_status = response.status;
-        $scope.response_message = response.message;
-      });
-      if (timer) {
-        $timeout(function() { $scope.refreshAlerts(true); }, 5000);
-      };
+          console.log(response.status);
+        });
+      timer = $timeout(repeat, 5000);
+      console.log(timer);
+      }, 0);
     };
 
+    $scope.$on('$destroy', function() {
+      if (timer) {
+        $timeout.cancel(timer);
+      }
+    });
+
     $scope.alertLimit = 20;
-    $scope.refreshAlerts(true);
+    refresh();
 
     var SEVERITY_MAP = {
         'critical': 1,
@@ -100,14 +86,8 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       return SEVERITY_MAP[alert.severity];
     };
 
-    $location.search({
-      'status': $scope.status,
-      'environment': $scope.environment,
-      'service': $scope.service,
-      'query': $scope.canned,
-    });
-
   }]);
+
 
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Properties', 'Alert',
   function($scope, $route, $routeParams, $location, Properties, Alert){
