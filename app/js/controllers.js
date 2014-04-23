@@ -171,14 +171,26 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Alert',
   function($scope, $timeout, Alert){
 
-    Alert.top10(function(response) {
-      if (response.status == 'ok') {
-        $scope.top10 = response.top10;
-      } else {
-        $scope.top10 = [];
+    $scope.top10 = [];
+
+    var refresh = function() {
+        Alert.top10({}, function(response) {
+          if (response.status == 'ok') {
+            $scope.top10 = response.top10;
+          }
+          $scope.message = response.status + ' - ' + response.message;
+          console.log(response.status);
+        });
+      timer = $timeout(refresh, 5000);
+      console.log(timer);
+    };
+    var timer = $timeout(refresh, 5000);
+
+    $scope.$on('$destroy', function() {
+      if (timer) {
+        $timeout.cancel(timer);
+        console.log('destroyed...');
       }
-      $scope.response_status = response.status;
-      $scope.response_message = response.message;
     });
 
   }]);
@@ -193,6 +205,7 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Pro
           if (response.status == 'ok') {
             $scope.watches = response.alerts;
           }
+          $scope.message = response.status + ' - ' + response.message;
           console.log(response.status);
         });
       timer = $timeout(refresh, 5000);
@@ -224,16 +237,30 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
       $scope.manifest = response;
     });
 
-    $scope.refreshAbout = function() {
-      Management.status(function(response) {
-        $scope.metrics = response.metrics;
-        $scope.lastTime = response.time;
-      });
+    $scope.metrics = [];
+    $scope.heartbeats = [];
 
-      Heartbeat.query(function(response) {
-        $scope.heartbeats = response.heartbeats;
-      });
-      $timeout($scope.refreshAbout, 5000);
+    var refresh = function() {
+        // Management.healthcheck(function(response) {
+        //   $scope.healthcheck = response;
+        // });
+        Management.status(function(response) {
+          $scope.metrics = response.metrics;
+          $scope.lastTime = response.time;
+        });
+        Heartbeat.query(function(response) {
+          $scope.heartbeats = response.heartbeats;
+        });
+      timer = $timeout(refresh, 5000);
+      console.log(timer);
     };
-    $scope.refreshAbout();
+    var timer = $timeout(refresh, 5000);
+
+    $scope.$on('$destroy', function() {
+      if (timer) {
+        $timeout.cancel(timer);
+        console.log('destroyed...');
+      }
+    });
+
   }]);

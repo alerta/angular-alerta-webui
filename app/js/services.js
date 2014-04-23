@@ -76,8 +76,9 @@ alertaServices.factory('Heartbeat', ['$resource',
 alertaServices.factory('Management', ['$resource',
   function($resource) {
     return $resource('http://localhost:8080/management/manifest', {}, {
-      'manifest': {method:'GET'},
-      'status':  {method:'GET', url:'http://localhost:8080/management/status'}
+      'manifest':    {method:'GET'},
+      'healthcheck': {method:'GET', url:'http://localhost:8080/management/healthcheck'},
+      'status':      {method:'GET', url:'http://localhost:8080/management/status'}
     });
   }]);
 
