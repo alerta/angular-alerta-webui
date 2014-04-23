@@ -47,17 +47,23 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         $scope.environments = response.environments;
       });
       console.log('scope.service=' + $scope.service);
-      if (angular.isDefined($scope.service)) {
+      if ($scope.service) {
         $scope.query['service'] = $scope.service
+      } else {
+        delete $scope.query['service'];
       }
       console.log($scope.query);
-      if (angular.isDefined($scope.environment)) {
+      if ($scope.environment) {
         $scope.query['environment'] = $scope.environment
+      } else {
+        delete $scope.query['environment'];
       }
-      if  ($scope.showActive) {
+      if ($scope.showActive) {
         $scope.query['status!'] = ["closed", "expired"];
+        delete $scope.query['status'];
       } else {
         $scope.query['status'] = ["open"];
+        delete $scope.query['status!'];
       }
       Alert.query($scope.query, function(response) {
         if (response.status == 'ok') {
