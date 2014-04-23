@@ -13,9 +13,9 @@
       <input class="form-control input" ng-model="search" size="8" placeholder="Search">
     </div>
     <div class="col-md-2">
-      <button type="button" class="btn btn-primary btn-block" ng-click="showAll =! showAll" ng-class="{active: showAll}">
-        <span ng-show="!showAll">Open</span>
-        <span ng-show="showAll">Active</span>
+      <button type="button" class="btn btn-primary btn-block" ng-click="showActive =! showActive" ng-class="{active: showActive}">
+        <span ng-show="!showActive">Open</span>
+        <span ng-show="showActive">Active</span>
       </button>
     </div>
     <div class="col-md-2">
@@ -29,28 +29,6 @@
       <li ng-class="{active: !environment}"><a data-toggle="tab" ng-click="undefined(environment)">ALL&nbsp;<span class="badge">{{ statusCounts.open || 0 }}</span></a></li>
       <li ng-class="{active: environment == e.environment}" ng-repeat="e in environments"><a data-toggle="tab" ng-click="setEnv(e.environment)">{{ e.environment }}&nbsp;<span class="badge">{{ e.count || 0 }}</span></a></li>
     </ul>
-    </div>
-  </div> <!-- row -->
-
-  <div class="row">
-    <div class="col-md-2 pull-right">
-        <label><input type="checkbox" ng-model="debug"> Show Query</label>
-     </div>
-  </div> <!-- row -->
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="check-element animate-show" ng-show="debug">
-        <pre>{{ combined | json }}</pre>
-      </div>
-    </div>
-  </div> <!-- row -->
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="check-element animate-show" ng-show="debug">
-        <pre>{{ canned | json }}</pre>
-      </div>
     </div>
   </div> <!-- row -->
 
@@ -93,7 +71,7 @@
       </div>
 
       <div ng-show="alerts.length == 0">
-          <center>{{ response_status | uppercase }} - {{ response_message }}</center>
+          <center>{{ message }}</center>
       </div>
 
     </div>
