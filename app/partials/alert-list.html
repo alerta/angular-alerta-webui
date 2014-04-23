@@ -4,9 +4,9 @@
 
   <div class="row">
     <div class="col-md-3">
-        <select class="form-control input-sm" ng-model="service" ng-change="setService()"
+        <select class="form-control input-sm" ng-model="service" ng-change="setService(service)"
         ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
-          <option value="">Service</option>
+          <option value="" ng-model="service" ng-change="setService(null)">Service</option>
         </select>
     </div>
     <div class="col-md-5">
@@ -19,7 +19,7 @@
       </button>
     </div>
     <div class="col-md-2">
-      <button type="button" class="btn btn-primary btn-block" ng-click="refreshAlerts(false)">Refresh</button>
+      <button type="button" class="btn btn-primary btn-block" ng-click="refresh()">Refresh</button>
     </div>
   </div> <!-- row -->
 

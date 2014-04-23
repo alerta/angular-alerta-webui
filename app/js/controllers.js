@@ -24,27 +24,50 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$route',
 alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $location, $timeout, Config, Count, Environment, Service, Alert){
 
+    // $scope.location = $location;
+
+    var search = $location.search();
+    if (search.environment) {
+      $scope.environment = search.environment;
+    }
+    if (search.service) {
+      $scope.service = search.service;
+    }
+    if (search.status == 'open') {
+      // console.log('only open');
+      $scope.showActive = false;
+    } else {
+      // console.log('active');
+      $scope.showActive = true;
+    }
+
     $scope.alerts = [];
     $scope.alertLimit = 20;
-    $scope.showActive = false;
     $scope.reverse = true;
     $scope.query = {};
 
-    $scope.setService = function() {
-      refresh();
-      console.log('refresh after svc change');
+    $scope.setService = function(service) {
+      $scope.service = service;
+      updateQuery();
+      //refresh();
+      console.log('refresh after svc change=' + service + '/' + $scope.environment);
     };
 
-    $scope.setEnv = function(env) {
-      console.log('setEnv(' + env + ')...');
-      $scope.environment = env;
-      refresh();
-      console.log('refresh after env change');
+    $scope.setEnv = function(environment) {
+      $scope.environment = environment;
+      updateQuery();
+      //refresh();
+      console.log('refresh after env change=' + $scope.service + '/' + environment);
     };
 
     $scope.toggleStatus = function() {
-      console.log('toggle status');
       $scope.showActive = !$scope.showActive;
+      updateQuery();
+      //refresh();
+      // console.log('toggle status');
+    };
+
+    $scope.refresh = function() {
       refresh();
     };
 
@@ -52,15 +75,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       $scope.services = response.services;
     });
 
-    var refresh = function() {
-      // console.log('start env ' + $scope.environment);
-      Count.query({}, function(response) {
-        $scope.statusCounts = response.statusCounts;
-      });
-      Environment.all(function(response) {
-        $scope.environments = response.environments;
-      });
-      // console.log('scope.service=' + $scope.service);
+    var updateQuery = function() {
       if ($scope.service) {
         $scope.query['service'] = $scope.service
       } else {
@@ -78,6 +93,20 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         $scope.query['status'] = ["open"];
         delete $scope.query['status!'];
       }
+      $location.search($scope.query);
+      // console.log('update url...');
+    };
+
+    var refresh = function() {
+      // console.log('start env ' + $scope.environment);
+      Count.query({}, function(response) {
+        $scope.statusCounts = response.statusCounts;
+      });
+      Environment.all(function(response) {
+        $scope.environments = response.environments;
+      });
+      // console.log('scope.service=' + $scope.service);
+      updateQuery();
       console.log($scope.query);
       Alert.query($scope.query, function(response) {
         if (response.status == 'ok') {
