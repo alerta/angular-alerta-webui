@@ -76,7 +76,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       timer = $timeout(refresh, 5000);
       console.log(timer);
     };
-    var timer = $timeout(refresh, 5000);
+    var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
@@ -193,7 +193,7 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Ale
       timer = $timeout(refresh, 5000);
       console.log(timer);
     };
-    var timer = $timeout(refresh, 5000);
+    var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
@@ -220,7 +220,7 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Pro
       timer = $timeout(refresh, 5000);
       console.log(timer);
     };
-    var timer = $timeout(refresh, 5000);
+    var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
@@ -260,10 +260,10 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
       Heartbeat.query(function(response) {
         $scope.heartbeats = response.heartbeats;
       });
-      timer = $timeout(refresh, 5000);
+      timer = $timeout(refresh, 10000);
       console.log(timer);
     };
-    var timer = $timeout(refresh, 5000);
+    var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
