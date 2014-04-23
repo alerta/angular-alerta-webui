@@ -25,10 +25,10 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
   function($scope, $location, $timeout, Config, Count, Environment, Service, Alert){
 
     $scope.alerts = [];
-
-    Config.query(function(response) {
-      $scope.config = response;
-    });
+    $scope.alertLimit = 20;
+    $scope.showAll = false;
+    $scope.reverse = true;
+    $scope.query = {};
 
     Environment.all(function(response) {
       $scope.environments = response.environments;
@@ -42,14 +42,23 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       $scope.services = response.services;
     });
 
-    $scope.showAll = false;
-    $scope.reverse = true;
-
     var refresh = function() {
-        Alert.query({}, function(response) {
+        if (angular.isDefined($scope.service)) {
+          $scope.query['service'] = $scope.service
+        }
+        if (angular.isDefined($scope.environment)) {
+          $scope.query['environment'] = $scope.environment
+        }
+        if  ($scope.showActive) {
+          $scope.query['status!'] = ["closed", "expired"];
+        } else {
+          $scope.query['status'] = ["open"];
+        }
+        Alert.query($scope.query, function(response) {
           if (response.status == 'ok') {
             $scope.alerts = response.alerts;
           }
+          $scope.message = response.status + ' - ' + response.message;
           console.log(response.status);
         });
       timer = $timeout(refresh, 5000);
@@ -63,8 +72,6 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         console.log('destroyed...');
       }
     });
-
-    $scope.alertLimit = 20;
 
     var SEVERITY_MAP = {
         'critical': 1,
@@ -144,8 +151,10 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     $scope.tagged = function(tags, tagged) {
       angular.forEach(tags, function(tag) {
         if (tag == tagged) {
+          console.log('tagged with ' + tagged);
           return true;
         };
+        console.log('tag ' + tagged + ' not found');
         return false;
       });
     };

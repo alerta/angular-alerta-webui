@@ -13,9 +13,9 @@
       <input class="form-control input" ng-model="search" size="8" placeholder="Search">
     </div>
     <div class="col-md-2">
-      <button type="button" class="btn btn-primary btn-block" ng-click="showAll =! showAll" ng-class="{active: showAll}">
-        <span ng-show="!showAll">Open</span>
-        <span ng-show="showAll">Active</span>
+      <button type="button" class="btn btn-primary btn-block" ng-click="showActive =! showActive" ng-class="{active: showActive}">
+        <span ng-show="!showActive">Open</span>
+        <span ng-show="showActive">Active</span>
       </button>
     </div>
     <div class="col-md-2">
@@ -71,7 +71,7 @@
       </div>
 
       <div ng-show="alerts.length == 0">
-          <center>{{ response_status | uppercase }} - {{ response_message }}</center>
+          <center>{{ message }}</center>
       </div>
 
     </div>
