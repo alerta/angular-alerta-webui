@@ -15,7 +15,8 @@ alertaApp.config(['$routeProvider',
     $routeProvider
     .when('/alerts', {
       templateUrl: 'partials/alert-list.html',
-      controller: 'AlertListController'
+      controller: 'AlertListController',
+      reloadOnSearch: false
     })
     .when('/alert/:id', {
       templateUrl: 'partials/alert-details.html',

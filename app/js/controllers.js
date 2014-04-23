@@ -49,21 +49,21 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     $scope.setService = function(service) {
       $scope.service = service;
       updateQuery();
-      //refresh();
+      refresh();
       console.log('refresh after svc change=' + service + '/' + $scope.environment);
     };
 
     $scope.setEnv = function(environment) {
       $scope.environment = environment;
       updateQuery();
-      //refresh();
+      refresh();
       console.log('refresh after env change=' + $scope.service + '/' + environment);
     };
 
     $scope.toggleStatus = function() {
       $scope.showActive = !$scope.showActive;
       updateQuery();
-      //refresh();
+      refresh();
       // console.log('toggle status');
     };
 
