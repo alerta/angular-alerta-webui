@@ -30,10 +30,6 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     $scope.reverse = true;
     $scope.query = {};
 
-    Environment.all(function(response) {
-      $scope.environments = response.environments;
-    });
-
     $scope.setEnv = function(env) {
       $scope.environment = env;
     };
@@ -45,6 +41,9 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     var refresh = function() {
         Count.query({}, function(response) {
           $scope.statusCounts = response.statusCounts;
+        });
+        Environment.all(function(response) {
+          $scope.environments = response.environments;
         });
         if (angular.isDefined($scope.service)) {
           $scope.query['service'] = $scope.service
