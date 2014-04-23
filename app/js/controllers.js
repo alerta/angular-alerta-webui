@@ -43,6 +43,9 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     });
 
     var refresh = function() {
+        Count.query({}, function(response) {
+          $scope.statusCounts = response.statusCounts;
+        });
         if (angular.isDefined($scope.service)) {
           $scope.query['service'] = $scope.service
         }
