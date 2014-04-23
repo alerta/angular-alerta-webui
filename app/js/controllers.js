@@ -24,6 +24,8 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$route',
 alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $location, $timeout, Config, Count, Environment, Service, Alert){
 
+    $scope.alerts = [];
+
     Config.query(function(response) {
       $scope.config = response;
     });
@@ -43,26 +45,26 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     $scope.showAll = false;
     $scope.reverse = true;
 
-    var timer;
     var refresh = function() {
-      $timeout(function repeat() {
         Alert.query({}, function(response) {
-          $scope.alerts = response.alerts;
+          if (response.status == 'ok') {
+            $scope.alerts = response.alerts;
+          }
           console.log(response.status);
         });
-      timer = $timeout(repeat, 5000);
+      timer = $timeout(refresh, 5000);
       console.log(timer);
-      }, 0);
     };
+    var timer = $timeout(refresh, 5000);
 
     $scope.$on('$destroy', function() {
       if (timer) {
         $timeout.cancel(timer);
+        console.log('destroyed...');
       }
     });
 
     $scope.alertLimit = 20;
-    refresh();
 
     var SEVERITY_MAP = {
         'critical': 1,
@@ -87,7 +89,6 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     };
 
   }]);
-
 
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Properties', 'Alert',
   function($scope, $route, $routeParams, $location, Properties, Alert){
@@ -173,21 +174,26 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Ale
 alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Properties', 'Alert',
   function($scope, $timeout, Properties, Alert){
 
-    $scope.refreshWatches = function(timer) {
+    $scope.watches = [];
 
-      Alert.query({'tags':'watch:' + Properties.getUser()}, function(response) {
-        if (response.status == 'ok') {
-          $scope.watches = response.alerts;
-        } else {
-          $scope.watches = [];
-        }
-      });
-      if (timer) {
-        $timeout(function() { $scope.refreshWatches(true); }, 5000);
-      };
+    var refresh = function() {
+        Alert.query({'tags': 'watch:' + Properties.getUser()}, function(response) {
+          if (response.status == 'ok') {
+            $scope.watches = response.alerts;
+          }
+          console.log(response.status);
+        });
+      timer = $timeout(refresh, 5000);
+      console.log(timer);
     };
+    var timer = $timeout(refresh, 5000);
 
-    $scope.refreshWatches(true);
+    $scope.$on('$destroy', function() {
+      if (timer) {
+        $timeout.cancel(timer);
+        console.log('destroyed...');
+      }
+    });
 
   }]);
 
