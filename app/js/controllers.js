@@ -26,19 +26,26 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
 
     $scope.alerts = [];
     $scope.alertLimit = 20;
-    $scope.showAll = false;
+    $scope.showActive = false;
     $scope.reverse = true;
     $scope.query = {};
 
     $scope.setService = function() {
-      timer = $timeout(refresh, 200);
-      console.log('setService()...');
+      refresh();
+      console.log('refresh after svc change');
     };
 
     $scope.setEnv = function(env) {
-      $scope.environment = env;
-      timer = $timeout(refresh, 200);
       console.log('setEnv(' + env + ')...');
+      $scope.environment = env;
+      refresh();
+      console.log('refresh after env change');
+    };
+
+    $scope.toggleStatus = function() {
+      console.log('toggle status');
+      $scope.showActive = !$scope.showActive;
+      refresh();
     };
 
     Service.all(function(response) {
@@ -46,20 +53,19 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     });
 
     var refresh = function() {
-      console.log('start env ' + $scope.environment);
+      // console.log('start env ' + $scope.environment);
       Count.query({}, function(response) {
         $scope.statusCounts = response.statusCounts;
       });
       Environment.all(function(response) {
         $scope.environments = response.environments;
       });
-      console.log('scope.service=' + $scope.service);
+      // console.log('scope.service=' + $scope.service);
       if ($scope.service) {
         $scope.query['service'] = $scope.service
       } else {
         delete $scope.query['service'];
       }
-      console.log($scope.query);
       if ($scope.environment) {
         $scope.query['environment'] = $scope.environment
       } else {
@@ -72,23 +78,28 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         $scope.query['status'] = ["open"];
         delete $scope.query['status!'];
       }
+      console.log($scope.query);
       Alert.query($scope.query, function(response) {
         if (response.status == 'ok') {
           $scope.alerts = response.alerts;
         }
         $scope.message = response.status + ' - ' + response.message;
-        console.log(response.status);
+        // console.log(response.status);
       });
-      console.log('end env ' + $scope.environment);
-      timer = $timeout(refresh, 5000);
-      console.log(timer);
+      // console.log('end env ' + $scope.environment);
+
+      //console.log(timer);
     };
-    var timer = $timeout(refresh, 200);
+    var refreshWithTimeout = function() {
+      refresh();
+      timer = $timeout(refreshWithTimeout, 5000);
+    };
+    var timer = $timeout(refreshWithTimeout, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
         $timeout.cancel(timer);
-        console.log('destroyed...');
+        // console.log('destroyed...');
       }
     });
 
@@ -170,10 +181,10 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     $scope.tagged = function(tags, tagged) {
       angular.forEach(tags, function(tag) {
         if (tag == tagged) {
-          console.log('tagged with ' + tagged);
+          // console.log('tagged with ' + tagged);
           return true;
         };
-        console.log('tag ' + tagged + ' not found');
+        // console.log('tag ' + tagged + ' not found');
         return false;
       });
     };
@@ -195,17 +206,17 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Ale
           $scope.top10 = response.top10;
         }
         $scope.message = response.status + ' - ' + response.message;
-        console.log(response.status);
+        // console.log(response.status);
       });
       timer = $timeout(refresh, 5000);
-      console.log(timer);
+      // console.log(timer);
     };
     var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
         $timeout.cancel(timer);
-        console.log('destroyed...');
+        // console.log('destroyed...');
       }
     });
 
@@ -222,17 +233,17 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Pro
           $scope.watches = response.alerts;
         }
         $scope.message = response.status + ' - ' + response.message;
-        console.log(response.status);
+        // console.log(response.status);
       });
       timer = $timeout(refresh, 5000);
-      console.log(timer);
+      // console.log(timer);
     };
     var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
         $timeout.cancel(timer);
-        console.log('destroyed...');
+        // console.log('destroyed...');
       }
     });
 
@@ -268,14 +279,14 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
         $scope.heartbeats = response.heartbeats;
       });
       timer = $timeout(refresh, 10000);
-      console.log(timer);
+      // console.log(timer);
     };
     var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
         $timeout.cancel(timer);
-        console.log('destroyed...');
+        // console.log('destroyed...');
       }
     });
 

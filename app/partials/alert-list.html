@@ -13,7 +13,7 @@
       <input class="form-control input" ng-model="search" size="8" placeholder="Search">
     </div>
     <div class="col-md-2">
-      <button type="button" class="btn btn-primary btn-block" ng-click="showActive =! showActive" ng-class="{active: showActive}">
+      <button type="button" class="btn btn-primary btn-block" ng-click="toggleStatus()" ng-class="{active: showActive}">
         <span ng-show="!showActive">Open</span>
         <span ng-show="showActive">Active</span>
       </button>
