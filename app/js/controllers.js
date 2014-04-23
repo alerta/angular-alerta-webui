@@ -39,30 +39,34 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     });
 
     var refresh = function() {
-        Count.query({}, function(response) {
-          $scope.statusCounts = response.statusCounts;
-        });
-        Environment.all(function(response) {
-          $scope.environments = response.environments;
-        });
-        if (angular.isDefined($scope.service)) {
-          $scope.query['service'] = $scope.service
+      console.log('start env ' + $scope.environment);
+      Count.query({}, function(response) {
+        $scope.statusCounts = response.statusCounts;
+      });
+      Environment.all(function(response) {
+        $scope.environments = response.environments;
+      });
+      console.log('scope.service=' + $scope.service);
+      if (angular.isDefined($scope.service)) {
+        $scope.query['service'] = $scope.service
+      }
+      console.log($scope.query);
+      if (angular.isDefined($scope.environment)) {
+        $scope.query['environment'] = $scope.environment
+      }
+      if  ($scope.showActive) {
+        $scope.query['status!'] = ["closed", "expired"];
+      } else {
+        $scope.query['status'] = ["open"];
+      }
+      Alert.query($scope.query, function(response) {
+        if (response.status == 'ok') {
+          $scope.alerts = response.alerts;
         }
-        if (angular.isDefined($scope.environment)) {
-          $scope.query['environment'] = $scope.environment
-        }
-        if  ($scope.showActive) {
-          $scope.query['status!'] = ["closed", "expired"];
-        } else {
-          $scope.query['status'] = ["open"];
-        }
-        Alert.query($scope.query, function(response) {
-          if (response.status == 'ok') {
-            $scope.alerts = response.alerts;
-          }
-          $scope.message = response.status + ' - ' + response.message;
-          console.log(response.status);
-        });
+        $scope.message = response.status + ' - ' + response.message;
+        console.log(response.status);
+      });
+      console.log('end env ' + $scope.environment);
       timer = $timeout(refresh, 5000);
       console.log(timer);
     };
@@ -173,13 +177,13 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Ale
     $scope.top10 = [];
 
     var refresh = function() {
-        Alert.top10({}, function(response) {
-          if (response.status == 'ok') {
-            $scope.top10 = response.top10;
-          }
-          $scope.message = response.status + ' - ' + response.message;
-          console.log(response.status);
-        });
+      Alert.top10({}, function(response) {
+        if (response.status == 'ok') {
+          $scope.top10 = response.top10;
+        }
+        $scope.message = response.status + ' - ' + response.message;
+        console.log(response.status);
+      });
       timer = $timeout(refresh, 5000);
       console.log(timer);
     };
@@ -200,13 +204,13 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Pro
     $scope.watches = [];
 
     var refresh = function() {
-        Alert.query({'tags': 'watch:' + Properties.getUser()}, function(response) {
-          if (response.status == 'ok') {
-            $scope.watches = response.alerts;
-          }
-          $scope.message = response.status + ' - ' + response.message;
-          console.log(response.status);
-        });
+      Alert.query({'tags': 'watch:' + Properties.getUser()}, function(response) {
+        if (response.status == 'ok') {
+          $scope.watches = response.alerts;
+        }
+        $scope.message = response.status + ' - ' + response.message;
+        console.log(response.status);
+      });
       timer = $timeout(refresh, 5000);
       console.log(timer);
     };
@@ -240,16 +244,16 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
     $scope.heartbeats = [];
 
     var refresh = function() {
-        // Management.healthcheck(function(response) {
-        //   $scope.healthcheck = response;
-        // });
-        Management.status(function(response) {
-          $scope.metrics = response.metrics;
-          $scope.lastTime = response.time;
-        });
-        Heartbeat.query(function(response) {
-          $scope.heartbeats = response.heartbeats;
-        });
+      // Management.healthcheck(function(response) {
+      //   $scope.healthcheck = response;
+      // });
+      Management.status(function(response) {
+        $scope.metrics = response.metrics;
+        $scope.lastTime = response.time;
+      });
+      Heartbeat.query(function(response) {
+        $scope.heartbeats = response.heartbeats;
+      });
       timer = $timeout(refresh, 5000);
       console.log(timer);
     };
