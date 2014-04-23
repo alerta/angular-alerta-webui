@@ -4,7 +4,7 @@
 
   <div class="row">
     <div class="col-md-3">
-        <select class="form-control input-sm" ng-model="service"
+        <select class="form-control input-sm" ng-model="service" ng-change="setService()"
         ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
           <option value="">Service</option>
         </select>

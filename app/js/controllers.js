@@ -30,8 +30,15 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     $scope.reverse = true;
     $scope.query = {};
 
+    $scope.setService = function() {
+      timer = $timeout(refresh, 200);
+      console.log('setService()...');
+    };
+
     $scope.setEnv = function(env) {
       $scope.environment = env;
+      timer = $timeout(refresh, 200);
+      console.log('setEnv(' + env + ')...');
     };
 
     Service.all(function(response) {
