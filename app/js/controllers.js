@@ -224,13 +224,88 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 
   }]);
 
-alertaControllers.controller('AlertTop10Controller', ['$scope', '$timeout', 'Alert',
-  function($scope, $timeout, Alert){
+alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $location, $timeout, Count, Environment, Service, Alert){
+
+    var search = $location.search();
+    if (search.environment) {
+      $scope.environment = search.environment;
+    }
+    if (search.service) {
+      $scope.service = search.service;
+    }
+    if (search.status == 'open') {
+      console.log('only open');
+      $scope.showActive = false;
+    } else {
+      console.log('active');
+      $scope.showActive = true;
+    }
 
     $scope.top10 = [];
 
+    $scope.query = {};
+
+    $scope.setService = function(service) {
+      $scope.service = service;
+      updateQuery();
+      refresh();
+      console.log('refresh after svc change=' + service + '/' + $scope.environment);
+    };
+
+    $scope.setEnv = function(environment) {
+      $scope.environment = environment;
+      updateQuery();
+      refresh();
+      console.log('refresh after env change=' + $scope.service + '/' + environment);
+    };
+
+    $scope.toggleStatus = function() {
+      $scope.showActive = !$scope.showActive;
+      updateQuery();
+      refresh();
+      // console.log('toggle status');
+    };
+
+    $scope.refresh = function() {
+      refresh();
+    };
+
+    Service.all(function(response) {
+      $scope.services = response.services;
+    });
+
+    var updateQuery = function() {
+      if ($scope.service) {
+        $scope.query['service'] = $scope.service
+      } else {
+        delete $scope.query['service'];
+      }
+      if ($scope.environment) {
+        $scope.query['environment'] = $scope.environment
+      } else {
+        delete $scope.query['environment'];
+      }
+      if ($scope.showActive) {
+        $scope.query['status!'] = ["closed", "expired"];
+        delete $scope.query['status'];
+      } else {
+        $scope.query['status'] = ["open"];
+        delete $scope.query['status!'];
+      }
+      $location.search($scope.query);
+      // console.log('update url...');
+    };
+
     var refresh = function() {
-      Alert.top10({}, function(response) {
+      Count.query({}, function(response) {
+        $scope.statusCounts = response.statusCounts;
+      });
+      Environment.all(function(response) {
+        $scope.environments = response.environments;
+      });
+      updateQuery();
+      Alert.top10($scope.query, function(response) {
         if (response.status == 'ok') {
           $scope.top10 = response.top10;
         }

@@ -1,4 +1,35 @@
 <div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-3">
+        <select class="form-control input-sm" ng-model="service" ng-change="setService(service)"
+        ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
+          <option value="" ng-model="service" ng-change="setService(null)">Service</option>
+        </select>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control input" ng-model="search" size="8" placeholder="Search">
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-primary btn-block" ng-click="toggleStatus()" ng-class="{active: showActive}">
+        <span ng-show="!showActive">Open</span>
+        <span ng-show="showActive">Active</span>
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-primary btn-block" ng-click="refresh()">Refresh</button>
+    </div>
+  </div> <!-- row -->
+
+  <div class="row">
+    <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <li ng-class="{active: !environment}"><a data-toggle="tab" ng-click="setEnv(null)">ALL&nbsp;<span class="badge">{{ statusCounts.open || 0 }}</span></a></li>
+      <li ng-class="{active: environment == e.environment}" ng-repeat="e in environments"><a data-toggle="tab" ng-click="setEnv(e.environment)">{{ e.environment }}&nbsp;<span class="badge">{{ e.count || 0 }}</span></a></li>
+    </ul>
+    </div>
+  </div> <!-- row -->
+
   <div class="row">
     <div class="col-xs-12">
       <table class="table">
@@ -11,7 +42,7 @@
           <th>Resources</th>
         </tr>
 
-        <tr ng-repeat="event in top10">
+        <tr ng-repeat="event in top10 | filter:search">
           <td>{{ event.event }}</td>
           <td>{{ event.count }}</td>
           <td>{{ event.duplicateCount }}</td>

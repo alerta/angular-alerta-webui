@@ -24,7 +24,8 @@ alertaApp.config(['$routeProvider',
     })
     .when('/top10', {
       templateUrl: 'partials/alert-top10.html',
-      controller: 'AlertTop10Controller'
+      controller: 'AlertTop10Controller',
+      reloadOnSearch: false
     })
     .when('/watch', {
       templateUrl: 'partials/alert-watch.html',
