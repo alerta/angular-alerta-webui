@@ -25,8 +25,8 @@
 
 <table class="table table-condensed table-striped">
   <tr class="visible-xs"><td><b>Alert ID</b></td><td>{{ alert.id | shortid }}</td></tr>
-  <tr class="hidden-xs"><td><b>Alert ID</b></td><td>{{ alert.id }}</td></tr>
   <tr class="visible-xs"><td><b>Last Receive Alert ID</b></td><td>{{ alert.lastReceiveId | shortid }}</td></tr>
+  <tr class="hidden-xs"><td><b>Alert ID</b></td><td>{{ alert.id }}</td></tr>
   <tr class="hidden-xs"><td><b>Last Receive Alert ID</b></td><td>{{ alert.lastReceiveId }}</td></tr>
   <tr><td><b>Create Time</b></td><td>{{ alert.createTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td></tr>
   <tr><td><b>Receive Time</b></td><td>{{ alert.receiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td></tr>
