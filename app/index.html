@@ -29,7 +29,7 @@
         <li ng-class="{active: isActive('/top10')}"><a href="#/top10">Top 10</a></li>
         <li ng-class="{active: isActive('/watch')}"><a href="#/watch">Watch</a></li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
+      <form ng-show="isActive('/watch')" class="navbar-form navbar-left" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search" ng-model="user">
         </div>
