@@ -5,10 +5,12 @@
           ng-disabled="alert.status == 'open'">Open</button>
   <button type="button" class="btn btn-default"
           ng-click="tagAlert(alert.id, ['foo'])">Tag</button>
-  <button type="button" class="btn btn-default" ng-show="tagged(alert,'watch:'+user)"
-          ng-click="watchAlert(alert.id, user)">Watch</button>
-  <button type="button" class="btn btn-default" ng-show="!tagged(alert,'watch:'+user)"
-          ng-click="unwatchAlert(alert.id, user)">Unwatch</button>
+  <button type="button" class="btn btn-default"
+          ng-click="watchAlert(alert.id, user)"
+          ng-show="alert.tags.indexOf('watch:'+user) == -1">Watch</button>
+  <button type="button" class="btn btn-default"
+          ng-click="unwatchAlert(alert.id, user)"
+          ng-show="alert.tags.indexOf('watch:'+user) > -1">Unwatch</button>
   <button type="button" class="btn btn-primary"
           ng-click="ackAlert(alert.id)"
           ng-disabled="alert.status == 'ack'">Ack</button>
@@ -22,6 +24,8 @@
 </div>
 
 <hr>
+
+{{ user }}
 
 <table class="table table-condensed table-striped">
   <tr class="visible-xs"><td><b>Alert ID</b></td><td>{{ alert.id | shortid }}</td></tr>
