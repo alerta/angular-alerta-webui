@@ -33,13 +33,13 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     if (search.service) {
       $scope.service = search.service;
     }
-    if (search.status == 'open') {
-      // console.log('only open');
-      $scope.showActive = false;
-    } else {
-      // console.log('active');
-      $scope.showActive = true;
-    }
+
+    $scope.show = [
+      {name: 'Open', status: 'open'},
+      {name: 'Active', status: ['open', 'ack', 'assign']},
+      {name: 'Closed', status: 'closed'}
+    ]
+    $scope.status = 'open';
 
     $scope.alerts = [];
     $scope.alertLimit = 20;
@@ -60,11 +60,10 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       console.log('refresh after env change=' + $scope.service + '/' + environment);
     };
 
-    $scope.toggleStatus = function() {
-      $scope.showActive = !$scope.showActive;
+    $scope.setStatus = function(status) {
+      $scope.status = status;
       updateQuery();
       refresh();
-      // console.log('toggle status');
     };
 
     $scope.refresh = function() {
@@ -86,12 +85,10 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       } else {
         delete $scope.query['environment'];
       }
-      if ($scope.showActive) {
-        $scope.query['status!'] = ["closed", "expired"];
-        delete $scope.query['status'];
+      if ($scope.status) {
+        $scope.query['status'] = $scope.status;
       } else {
-        $scope.query['status'] = ["open"];
-        delete $scope.query['status!'];
+        delete $scope.query['status'];
       }
       $location.search($scope.query);
       // console.log('update url...');
