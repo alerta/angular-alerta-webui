@@ -1,21 +1,21 @@
 <div class="container-fluid">
 
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 col-sm-3 col-xs-12">
         <select class="form-control input-sm" ng-model="service" ng-change="setService(service)"
         ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
           <option value="" ng-model="service" ng-change="setService(null)">Service</option>
         </select>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5 col-sm-5 col-xs-12">
       <input class="form-control input" ng-model="search" size="8" placeholder="Search">
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 col-sm-2 col-xs-12">
       <select class="form-control input-sm" ng-model="status" ng-change="setStatus(status)"
       ng-options="s.status as s.name for s in show">
       </select>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 col-sm-2 col-xs-12">
       <button type="button" class="btn btn-primary btn-block" ng-click="refresh()">Refresh</button>
     </div>
   </div> <!-- row -->
