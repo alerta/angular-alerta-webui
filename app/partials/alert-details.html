@@ -3,8 +3,8 @@
   <button type="button" class="btn btn-default"
           ng-click="openAlert(alert.id)"
           ng-disabled="alert.status == 'open'">Open</button>
-  <button type="button" class="btn btn-default"
-          ng-click="tagAlert(alert.id, ['foo'])">Tag</button>
+  <!-- button type="button" class="btn btn-default"
+          ng-click="tagAlert(alert.id, ['foo'])">Tag</button -->
   <button type="button" class="btn btn-default"
           ng-click="watchAlert(alert.id, user)"
           ng-show="alert.tags.indexOf('watch:'+user) == -1">Watch</button>
