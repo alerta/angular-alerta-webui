@@ -28,32 +28,34 @@ table {
     border: 1px solid #000;
 }
 
+.severity {
+    background-color: silver;
+}
+
 .severity-critical {
-  background-color: red;
+    background-color: red;
 }
 
 .severity-major {
-  background-color: orange;
+    background-color: orange;
 }
 
 .severity-minor {
-        background-color: yellow;
+    background-color: yellow;
 }
 
 .severity-warning {
-  background-color: #1E90FF; // dodger-blue
+    background-color: #1E90FF; // dodger-blue
 }
 
-.severity-normal {
-  background-color: #00CC00;
-}
-
+.severity-normal,
+.severity-cleared,
 .severity-informational {
-  background-color: #00CC00;
+    background-color: #00CC00;
 }
 
 .severity-debug {
-  background-color: #7554BF;
+    background-color: #7554BF;
 }
 
 .label {
@@ -90,7 +92,9 @@ table {
     background-color: #3a87ad;
 }
 
-.label-normal {
+.label-normal,
+.label-cleared,
+.label-informational {
     background-color: #468847;
 }
 
