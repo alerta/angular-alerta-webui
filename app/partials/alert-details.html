@@ -2,25 +2,25 @@
 <div>
   <button type="button" class="btn btn-default"
           ng-click="openAlert(alert.id)"
-          ng-disabled="alert.status == 'open'">Open</button>
+          ng-disabled="alert.status == 'open'"><i class="glyphicon glyphicon-arrow-up"></i> Open</button>
   <!-- button type="button" class="btn btn-default"
           ng-click="tagAlert(alert.id, ['foo'])">Tag</button -->
   <button type="button" class="btn btn-default"
           ng-click="watchAlert(alert.id, user)"
-          ng-show="alert.tags.indexOf('watch:'+user) == -1">Watch</button>
+          ng-show="alert.tags.indexOf('watch:'+user) == -1"><i class="glyphicon glyphicon-eye-open"></i> Watch</button>
   <button type="button" class="btn btn-default"
           ng-click="unwatchAlert(alert.id, user)"
-          ng-show="alert.tags.indexOf('watch:'+user) > -1">Unwatch</button>
+          ng-show="alert.tags.indexOf('watch:'+user) > -1"><i class="glyphicon glyphicon-eye-close"></i> Unwatch</button>
   <button type="button" class="btn btn-primary"
           ng-click="ackAlert(alert.id)"
-          ng-disabled="alert.status == 'ack'">Ack</button>
+          ng-disabled="alert.status == 'ack'"><i class="glyphicon glyphicon-ok-circle"></i> Ack</button>
   <button type="button" class="btn btn-warning"
           ng-click="closeAlert(alert.id)"
-          ng-disabled="alert.status == 'closed'">Close</button>
+          ng-disabled="alert.status == 'closed'"><i class="glyphicon glyphicon-remove-circle"></i> Close</button>
   <button type="button" class="btn btn-danger"
-          ng-click="deleteAlert(alert.id)">Delete</button>
+          ng-click="deleteAlert(alert.id)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
   <button type="button" class="btn btn-success"
-          ng-click="back()">Back</button>
+          ng-click="back()"><i class="glyphicon glyphicon-chevron-left"></i> Back</button>
 </div>
 
 <hr>
