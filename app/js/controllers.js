@@ -379,6 +379,7 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
       Management.status(function(response) {
         $scope.metrics = response.metrics;
         $scope.lastTime = response.time;
+        $scope.uptime = response.uptime;
       });
       Heartbeat.query(function(response) {
         $scope.heartbeats = response.heartbeats;
