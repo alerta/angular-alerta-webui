@@ -3,12 +3,12 @@ Alerta Web UI 3.0
 
 Version 3.0 of the alerta dashboard is an [AngularJS](http://angularjs.org/) web app that uses client-side templating.
 
-It replaces Version 2.0 which still works, but is no longer under active development.
+It replaces alerta dashboard [version 2.0](https://github.com/alerta/alerta-dashboard) which still works, but is no longer under active development.
 
 Example
 -------
 
-![dashboard](/docs/images/alerta-dashboard-v2.png?raw=true)
+![dashboard](/docs/images/alerta-webui-v3.png?raw=true)
 
 
 Installation
