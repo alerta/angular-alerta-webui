@@ -47,7 +47,7 @@ alertaServices.factory('Alert', ['$resource', 'Settings',
   }]);
 
 alertaServices.factory('Environment', ['$resource', 'Settings',
-  function($resource) {
+  function($resource, Settings) {
     var server = Settings.getServer();
     return $resource(server+'/api/environments?status=open', {}, {
       'all':  {method: 'GET'},
@@ -55,7 +55,7 @@ alertaServices.factory('Environment', ['$resource', 'Settings',
   }]);
 
 alertaServices.factory('Service', ['$resource', 'Settings',
-  function($resource) {
+  function($resource, Settings) {
     var server = Settings.getServer();
     return $resource(server+'/api/services', {}, {
       'all':  {method: 'GET'},
@@ -85,7 +85,7 @@ alertaServices.factory('Config', ['$resource',
   }]);
 
 alertaServices.factory('Heartbeat', ['$resource', 'Settings',
-  function($resource) {
+  function($resource, Settings) {
     var server = Settings.getServer();
     return $resource(server+'/api/heartbeats', {}, {
       'query':  {method:'GET'}
@@ -93,7 +93,7 @@ alertaServices.factory('Heartbeat', ['$resource', 'Settings',
   }]);
 
 alertaServices.factory('Management', ['$resource', 'Settings',
-  function($resource) {
+  function($resource, Settings) {
     var server = Settings.getServer()
     return $resource(server+'/management/manifest', {}, {
       'manifest':    {method:'GET'},
