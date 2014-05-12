@@ -23,9 +23,10 @@ alertaServices.factory('Settings', [
     };
   }]);
 
-alertaServices.factory('Count', ['$resource',
-  function($resource) {
-    return $resource('http://localhost:8080/api/alerts/count', {}, {
+alertaServices.factory('Count', ['$resource', 'Settings',
+  function($resource, Settings) {
+    var server = Settings.getServer()
+    return $resource(server+'/api/alerts/count', {}, {
       'query': {method:'GET'}
     });
   }]);
