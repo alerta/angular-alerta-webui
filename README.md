@@ -14,33 +14,24 @@ Example
 Installation
 ------------
 
-To install the v2 dashboard, clone the repository and run:
-
-    $ sudo python setup.py install
+In production, copy the files under the `app/` directory to a web server.
 
 
 Configuration
 -------------
 
 By default, the dashboard will assume the alerta API endpoint is located at port 8080 on the same domain
-that the dashboard is served from ie. `http://localhost:8080` if the dashboard is at `http://localhost:5000`
+that the dashboard is served from. That is:
 
-Modify file `dashboard/assets/js/config.js` to use a different alerta API endpoint. For example:
+    var config = {
+      'alerta': "http://"+window.location.hostname+":8080"
+    };
 
-    var appConfig = {
-        'endpoint': 'http://api.alerta.io:8080'
-    }
+Modify the file `app/js/services.js` to use a different alert API endpoint. For example:
 
-
-Run
----
-
-To run the dashboard in development, simply run `alerta-dashboard` on the command-line:
-
-    $ alerta-dashboard
-    # => http://localhost:5000/dashboard/index.html
-
-In production, the only files needed are all those under the `app/` directory. Everything else can be omited.
+    var config = {
+      'alerta': "http://api.alerta.io"
+    };
 
 
 Dependencies
