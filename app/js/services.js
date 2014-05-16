@@ -7,58 +7,40 @@
 // In this case it is a simple value service.
 var alertaServices = angular.module('alertaServices', ['ngResource']);
 
-alertaServices.factory('Settings', [
-  function() {
-    var config = {
-      'alerta': "http://"+window.location.hostname+":8080"
-      // 'alerta': "http://api.alerta.io"
-    };
-    return {
-      getServer: function() {
-        return config.alerta;
-      },
-      setServer: function(server) {
-        config.alerta = server;
-      }
-    };
-  }]);
+alertaServices.value('endpoint', "http://"+window.location.hostname+":8080");
 
-alertaServices.factory('Count', ['$resource', 'Settings',
-  function($resource, Settings) {
-    var server = Settings.getServer()
-    return $resource(server+'/api/alerts/count', {}, {
+alertaServices.factory('Count', ['$resource', 'endpoint',
+  function($resource, endpoint) {
+    return $resource(endpoint+'/api/alerts/count', {}, {
       'query': {method:'GET'}
     });
   }]);
 
-alertaServices.factory('Alert', ['$resource', 'Settings',
-  function($resource, Settings) {
-    var server = Settings.getServer();
-    return $resource(server+'/api/alert/:id', {}, {
-      'query':  {method:'GET', url: server+'/api/alerts'},
+alertaServices.factory('Alert', ['$resource', 'endpoint',
+  function($resource, endpoint) {
+    return $resource(endpoint+'/api/alert/:id', {}, {
+      'query':  {method:'GET', url: endpoint+'/api/alerts'},
       'save':   {method:'POST'},
       'get':    {method:'GET'},
-      'status': {method:'POST', url: server+'/api/alert/:id/status'},
+      'status': {method:'POST', url: endpoint+'/api/alert/:id/status'},
       'remove': {method:'DELETE'},
       'delete': {method:'DELETE'},
-      'tag':    {method:'POST', url: server+'/api/alert/:id/tag'},
-      'untag':  {method:'POST', url: server+'/api/alert/:id/untag'},
-      'top10':  {method:'GET', url: server+'/api/alerts/top10'}
+      'tag':    {method:'POST', url: endpoint+'/api/alert/:id/tag'},
+      'untag':  {method:'POST', url: endpoint+'/api/alert/:id/untag'},
+      'top10':  {method:'GET', url: endpoint+'/api/alerts/top10'}
     });
   }]);
 
-alertaServices.factory('Environment', ['$resource', 'Settings',
-  function($resource, Settings) {
-    var server = Settings.getServer();
-    return $resource(server+'/api/environments?status=open', {}, {
+alertaServices.factory('Environment', ['$resource', 'endpoint',
+  function($resource, endpoint) {
+    return $resource(endpoint+'/api/environments?status=open', {}, {
       'all':  {method: 'GET'},
     });
   }]);
 
-alertaServices.factory('Service', ['$resource', 'Settings',
-  function($resource, Settings) {
-    var server = Settings.getServer();
-    return $resource(server+'/api/services', {}, {
+alertaServices.factory('Service', ['$resource', 'endpoint',
+  function($resource, endpoint) {
+    return $resource(endpoint+'/api/services', {}, {
       'all':  {method: 'GET'},
     });
   }]);
@@ -85,21 +67,19 @@ alertaServices.factory('Config', ['$resource',
     });
   }]);
 
-alertaServices.factory('Heartbeat', ['$resource', 'Settings',
-  function($resource, Settings) {
-    var server = Settings.getServer();
-    return $resource(server+'/api/heartbeats', {}, {
+alertaServices.factory('Heartbeat', ['$resource', 'endpoint',
+  function($resource, endpoint) {
+    return $resource(endpoint+'/api/heartbeats', {}, {
       'query':  {method:'GET'}
     });
   }]);
 
-alertaServices.factory('Management', ['$resource', 'Settings',
-  function($resource, Settings) {
-    var server = Settings.getServer()
-    return $resource(server+'/management/manifest', {}, {
+alertaServices.factory('Management', ['$resource', 'endpoint',
+  function($resource, endpoint) {
+    return $resource(endpoint+'/management/manifest', {}, {
       'manifest':    {method:'GET'},
-      'healthcheck': {method:'GET', url: server+'/management/healthcheck'},
-      'status':      {method:'GET', url: server+'/management/status'}
+      'healthcheck': {method:'GET', url: endpoint+'/management/healthcheck'},
+      'status':      {method:'GET', url: endpoint+'/management/status'}
     });
   }]);
 
