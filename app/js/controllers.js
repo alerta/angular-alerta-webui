@@ -11,7 +11,9 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$route',
         return viewLocation === $location.path();
     };
 
-    $scope.user = Properties.getUser();
+    $scope.$watch(Properties.getUser, function(user) {
+      $scope.user = user;
+    });
 
     $scope.setUser = function(user) {
       Properties.setUser(user, function(data) {
@@ -160,7 +162,9 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Properties', 'Alert',
   function($scope, $route, $routeParams, $location, Properties, Alert){
 
-    $scope.user = Properties.getUser();
+    $scope.$watch(Properties.getUser, function(user) {
+      $scope.user = user;
+    });
 
     Alert.get({id: $routeParams.id}, function(response) {
       $scope.alert = response.alert;
