@@ -7,7 +7,8 @@ var alertaApp = angular.module('alertaApp', [
   'alertaFilters',
   'alertaServices',
   'alertaDirectives',
-  'alertaControllers'
+  'alertaControllers',
+  'googleOauth'
 ])
 
 alertaApp.config(['$routeProvider',
@@ -35,8 +36,26 @@ alertaApp.config(['$routeProvider',
       templateUrl: 'partials/about.html',
       controller: 'AboutController'
     })
+    .when('/login', {
+      templateUrl: 'partials/login.html',
+      controller: 'LoginController'
+    })
     .otherwise({
       redirectTo: '/alerts'
     });
   }]);
 
+alertaApp.config(
+  function(TokenProvider) {
+    // Demo configuration for the "angular-oauth demo" project on Google.
+    // Log in at will!
+
+    // Sorry about this way of getting a relative URL, powers that be.
+    var baseUrl = document.URL.replace('example/demo.html', '');
+
+    TokenProvider.extendConfig({
+      clientId: '191261111313.apps.googleusercontent.com',
+      redirectUri: baseUrl + 'src/oauth2callback.html',  // allow lunching demo from a mirror
+      scopes: ["https://www.googleapis.com/auth/userinfo.email"]
+    });
+  });
