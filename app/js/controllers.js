@@ -403,7 +403,7 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
   }]);
 
 alertaControllers.controller('LoginController',
-  function($rootScope, $scope, $window, Token) {
+  function($rootScope, $scope, $http, $window, Token) {
     $scope.accessToken = Token.get();
 
     $scope.authenticate = function() {
@@ -420,6 +420,9 @@ alertaControllers.controller('LoginController',
                 $scope.expiresIn = params.expires_in;
 
                 Token.set(params.access_token);
+
+                $http.defaults.headers.common.Authorization = 'Token ' + Token.get();
+
               });
             }, function() {
               alert("Failed to verify token.")

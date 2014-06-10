@@ -11,9 +11,8 @@ var alertaApp = angular.module('alertaApp', [
   'googleOauth'
 ])
 
-alertaApp.config(['$routeProvider', '$locationProvider',
-  function($routeProvider, $locationProvider) {
-    $locationProvider.html5Mode(true);
+alertaApp.config(['$routeProvider',
+  function($routeProvider) {
     $routeProvider
     .when('/alerts', {
       templateUrl: 'partials/alert-list.html',
@@ -41,10 +40,6 @@ alertaApp.config(['$routeProvider', '$locationProvider',
       templateUrl: 'partials/login.html',
       controller: 'LoginController'
     })
-    .when('/oauth2callback', {
-      templateUrl: 'partials/oauth2callback.html',
-      controller: 'CallbackCtrl'
-    })
     .otherwise({
       redirectTo: '/alerts'
     });
@@ -53,8 +48,8 @@ alertaApp.config(['$routeProvider', '$locationProvider',
 alertaApp.config(
   function(TokenProvider) {
     TokenProvider.extendConfig({
-      clientId: '670909444171-la87bi7biqd7bdhv9vq5r05d76mpstrb.apps.googleusercontent.com',
-      redirectUri: 'http://127.0.0.1/~nsatterl/angular-alerta-webui/app/oauth2callback',
+      clientId: '379647311730-hn94fk7lss64ohvs1ddc01sauuspeeea.apps.googleusercontent.com',
+      redirectUri: 'http://localhost/~nsatterl/angular-alerta-webui/app/oauth2callback.html',
       scopes: ["https://www.googleapis.com/auth/userinfo.email"]
     });
   });

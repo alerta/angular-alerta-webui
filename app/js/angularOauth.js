@@ -210,6 +210,7 @@ angular.module('angularOauth', []).
      * @returns Object.<(string|boolean)>
      */
     function parseKeyValue(/**string*/keyValue) {
+
       console.log('callback!');
       var obj = {}, key_value, key;
       angular.forEach((keyValue || "").split('&'), function(keyValue){
