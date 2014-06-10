@@ -11,8 +11,9 @@ var alertaApp = angular.module('alertaApp', [
   'googleOauth'
 ])
 
-alertaApp.config(['$routeProvider',
-  function($routeProvider) {
+alertaApp.config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
     $routeProvider
     .when('/alerts', {
       templateUrl: 'partials/alert-list.html',
@@ -39,6 +40,10 @@ alertaApp.config(['$routeProvider',
     .when('/login', {
       templateUrl: 'partials/login.html',
       controller: 'LoginController'
+    })
+    .when('/oauth2callback', {
+      templateUrl: 'partials/oauth2callback.html',
+      controller: 'CallbackCtrl'
     })
     .otherwise({
       redirectTo: '/alerts'
