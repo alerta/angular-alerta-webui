@@ -47,7 +47,7 @@
   </tr>
   <tr><td><b>Status</b></td><td><span class="label label-{{ alert.status }}">{{ alert.status }}</span></td></tr>
   <tr><td><b>Value</b></td><td>{{ alert.value }}</td></tr>
-  <tr><td><b>Text</b></td><td>{{ alert.text }}</td></tr>
+  <tr><td><b>Text</b></td><td><span ng-bind-html="alert.text | linky:'_blank'"></span></td></tr>
   <tr><td><b>Trend Indication</b></td><td>{{ alert.trendIndication }}</td></tr>
   <tr><td><b>Timeout</b></td><td>{{ alert.timeout }}</td></tr>
   <tr><td><b>Type</b></td><td>{{ alert.type }}</td></tr>
