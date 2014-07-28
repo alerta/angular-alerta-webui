@@ -22,8 +22,8 @@
         <tr ng-repeat="key in keys">
           <td><tt>{{ key.key }}</tt></td>
           <td>{{ key.text}}</td>
-          <td class="hidden-xs">{{ key.expireTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss' }}</td>
-          <td class="hidden-xs">{{ key.lastUsedTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss' }}</td>
+          <td class="hidden-xs">{{ key.expireTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
+          <td class="hidden-xs">{{ key.lastUsedTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
           <td class="hidden-xs">{{ key.count }}</td>
           <td ng-click="deleteKey(key.key);"><i class="glyphicon glyphicon-trash"></td>
         </tr>

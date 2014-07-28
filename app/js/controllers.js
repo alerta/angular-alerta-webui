@@ -62,14 +62,14 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       $scope.service = service;
       updateQuery();
       refresh();
-      console.log('refresh after svc change=' + service + '/' + $scope.environment);
+      // console.log('refresh after svc change=' + service + '/' + $scope.environment);
     };
 
     $scope.setEnv = function(environment) {
       $scope.environment = environment;
       updateQuery();
       refresh();
-      console.log('refresh after env change=' + $scope.service + '/' + environment);
+      // console.log('refresh after env change=' + $scope.service + '/' + environment);
     };
 
     $scope.setStatus = function(status) {
@@ -116,7 +116,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       });
       // console.log('scope.service=' + $scope.service);
       updateQuery();
-      console.log($scope.query);
+      // console.log($scope.query);
       Alert.query($scope.query, function(response) {
         if (response.status == 'ok') {
           $scope.alerts = response.alerts;
@@ -264,14 +264,14 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
       $scope.service = service;
       updateQuery();
       refresh();
-      console.log('refresh after svc change=' + service + '/' + $scope.environment);
+      // console.log('refresh after svc change=' + service + '/' + $scope.environment);
     };
 
     $scope.setEnv = function(environment) {
       $scope.environment = environment;
       updateQuery();
       refresh();
-      console.log('refresh after env change=' + $scope.service + '/' + environment);
+      // console.log('refresh after env change=' + $scope.service + '/' + environment);
     };
 
     $scope.setStatus = function(status) {
@@ -448,14 +448,10 @@ alertaControllers.controller('LoginController', ['$rootScope', '$scope', '$http'
       Token.getTokenByPopup(extraParams)
         .then(function(params) {
           // Success getting token from popup.
-                console.log(params);
 
           // Verify the token before setting it, to avoid the confused deputy problem.
           Token.verifyAsync(params.access_token).
             then(function(data) {
-
-              console.log('verify response: ');
-              console.log(data);
 
               $rootScope.$apply(function() {
 
@@ -463,8 +459,6 @@ alertaControllers.controller('LoginController', ['$rootScope', '$scope', '$http'
                 $scope.expiresIn = params.expires_in;
 
                 Token.set(params.access_token);
-
-                console.log(Token.get());
 
                 $http.defaults.headers.common.Authorization = 'Token ' + Token.get();
 
