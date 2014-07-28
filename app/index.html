@@ -35,7 +35,7 @@
             <li><a href="#/keys">API Keys</a></li>
           </ul>
         </li>
-        <li ng-hide="isAuthenticated();" ng-class="{active: isActive('/login')}"><a href="#/login">Login</a></li>
+        <li ng-hide="isAuthenticated();" ng-click="authenticate();"><a href="#">Login</a></li>
         <li ng-show="isAuthenticated();" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">{{ user }} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#/profile">Profile</a></li>

@@ -4,8 +4,8 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('MenuController', ['$scope', '$location', '$route', 'Profile',
-  function($scope, $location, $route, Profile) {
+alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http', '$window', '$location', '$route', 'Token', 'Profile',
+  function($rootScope, $scope, $http, $window, $location, $route, Token, Profile) {
 
     // $scope.user = Profile.getUser();
 
@@ -27,6 +27,39 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$route',
       return (angular.isDefined(Profile.getUser()));
     };
 
+    $scope.accessToken = Token.get();
+
+    $scope.authenticate = function() {
+      var extraParams = $scope.askApproval ? {approval_prompt: 'force'} : {};
+      Token.getTokenByPopup(extraParams)
+        .then(function(params) {
+          // Success getting token from popup.
+
+          // Verify the token before setting it, to avoid the confused deputy problem.
+          Token.verifyAsync(params.access_token).
+            then(function(data) {
+
+              $rootScope.$apply(function() {
+
+                $scope.accessToken = params.access_token;
+                $scope.expiresIn = params.expires_in;
+
+                Token.set(params.access_token);
+
+                $http.defaults.headers.common.Authorization = 'Token ' + Token.get();
+
+                Profile.setUser(data.email);
+
+              });
+            }, function() {
+              alert("Failed to verify token.")
+            });
+
+        }, function() {
+          // Failure getting token from popup.
+          alert("Failed to get token from popup.");
+        });
+    };
   }]);
 
 alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
@@ -439,47 +472,10 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
 
   }]);
 
-alertaControllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$window', 'Token', 'Profile',
-  function($rootScope, $scope, $http, $window, Token, Profile) {
-    $scope.accessToken = Token.get();
-
-    $scope.authenticate = function() {
-      var extraParams = $scope.askApproval ? {approval_prompt: 'force'} : {};
-      Token.getTokenByPopup(extraParams)
-        .then(function(params) {
-          // Success getting token from popup.
-
-          // Verify the token before setting it, to avoid the confused deputy problem.
-          Token.verifyAsync(params.access_token).
-            then(function(data) {
-
-              $rootScope.$apply(function() {
-
-                $scope.accessToken = params.access_token;
-                $scope.expiresIn = params.expires_in;
-
-                Token.set(params.access_token);
-
-                $http.defaults.headers.common.Authorization = 'Token ' + Token.get();
-
-                Profile.setUser(data.email);
-
-              });
-            }, function() {
-              alert("Failed to verify token.")
-            });
-
-        }, function() {
-          // Failure getting token from popup.
-          alert("Failed to get token from popup.");
-        });
-    };
-  }]);
-
 alertaControllers.controller('LogoutController', ['$scope', '$http', '$location', 'Token', 'Profile',
   function($scope, $http, $location, Token, Profile){
     Profile.clear();
     Token.clear();
     delete $http.defaults.headers.common.Authorization;
-    $location.path('/login')
+    $location.path('/')
 }]);

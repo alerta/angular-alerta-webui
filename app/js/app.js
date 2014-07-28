@@ -44,10 +44,6 @@ alertaApp.config(['$routeProvider',
       templateUrl: 'partials/about.html',
       controller: 'AboutController'
     })
-    .when('/login', {
-      templateUrl: 'partials/login.html',
-      controller: 'LoginController'
-    })
     .when('/logout', {
       templateUrl: 'partials/logout.html',
       controller: 'LogoutController'
