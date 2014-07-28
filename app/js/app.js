@@ -32,6 +32,14 @@ alertaApp.config(['$routeProvider',
       templateUrl: 'partials/alert-watch.html',
       controller: 'AlertWatchController'
     })
+    .when('/keys', {
+      templateUrl: 'partials/keys.html',
+      controller: 'ApiKeyController'
+    })
+    .when('/profile', {
+      templateUrl: 'partials/profile.html',
+      controller: 'ProfileController'
+    })
     .when('/about', {
       templateUrl: 'partials/about.html',
       controller: 'AboutController'
@@ -39,6 +47,10 @@ alertaApp.config(['$routeProvider',
     .when('/login', {
       templateUrl: 'partials/login.html',
       controller: 'LoginController'
+    })
+    .when('/logout', {
+      templateUrl: 'partials/logout.html',
+      controller: 'LogoutController'
     })
     .otherwise({
       redirectTo: '/alerts'

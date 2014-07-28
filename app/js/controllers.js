@@ -4,21 +4,27 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('MenuController', ['$scope', '$location', '$route', 'Properties',
-  function($scope, $location, $route, Properties) {
+alertaControllers.controller('MenuController', ['$scope', '$location', '$route', 'Profile',
+  function($scope, $location, $route, Profile) {
+
+    // $scope.user = Profile.getUser();
 
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
 
-    $scope.$watch(Properties.getUser, function(user) {
+    $scope.$watch(Profile.getUser, function(user) {
       $scope.user = user;
     });
 
     $scope.setUser = function(user) {
-      Properties.setUser(user, function(data) {
+      Profile.setUser(user, function(data) {
         $route.reload();
       });
+    };
+
+    $scope.isAuthenticated = function() {
+      return (angular.isDefined(Profile.getUser()));
     };
 
   }]);
@@ -159,10 +165,10 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
 
   }]);
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Properties', 'Alert',
-  function($scope, $route, $routeParams, $location, Properties, Alert){
+alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Profile', 'Alert',
+  function($scope, $route, $routeParams, $location, Profile, Alert){
 
-    $scope.$watch(Properties.getUser, function(user) {
+    $scope.$watch(Profile.getUser, function(user) {
       $scope.user = user;
     });
 
@@ -331,13 +337,13 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
 
   }]);
 
-alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Properties', 'Alert',
-  function($scope, $timeout, Properties, Alert){
+alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Profile', 'Alert',
+  function($scope, $timeout, Profile, Alert){
 
     $scope.watches = [];
 
     var refresh = function() {
-      Alert.query({'tags': 'watch:' + Properties.getUser()}, function(response) {
+      Alert.query({'tags': 'watch:' + Profile.getUser()}, function(response) {
         if (response.status == 'ok') {
           $scope.watches = response.alerts;
         }
@@ -364,6 +370,37 @@ alertaControllers.controller('AlertLinkController', ['$scope', '$location',
     $scope.getDetails = function(alert) {
       $location.url('/alert/' + alert.id);
     };
+  }]);
+
+alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', 'Profile', 'Keys',
+  function($scope, $route, $timeout, Profile, Keys) {
+
+    $scope.keys = [];
+
+    $scope.createKey = function(text) {
+      Keys.save({}, {user: Profile.getUser(), text: text}, function(data) {
+        $route.reload();
+      });
+    };
+
+    $scope.deleteKey = function(key) {
+      Keys.delete({key: key}, {}, function(data) {
+        $route.reload();
+      });
+    };
+
+    Keys.query({user: Profile.getUser()}, function(response) {
+      $scope.keys = response.keys;
+    });
+
+  }]);
+
+alertaControllers.controller('ProfileController', ['$scope', '$route', '$timeout', 'Profile', 'Token',
+  function($scope, $route, $timeout, Profile, Token) {
+
+    $scope.user = Profile.getUser();
+    $scope.accessToken = Token.get();
+
   }]);
 
 alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Management', 'Heartbeat',
@@ -402,8 +439,8 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
 
   }]);
 
-alertaControllers.controller('LoginController',
-  function($rootScope, $scope, $http, $window, Token) {
+alertaControllers.controller('LoginController', ['$rootScope', '$scope', '$http', '$window', 'Token', 'Profile',
+  function($rootScope, $scope, $http, $window, Token, Profile) {
     $scope.accessToken = Token.get();
 
     $scope.authenticate = function() {
@@ -411,17 +448,27 @@ alertaControllers.controller('LoginController',
       Token.getTokenByPopup(extraParams)
         .then(function(params) {
           // Success getting token from popup.
+                console.log(params);
 
           // Verify the token before setting it, to avoid the confused deputy problem.
           Token.verifyAsync(params.access_token).
             then(function(data) {
+
+              console.log('verify response: ');
+              console.log(data);
+
               $rootScope.$apply(function() {
+
                 $scope.accessToken = params.access_token;
                 $scope.expiresIn = params.expires_in;
 
                 Token.set(params.access_token);
 
+                console.log(Token.get());
+
                 $http.defaults.headers.common.Authorization = 'Token ' + Token.get();
+
+                Profile.setUser(data.email);
 
               });
             }, function() {
@@ -433,5 +480,12 @@ alertaControllers.controller('LoginController',
           alert("Failed to get token from popup.");
         });
     };
-  });
+  }]);
 
+alertaControllers.controller('LogoutController', ['$scope', '$http', '$location', 'Token', 'Profile',
+  function($scope, $http, $location, Token, Profile){
+    Profile.clear();
+    Token.clear();
+    delete $http.defaults.headers.common.Authorization;
+    $location.path('/login')
+}]);

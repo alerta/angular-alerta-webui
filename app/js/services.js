@@ -45,17 +45,29 @@ alertaServices.factory('Service', ['$resource', 'endpoint',
     });
   }]);
 
-alertaServices.factory('Properties', [
+alertaServices.factory('Keys', ['$resource', 'endpoint',
+  function($resource, endpoint) {
+    return $resource(endpoint+'/api/key', {}, {
+      'query':  {method:'GET', url: endpoint+'/api/keys/:user'},
+      'save':   {method:'POST'},
+      'delete': {method:'DELETE', url: endpoint+'/api/key/:key'}
+    });
+  }]);
+
+alertaServices.factory('Profile', [
   function() {
-    var props = {
-      'user': 'unknown'
+    var profile = {
+      'user': undefined
     };
     return {
       getUser: function() {
-        return props.user;
+        return profile.user;
       },
       setUser: function(name) {
-        props.user = name;
+        profile.user = name;
+      },
+      clear: function() {
+        profile.user = undefined;
       }
     };
   }]);
