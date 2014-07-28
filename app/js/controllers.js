@@ -409,6 +409,7 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
   function($scope, $route, $timeout, Profile, Keys) {
 
     $scope.keys = [];
+    $scope.text = '';
 
     $scope.createKey = function(text) {
       Keys.save({}, {user: Profile.getUser(), text: text}, function(data) {

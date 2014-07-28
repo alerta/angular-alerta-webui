@@ -5,11 +5,6 @@
     <div class="span12">
       <!--Body content-->
 
-      <div>
-        <button type="button" class="btn btn-primary"
-                ng-click="createKey('prompt for key description')"><i class="glyphicon glyphicon-plus"></i> New API Key</button>
-      </div>
-
       <table class="table">
         <tr>
           <th>API Key</th>
@@ -17,7 +12,7 @@
           <th>Expires</th>
           <th>Last Used</th>
           <th>Times Used</th>
-          <th></th>
+          <th>Access</th>
         </tr>
         <tr ng-repeat="key in keys">
           <td><tt>{{ key.key }}</tt></td>
@@ -25,9 +20,30 @@
           <td class="hidden-xs">{{ key.expireTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
           <td class="hidden-xs">{{ key.lastUsedTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
           <td class="hidden-xs">{{ key.count }}</td>
-          <td ng-click="deleteKey(key.key);"><i class="glyphicon glyphicon-trash"></td>
+          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteKey(key.key);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
       </table>
+
+      <style>
+      .form-control[type="text"]{
+          width : 300px;
+          float : left;
+      }
+
+      #generate-button {
+          width : 124px;
+          float : left;
+          margin-left: 10px;
+      }
+      </style>
+
+      <form class="form-inline" role="form" name="key-form">
+        <div class="form-group col-lg-4" ng-class="{ 'has-error': key-form.text.$invalid }" >
+          <input type="text" class="span6 form-control" name="text" placeholder="Application requiring API Key" ng-model="text" required />
+          <button id="generate-button" type="button" class="btn btn-primary"
+                ng-click="createKey(text)">Generate</button>
+        </div>
+      </form>
 
     </div>
   </div>
