@@ -8,7 +8,8 @@ var alertaApp = angular.module('alertaApp', [
   'alertaFilters',
   'alertaServices',
   'alertaDirectives',
-  'alertaControllers'
+  'alertaControllers',
+  'googleOauth'
 ])
 
 alertaApp.config(['$routeProvider',
@@ -32,12 +33,32 @@ alertaApp.config(['$routeProvider',
       templateUrl: 'partials/alert-watch.html',
       controller: 'AlertWatchController'
     })
+    .when('/keys', {
+      templateUrl: 'partials/keys.html',
+      controller: 'ApiKeyController'
+    })
+    .when('/profile', {
+      templateUrl: 'partials/profile.html',
+      controller: 'ProfileController'
+    })
     .when('/about', {
       templateUrl: 'partials/about.html',
       controller: 'AboutController'
+    })
+    .when('/logout', {
+      templateUrl: 'partials/logout.html',
+      controller: 'LogoutController'
     })
     .otherwise({
       redirectTo: '/alerts'
     });
   }]);
 
+alertaApp.config(
+  function(TokenProvider) {
+    TokenProvider.extendConfig({
+      clientId: '379647311730-hn94fk7lss64ohvs1ddc01sauuspeeea.apps.googleusercontent.com',
+      redirectUri: 'http://localhost/~nsatterl/angular-alerta-webui/app/oauth2callback.html',
+      scopes: ["https://www.googleapis.com/auth/userinfo.email"]
+    });
+  });
