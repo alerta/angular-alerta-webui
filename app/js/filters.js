@@ -62,6 +62,13 @@ alertaFilters.filter('diff', function() {
   };
 });
 
+alertaFilters.filter('isExpired', function() {
+  return function(expire) {
+    console.log(expire);
+    return new Date().getTime() > new Date(expire).getTime();
+  };
+});
+
 alertaFilters.filter('shortid', function() {
   return function(id) {
     return String(id).substring(0,8);
