@@ -1,0 +1,55 @@
+
+<div class="container-fluid">
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--Body content-->
+
+      <div>
+        <table class="table">
+          <tr>
+            <td><b>Allowed Email Domains</b></td><td>{{ domains.join(', ') }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <table class="table">
+        <tr>
+          <th>User</th>
+          <th class="hidden-xs">Since</th>
+          <th class="hidden-xs">Sponsor</th>
+          <th>Access</th>
+        </tr>
+        <tr ng-repeat="user in users">
+          <td>{{ user.user }}</td>
+          <td class="hidden-xs">{{ user.createTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
+          <td class="hidden-xs">{{ user.sponsor }}</td>
+          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.user);"><i class="glyphicon glyphicon-trash"></i><span class="hidden-xs">&nbsp;Revoke<span></button></td>
+        </tr>
+      </table>
+
+      <style>
+      .form-control[type="email"]{
+          width : 300px;
+          float : left;
+      }
+
+      #generate-button {
+          width : 124px;
+          float : left;
+          margin-left: 10px;
+      }
+      </style>
+
+      <form class="form-inline" role="form" name="user-form">
+        <div class="form-group col-lg-4" ng-class="{ 'has-error': user-form.text.$invalid }" >
+          <input type="email" class="form-control" name="email" placeholder="Email address" ng-model="email" required />
+          <button id="generate-button" type="button" class="btn btn-primary"
+                ng-click="createUser(email)">Add new user</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>

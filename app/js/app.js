@@ -33,6 +33,10 @@ alertaApp.config(['$routeProvider',
       templateUrl: 'partials/alert-watch.html',
       controller: 'AlertWatchController'
     })
+    .when('/users', {
+      templateUrl: 'partials/users.html',
+      controller: 'UserController'
+    })
     .when('/keys', {
       templateUrl: 'partials/keys.html',
       controller: 'ApiKeyController'

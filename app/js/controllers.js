@@ -413,6 +413,32 @@ alertaControllers.controller('AlertLinkController', ['$scope', '$location',
     };
   }]);
 
+alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 'Profile', 'Users',
+  function($scope, $route, $timeout, Profile, Users) {
+
+    $scope.domains = [];
+    $scope.users = [];
+    $scope.email = '';
+
+    $scope.createUser = function(user) {
+      Users.save({}, {user: user, sponsor: Profile.getUser()}, function(data) {
+        $route.reload();
+      });
+    };
+
+    $scope.deleteUser = function(user) {
+      Users.delete({user: user}, {}, function(data) {
+        $route.reload();
+      });
+    };
+
+    Users.query(function(response) {
+      $scope.domains = response.domains;
+      $scope.users = response.users;
+    });
+
+  }]);
+
 alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', 'Profile', 'Keys',
   function($scope, $route, $timeout, Profile, Keys) {
 

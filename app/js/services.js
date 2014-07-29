@@ -45,6 +45,15 @@ alertaServices.factory('Service', ['$resource', 'endpoint',
     });
   }]);
 
+alertaServices.factory('Users', ['$resource', 'endpoint',
+  function($resource, endpoint) {
+    return $resource(endpoint+'/api/user', {}, {
+      'query':  {method:'GET', url: endpoint+'/api/users'},
+      'save':   {method:'POST'},
+      'delete': {method:'DELETE', url: endpoint+'/api/user/:user'}
+    });
+  }]);
+
 alertaServices.factory('Keys', ['$resource', 'endpoint',
   function($resource, endpoint) {
     return $resource(endpoint+'/api/key', {}, {
