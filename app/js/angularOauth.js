@@ -146,8 +146,8 @@ angular.module('angularOauth', []).
           popupOptions = angular.extend({
             name: 'AuthPopup',
             openParams: {
-              width: 650,
-              height: 300,
+              width: 600,
+              height: 500,
               resizable: true,
               scrollbars: true,
               status: true

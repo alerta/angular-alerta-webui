@@ -30,6 +30,11 @@ alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http',
     $scope.accessToken = Token.get();
 
     $scope.authenticate = function() {
+
+      Profile.clear();
+      Token.clear();
+      delete $http.defaults.headers.common.Authorization;
+
       var extraParams = $scope.askApproval ? {approval_prompt: 'force'} : {};
       Token.getTokenByPopup(extraParams)
         .then(function(params) {
@@ -50,6 +55,8 @@ alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http',
 
                 Profile.setUser(data.email);
 
+                $location.url('/alerts');
+
               });
             }, function() {
               alert("Failed to verify token.")
@@ -60,6 +67,7 @@ alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http',
           alert("Failed to get token from popup.");
         });
     };
+
   }]);
 
 alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
@@ -429,11 +437,15 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
 
   }]);
 
-alertaControllers.controller('ProfileController', ['$scope', '$route', '$timeout', 'Profile', 'Token',
-  function($scope, $route, $timeout, Profile, Token) {
+alertaControllers.controller('ProfileController', ['$scope', '$route', '$http', 'Profile', 'Token',
+  function($scope, $route, $http, Profile, Token) {
 
     $scope.user = Profile.getUser();
     $scope.accessToken = Token.get();
+
+    $http.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token='+$scope.accessToken).success(function(data) {
+      $scope.profile = data;
+    });
 
   }]);
 
@@ -472,6 +484,14 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
     });
 
   }]);
+
+alertaControllers.controller('LoginController', ['$scope', 'Profile',
+  function($scope, Profile) {
+
+    $scope.isAuthenticated = function() {
+      return (angular.isDefined(Profile.getUser()));
+    };
+}]);
 
 alertaControllers.controller('LogoutController', ['$scope', '$http', '$location', 'Token', 'Profile',
   function($scope, $http, $location, Token, Profile){
