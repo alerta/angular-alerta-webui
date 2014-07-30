@@ -26,26 +26,13 @@
         </tr>
       </table>
 
-      <style>
-      .form-control[type="text"]{
-          width : 300px;
-          float : left;
-      }
-
-      #generate-button {
-          width : 124px;
-          float : left;
-          margin-left: 10px;
-      }
-      </style>
-
-      <form class="form-inline" role="form" name="key-form">
-        <div class="form-group col-lg-4" ng-class="{ 'has-error': key-form.text.$invalid }" >
-          <input type="text" class="form-control" name="text" placeholder="Application requiring API Key" ng-model="text" required />
-          <button id="generate-button" type="button" class="btn btn-primary"
-                ng-click="createKey(text)">Create API Key</button>
+      <form name="form" class="form-inline css-form" novalidate>
+        <div class="form-group col-md-4">
+              <input type="text" class="form-control" id="text" placeholder="Application requiring API Key" ng-model="text" name="text" required />
         </div>
+        <button type="button" class="btn btn-primary" ng-click="createKey(text)" ng-disabled="form.$invalid">Create new API Key</button>
       </form>
+
 
     </div>
   </div>
