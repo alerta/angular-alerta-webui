@@ -22,7 +22,7 @@
           <td><i class="glyphicon glyphicon-warning-sign" ng-show="key.expireTime | isExpired" title="Expired"></i><i class="glyphicon glyphicon-ok" ng-hide="key.expireTime | isExpired" title="Active"></i></td>
           <td class="hidden-xs">{{ key.lastUsedTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
           <td class="hidden-xs">{{ key.count }}</td>
-          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteKey(key.key);"><i class="glyphicon glyphicon-trash"></i><span class="hidden-xs"> Revoke<span></button></td>
+          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteKey(key.key);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
       </table>
 

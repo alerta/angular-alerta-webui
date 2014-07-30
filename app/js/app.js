@@ -67,12 +67,10 @@ alertaApp.config(['$httpProvider', function ($httpProvider) {
         return {
             'response': function (response) {
                 //Will only be called for HTTP up to 300
-                console.log(response);
                 return response;
             },
             'responseError': function (rejection) {
                 if(rejection.status === 401) {
-                    //location.path('/login')
                     $location.path('/login');
                 }
                 return $q.reject(rejection);
