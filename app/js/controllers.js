@@ -7,8 +7,6 @@ var alertaControllers = angular.module('alertaControllers', []);
 alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http', '$window', '$location', '$route', 'Token', 'Profile',
   function($rootScope, $scope, $http, $window, $location, $route, Token, Profile) {
 
-    // $scope.user = Profile.getUser();
-
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
@@ -44,16 +42,17 @@ alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http',
           Token.verifyAsync(params.access_token).
             then(function(data) {
 
+              Token.set(params.access_token);
+
+              Profile.setEmail(data.email);
+
               $rootScope.$apply(function() {
 
-                $scope.accessToken = params.access_token;
-                $scope.expiresIn = params.expires_in;
-
-                Token.set(params.access_token);
+                $http.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token='+params.access_token).success(function(data) {
+                  Profile.setUser(data.name);
+                 });
 
                 $http.defaults.headers.common.Authorization = 'Token ' + Token.get();
-
-                Profile.setUser(data.email);
 
                 $location.url('/alerts');
 
@@ -72,8 +71,6 @@ alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http',
 
 alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $location, $timeout, Count, Environment, Service, Alert){
-
-    // $scope.location = $location;
 
     var search = $location.search();
     if (search.environment) {
@@ -463,15 +460,12 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
 
   }]);
 
-alertaControllers.controller('ProfileController', ['$scope', '$route', '$http', 'Profile', 'Token',
-  function($scope, $route, $http, Profile, Token) {
+alertaControllers.controller('ProfileController', ['$scope', 'Profile', 'Token',
+  function($scope, Profile, Token) {
 
     $scope.user = Profile.getUser();
+    $scope.email = Profile.getEmail();
     $scope.accessToken = Token.get();
-
-    $http.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token='+$scope.accessToken).success(function(data) {
-      $scope.profile = data;
-    });
 
   }]);
 
@@ -522,8 +516,10 @@ alertaControllers.controller('LoginController', ['$scope', '$http', 'Token', 'Pr
 
 alertaControllers.controller('LogoutController', ['$scope', '$http', '$location', 'Token', 'Profile',
   function($scope, $http, $location, Token, Profile){
+
     Profile.clear();
     Token.clear();
     delete $http.defaults.headers.common.Authorization;
+
     $location.path('/')
 }]);

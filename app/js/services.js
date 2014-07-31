@@ -61,17 +61,25 @@ alertaServices.factory('Keys', ['$resource', 'config',
 alertaServices.factory('Profile', [
   function() {
     var profile = {
-      'user': undefined
+      'user': undefined,
+      'email': undefined
     };
     return {
       getUser: function() {
         return profile.user;
       },
-      setUser: function(name) {
-        profile.user = name;
+      getEmail: function() {
+        return profile.email;
+      },
+      setUser: function(user) {
+        profile.user = user;
+      },
+      setEmail: function(email) {
+        profile.email = email;
       },
       clear: function() {
         profile.user = undefined;
+        profile.email = undefined;
       }
     };
   }]);
