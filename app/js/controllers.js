@@ -511,12 +511,13 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
 
   }]);
 
-alertaControllers.controller('LoginController', ['$scope', 'Profile',
-  function($scope, Profile) {
+alertaControllers.controller('LoginController', ['$scope', '$http', 'Token', 'Profile',
+  function($scope, $http, Token, Profile) {
 
-    $scope.isAuthenticated = function() {
-      return (angular.isDefined(Profile.getUser()));
-    };
+    Profile.clear();
+    Token.clear();
+    delete $http.defaults.headers.common.Authorization;
+
 }]);
 
 alertaControllers.controller('LogoutController', ['$scope', '$http', '$location', 'Token', 'Profile',
