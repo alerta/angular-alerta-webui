@@ -2,61 +2,59 @@
 
 /* Services */
 
-var alertaServices = angular.module('alertaServices', ['ngResource']);
+var alertaServices = angular.module('alertaServices', ['config', 'ngResource']);
 
-alertaServices.value('endpoint', "http://"+window.location.hostname+":8080");
-
-alertaServices.factory('Count', ['$resource', 'endpoint',
-  function($resource, endpoint) {
-    return $resource(endpoint+'/api/alerts/count', {}, {
+alertaServices.factory('Count', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/api/alerts/count', {}, {
       'query': {method:'GET'}
     });
   }]);
 
-alertaServices.factory('Alert', ['$resource', 'endpoint',
-  function($resource, endpoint) {
-    return $resource(endpoint+'/api/alert/:id', {}, {
-      'query':  {method:'GET', url: endpoint+'/api/alerts'},
+alertaServices.factory('Alert', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/api/alert/:id', {}, {
+      'query':  {method:'GET', url: config.endpoint+'/api/alerts'},
       'save':   {method:'POST'},
       'get':    {method:'GET'},
-      'status': {method:'POST', url: endpoint+'/api/alert/:id/status'},
+      'status': {method:'POST', url: config.endpoint+'/api/alert/:id/status'},
       'remove': {method:'DELETE'},
       'delete': {method:'DELETE'},
-      'tag':    {method:'POST', url: endpoint+'/api/alert/:id/tag'},
-      'untag':  {method:'POST', url: endpoint+'/api/alert/:id/untag'},
-      'top10':  {method:'GET', url: endpoint+'/api/alerts/top10'}
+      'tag':    {method:'POST', url: config.endpoint+'/api/alert/:id/tag'},
+      'untag':  {method:'POST', url: config.endpoint+'/api/alert/:id/untag'},
+      'top10':  {method:'GET', url: config.endpoint+'/api/alerts/top10'}
     });
   }]);
 
-alertaServices.factory('Environment', ['$resource', 'endpoint',
-  function($resource, endpoint) {
-    return $resource(endpoint+'/api/environments?status=open', {}, {
+alertaServices.factory('Environment', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/api/environments?status=open', {}, {
       'all':  {method: 'GET'},
     });
   }]);
 
-alertaServices.factory('Service', ['$resource', 'endpoint',
-  function($resource, endpoint) {
-    return $resource(endpoint+'/api/services', {}, {
+alertaServices.factory('Service', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/api/services', {}, {
       'all':  {method: 'GET'},
     });
   }]);
 
-alertaServices.factory('Users', ['$resource', 'endpoint',
-  function($resource, endpoint) {
-    return $resource(endpoint+'/api/user', {}, {
-      'query':  {method:'GET', url: endpoint+'/api/users'},
+alertaServices.factory('Users', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/api/user', {}, {
+      'query':  {method:'GET', url: config.endpoint+'/api/users'},
       'save':   {method:'POST'},
-      'delete': {method:'DELETE', url: endpoint+'/api/user/:user'}
+      'delete': {method:'DELETE', url: config.endpoint+'/api/user/:user'}
     });
   }]);
 
-alertaServices.factory('Keys', ['$resource', 'endpoint',
-  function($resource, endpoint) {
-    return $resource(endpoint+'/api/key', {}, {
-      'query':  {method:'GET', url: endpoint+'/api/keys/:user'},
+alertaServices.factory('Keys', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/api/key', {}, {
+      'query':  {method:'GET', url: config.endpoint+'/api/keys/:user'},
       'save':   {method:'POST'},
-      'delete': {method:'DELETE', url: endpoint+'/api/key/:key'}
+      'delete': {method:'DELETE', url: config.endpoint+'/api/key/:key'}
     });
   }]);
 
@@ -78,26 +76,19 @@ alertaServices.factory('Profile', [
     };
   }]);
 
-alertaServices.factory('Config', ['$resource',
-  function($resource) {
-    return $resource('config.json', {}, {
-      'query':  {method: 'GET'},
-    });
-  }]);
-
-alertaServices.factory('Heartbeat', ['$resource', 'endpoint',
-  function($resource, endpoint) {
-    return $resource(endpoint+'/api/heartbeats', {}, {
+alertaServices.factory('Heartbeat', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/api/heartbeats', {}, {
       'query':  {method:'GET'}
     });
   }]);
 
-alertaServices.factory('Management', ['$resource', 'endpoint',
-  function($resource, endpoint) {
-    return $resource(endpoint+'/management/manifest', {}, {
+alertaServices.factory('Management', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/management/manifest', {}, {
       'manifest':    {method:'GET'},
-      'healthcheck': {method:'GET', url: endpoint+'/management/healthcheck'},
-      'status':      {method:'GET', url: endpoint+'/management/status'}
+      'healthcheck': {method:'GET', url: config.endpoint+'/management/healthcheck'},
+      'status':      {method:'GET', url: config.endpoint+'/management/status'}
     });
   }]);
 

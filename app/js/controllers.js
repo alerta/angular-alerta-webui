@@ -70,8 +70,8 @@ alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http',
 
   }]);
 
-alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Config', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, $location, $timeout, Config, Count, Environment, Service, Alert){
+alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $location, $timeout, Count, Environment, Service, Alert){
 
     // $scope.location = $location;
 
