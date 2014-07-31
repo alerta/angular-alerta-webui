@@ -2,9 +2,6 @@
 
 /* Services */
 
-
-// Demonstrate how to register services
-// In this case it is a simple value service.
 var alertaServices = angular.module('alertaServices', ['ngResource']);
 
 alertaServices.value('endpoint', "http://"+window.location.hostname+":8080");

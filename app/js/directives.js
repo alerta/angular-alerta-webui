@@ -2,5 +2,4 @@
 
 /* Directives */
 
-
 var alertaDirectives = angular.module('alertaDirectives', []);
