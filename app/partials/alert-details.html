@@ -7,10 +7,12 @@
           ng-click="tagAlert(alert.id, ['foo'])">Tag</button -->
   <button type="button" class="btn btn-default"
           ng-click="watchAlert(alert.id, user)"
-          ng-show="alert.tags.indexOf('watch:'+user) == -1"><i class="glyphicon glyphicon-eye-open"></i> Watch</button>
+          ng-show="alert.tags.indexOf('watch:'+user) == -1"
+          ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-open"></i> Watch</button>
   <button type="button" class="btn btn-default"
           ng-click="unwatchAlert(alert.id, user)"
-          ng-show="alert.tags.indexOf('watch:'+user) > -1"><i class="glyphicon glyphicon-eye-close"></i> Unwatch</button>
+          ng-show="alert.tags.indexOf('watch:'+user) > -1"
+          ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-close"></i> Unwatch</button>
   <button type="button" class="btn btn-primary"
           ng-click="ackAlert(alert.id)"
           ng-disabled="alert.status == 'ack'"><i class="glyphicon glyphicon-ok-circle"></i> Ack</button>

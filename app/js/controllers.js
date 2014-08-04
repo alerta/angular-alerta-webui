@@ -210,6 +210,11 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       $scope.user = user;
     });
 
+    $scope.isAuthenticated = function() {
+      console.log(angular.isDefined(Profile.getUser()));
+      return (angular.isDefined(Profile.getUser()));
+    };
+
     Alert.get({id: $routeParams.id}, function(response) {
       $scope.alert = response.alert;
     });
