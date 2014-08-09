@@ -10,6 +10,12 @@
     src: url('../fonts/Sintony-Bold.ttf');
 }
 
+
+@font-face {
+    font-family: "Sonsie One";
+    src: url('../fonts/SonsieOne-Regular.ttf');
+}
+
 body {
     padding: 10px !important;
 }
@@ -22,6 +28,11 @@ table {
     color: #333333;
     background-color: #ffffff;
     font-weight: normal;
+}
+
+.logo {
+    font-family: "Sonsie One";
+    font-size: 26pt;
 }
 
 .ng-table {
