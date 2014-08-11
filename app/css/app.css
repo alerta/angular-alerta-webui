@@ -61,6 +61,7 @@ table {
 
 .severity-normal,
 .severity-cleared,
+.severity-ok,
 .severity-informational {
     background-color: #00CC00;
 }
@@ -105,6 +106,7 @@ table {
 
 .label-normal,
 .label-cleared,
+.label-ok,
 .label-informational {
     background-color: #468847;
 }
