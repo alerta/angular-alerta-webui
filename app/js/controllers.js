@@ -72,6 +72,9 @@ alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http',
 alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $location, $timeout, Count, Environment, Service, Alert){
 
+    $scope.autoRefresh = true;
+    $scope.refreshText = 'Auto Update';
+
     var search = $location.search();
     if (search.environment) {
       $scope.environment = search.environment;
@@ -145,6 +148,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     };
 
     var refresh = function() {
+      $scope.refreshText = 'Refreshing...';
       // console.log('start env ' + $scope.environment);
       Count.query({}, function(response) {
         $scope.statusCounts = response.statusCounts;
@@ -161,13 +165,21 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         }
         $scope.message = response.status + ' - ' + response.message;
         // console.log(response.status);
+        $scope.autoRefresh = response.autoRefresh;
+        if ($scope.autoRefresh) {
+          $scope.refreshText = 'Auto Update';
+        } else {
+          $scope.refreshText = 'Refresh';
+        }
       });
       // console.log('end env ' + $scope.environment);
 
       //console.log(timer);
     };
     var refreshWithTimeout = function() {
-      refresh();
+      if ($scope.autoRefresh) {
+        refresh();
+      }
       timer = $timeout(refreshWithTimeout, 5000);
     };
     var timer = $timeout(refreshWithTimeout, 200);

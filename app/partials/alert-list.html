@@ -18,7 +18,7 @@
       </select>
     </div>
     <div class="col-md-2 col-sm-2 col-xs-12">
-      <button type="button" class="btn btn-primary btn-block" ng-click="refresh()">Refresh</button>
+      <button type="button" class="btn btn-primary btn-block" ng-click="refresh()" ng-disabled="autoRefresh">{{ refreshText }}</button>
     </div>
   </div> <!-- row -->
 
