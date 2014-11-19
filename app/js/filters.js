@@ -64,7 +64,6 @@ alertaFilters.filter('diff', function() {
 
 alertaFilters.filter('isExpired', function() {
   return function(expire) {
-    console.log(expire);
     return new Date().getTime() > new Date(expire).getTime();
   };
 });
