@@ -1,0 +1,27 @@
+{
+  "name": "alerta-webui",
+  "description": "Deploy alerta web UI to Heroku",
+  "keywords": [
+    "monitoring",
+    "angularjs",
+    "bootstrap"
+  ],
+  "website": "http://alerta.io",
+  "repository": "https://github.com/alerta/angular-alerta-webui",
+  "success_url": "/",
+  "env": {
+    "ALERTA_ENDPOINT": {
+      "description": "Alerta API endpoint",
+      "value": "http://api.alerta.io"
+    },
+    "CLIENT_ID": {
+      "description": "Google OAuth2 Client ID",
+      "required": false
+    },
+    "REDIRECT_URL": {
+      "description": "Google OAuth2 redirect URL",
+      "required": false
+    }
+  }
+}
+
