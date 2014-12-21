@@ -115,6 +115,11 @@ table {
     background-color: #333333;
 }
 
+.no-wrap {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .full-width {
     width: 100%;
 }
