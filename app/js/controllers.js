@@ -4,66 +4,39 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('MenuController', ['$rootScope', '$scope', '$http', '$window', '$location', '$route', 'Token', 'Profile',
-  function($rootScope, $scope, $http, $window, $location, $route, Token, Profile) {
+alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 'Profile',
+  function($scope, $location, $auth, Profile) {
 
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
 
-    $scope.$watch(Profile.getUser, function(user) {
-      $scope.user = user;
+    Profile.getProfile(function(response) {
+      $scope.name = response.name;
+      $scope.email = response.email;
     });
 
-    $scope.setUser = function(user) {
-      Profile.setUser(user, function(data) {
-        $route.reload();
-      });
-    };
-
     $scope.isAuthenticated = function() {
-      return (angular.isDefined(Profile.getUser()));
+      return $auth.isAuthenticated();
     };
 
-    $scope.accessToken = Token.get();
-
-    $scope.authenticate = function() {
-
-      Profile.clear();
-      Token.clear();
-      delete $http.defaults.headers.common.Authorization;
-
-      var extraParams = $scope.askApproval ? {approval_prompt: 'force'} : {};
-      Token.getTokenByPopup(extraParams)
-        .then(function(params) {
-          // Success getting token from popup.
-
-          // Verify the token before setting it, to avoid the confused deputy problem.
-          Token.verifyAsync(params.access_token).
-            then(function(data) {
-
-              Token.set(params.access_token);
-
-              Profile.setEmail(data.email);
-
-              $rootScope.$apply(function() {
-
-                $http.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token='+params.access_token).success(function(data) {
-                  Profile.setUser(data.name);
-                 });
-
-                $http.defaults.headers.common.Authorization = 'Token ' + Token.get();
-
-                $location.url('/alerts');
-
-              });
-            }, function() {
-              alert("Failed to verify token.")
-            });
-
-        }, function() {
-          // Failure getting token from popup.
-          alert("Failed to get token from popup.");
+    $scope.authenticate = function(provider) {
+      $auth.authenticate(provider)
+        .then(function() {
+          console.log({
+            content: 'You have successfully logged in',
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 3
+          });
+        })
+        .catch(function(response) {
+          console.log({
+            content: response.data.message,
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 3
+          });
         });
     };
 
@@ -215,16 +188,11 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
 
   }]);
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', 'Profile', 'Alert',
-  function($scope, $route, $routeParams, $location, Profile, Alert){
-
-    $scope.$watch(Profile.getUser, function(user) {
-      $scope.user = user;
-    });
+alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
+  function($scope, $route, $routeParams, $location, $auth, Alert){
 
     $scope.isAuthenticated = function() {
-      console.log(angular.isDefined(Profile.getUser()));
-      return (angular.isDefined(Profile.getUser()));
+      return $auth.isAuthenticated();
     };
 
     Alert.get({id: $routeParams.id}, function(response) {
@@ -397,8 +365,10 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Pro
 
     $scope.watches = [];
 
+
+
     var refresh = function() {
-      Alert.query({'tags': 'watch:' + Profile.getUser()}, function(response) {
+      Alert.query({'tags': 'watch:' + 'foo'}, function(response) {
         if (response.status == 'ok') {
           $scope.watches = response.alerts;
         }
@@ -435,7 +405,7 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
     $scope.email = '';
 
     $scope.createUser = function(user) {
-      Users.save({}, {user: user, sponsor: Profile.getUser()}, function(data) {
+      Users.save({}, {user: user, sponsor: 'foo'}, function(data) {
         $route.reload();
       });
     };
@@ -460,7 +430,7 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
     $scope.text = '';
 
     $scope.createKey = function(text) {
-      Keys.save({}, {user: Profile.getUser(), text: text}, function(data) {
+      Keys.save({}, {user: 'foo', text: text}, function(data) {
         $route.reload();
       });
     };
@@ -471,19 +441,22 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
       });
     };
 
-    Keys.query({user: Profile.getUser()}, function(response) {
+    Keys.query({user: 'foo'}, function(response) {
       $scope.keys = response.keys;
     });
 
   }]);
 
-alertaControllers.controller('ProfileController', ['$scope', 'Profile', 'Token',
-  function($scope, Profile, Token) {
+alertaControllers.controller('ProfileController', ['$scope', '$auth', 'Profile',
+  function($scope, $auth, Profile) {
 
-    $scope.user = Profile.getUser();
-    $scope.email = Profile.getEmail();
-    $scope.accessToken = Token.get();
+    Profile.getProfile(function(response) {
+      $scope.name = response.name;
+      $scope.email = response.email;
+    });
 
+    $scope.token = $auth.getToken();
+    $scope.payload = $auth.getPayload();
   }]);
 
 alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Management', 'Heartbeat',
@@ -522,21 +495,60 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
 
   }]);
 
-alertaControllers.controller('LoginController', ['$scope', '$http', 'Token', 'Profile',
-  function($scope, $http, Token, Profile) {
+// alertaControllers.controller('LoginController', ['$scope', '$http', 'Token', 'Profile',
+//   function($scope, $http, Token, Profile) {
 
-    Profile.clear();
-    Token.clear();
-    delete $http.defaults.headers.common.Authorization;
+//     Profile.clear();
+//     Token.clear();
+//     delete $http.defaults.headers.common.Authorization;
 
-}]);
+// }]);
 
-alertaControllers.controller('LogoutController', ['$scope', '$http', '$location', 'Token', 'Profile',
-  function($scope, $http, $location, Token, Profile){
+alertaControllers.controller('LoginController', ['$scope', '$auth',
+ function($scope, $auth) {
+    $scope.authenticate = function(provider) {
+      $auth.authenticate(provider)
+        .then(function() {
+          console.log({
+            content: 'You have successfully logged in',
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 3
+          });
+        })
+        .catch(function(response) {
+          console.log({
+            content: response.data.message,
+            animation: 'fadeZoomFadeDown',
+            type: 'material',
+            duration: 3
+          });
+        });
+    };
+  }]);
 
-    Profile.clear();
-    Token.clear();
-    delete $http.defaults.headers.common.Authorization;
+// alertaControllers.controller('LogoutController', ['$scope', '$http', '$location', 'Profile',
+//   function($scope, $http, $location, Profile){
 
-    $location.path('/')
-}]);
+//     Profile.clear();
+//   //  Token.clear();
+//     delete $http.defaults.headers.common.Authorization;
+
+//     $location.path('/')
+// }]);
+
+  alertaControllers.controller('LogoutController', ['$auth',
+    function($auth) {
+    if (!$auth.isAuthenticated()) {
+        return;
+    }
+    $auth.logout()
+      .then(function() {
+        console.log({
+          content: 'You have been logged out',
+          animation: 'fadeZoomFadeDown',
+          type: 'material',
+          duration: 3
+        });
+      });
+  }]);

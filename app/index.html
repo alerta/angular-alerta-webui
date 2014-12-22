@@ -44,8 +44,8 @@
             <li><a href="#/keys">API Keys</a></li>
           </ul>
         </li>
-        <li ng-hide="isAuthenticated();" ng-click="authenticate();"><a href="#">Login</a></li>
-        <li ng-show="isAuthenticated();" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">{{ user }} <span class="caret"></span></a>
+        <li ng-hide="isAuthenticated();" ng-click="authenticate('google')"><a href="#">Login</a></li>
+        <li ng-show="isAuthenticated();" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">{{ name }} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#/profile">Profile</a></li>
             <li><a href="#/logout">Log Out</a></li>
@@ -69,12 +69,11 @@
 
   <script src="config.js"></script>
 
-  <script src="js/googleOauth.js"></script>
-  <script src="js/angularOauth.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
+  <script src="vendor/satellizer.js"></script>
 </body>
 </html>
