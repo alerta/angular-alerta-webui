@@ -33,8 +33,8 @@ Modify the file `app/js/services.js` to use a different alert API endpoint. For 
       'alerta': "http://api.alerta.io"
     };
 
-Push-button Deploy
-------------------
+Deploy to the Cloud
+-------------------
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
