@@ -62,7 +62,8 @@ alertaApp.config(['$routeProvider',
     });
   }]);
 
-alertaApp.config(['$httpProvider', function ($httpProvider) {
+alertaApp.config(['$httpProvider',
+  function ($httpProvider) {
     $httpProvider.interceptors.push(function ($q, $location) {
         return {
             'response': function (response) {
@@ -79,11 +80,12 @@ alertaApp.config(['$httpProvider', function ($httpProvider) {
     });
 }]);
 
-alertaApp.config(['$authProvider', function ($authProvider) {
+alertaApp.config(['config', '$authProvider',
+  function (config, $authProvider) {
     $authProvider.google({
-      url: 'http://localhost:8080/auth/google',
-      clientId: '379647311730-sj130ru952o3o7ig8u0ts8np2ojivr8d.apps.googleusercontent.com',
-      redirectUri: 'http://localhost/~nsatterl/angular-alerta-webui/app'
+      url: config.endpoint+'/auth/google',
+      clientId: config.client_id,
+      redirectUri: config.redirect_url
 
     });
 }]);
