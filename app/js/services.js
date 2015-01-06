@@ -58,13 +58,6 @@ alertaServices.factory('Keys', ['$resource', 'config',
     });
   }]);
 
-alertaServices.factory('Profile', ['$resource', 'config',
-  function($resource, config) {
-    return $resource(config.endpoint+'/users/me', {}, {
-      'getProfile': {method:'GET'}
-    });
-  }]);
-
 alertaServices.factory('Heartbeat', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/heartbeats', {}, {

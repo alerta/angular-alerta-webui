@@ -15,28 +15,35 @@
 
       <table class="table">
         <tr>
-          <th>User</th>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>E-mail</th>
           <th class="hidden-xs">Since</th>
-          <th class="hidden-xs">Sponsor</th>
+          <th class="hidden-xs">Provider</th>
           <th>Access</th>
         </tr>
         <tr ng-repeat="user in users">
-          <td>{{ user.user }}</td>
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
           <td class="hidden-xs">{{ user.createTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
-          <td class="hidden-xs">{{ user.sponsor }}</td>
+          <td class="hidden-xs">{{ user.provider }}</td>
           <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.user);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
       </table>
 
       <form name="form" class="form-inline css-form" novalidate>
+         <div class="form-group col-md-3">
+          <input class="form-control" id="username" placeholder="Name eg. Joe Bloggs" ng-model="username" name="username" required />
+        </div>
         <div class="form-group col-md-3">
           <div class="input-group ">
               <span class="input-group-addon">@</span>
               <label class="sr-only" for="email">E-mail address</label>
-              <input type="email" class="form-control" id="email" placeholder="E-mail address" ng-model="email" name="email" required />
+              <input class="form-control" id="email" placeholder="E-mail address" ng-model="email" name="email" required />
           </div>
         </div>
-        <button type="button" class="btn btn-primary" ng-click="createUser(email)" ng-disabled="form.$invalid">Add new User</button>
+        <button type="button" class="btn btn-primary" ng-click="createUser(username,email)" ng-disabled="form.$invalid">Add new User</button>
       </form>
 
     </div>

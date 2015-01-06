@@ -4,17 +4,12 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 'Profile',
-  function($scope, $location, $auth, Profile) {
+alertaControllers.controller('MenuController', ['$scope', '$location', '$auth',
+  function($scope, $location, $auth) {
 
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
-
-    Profile.getProfile(function(response) {
-      $scope.name = response.name;
-      $scope.email = response.email;
-    });
 
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
@@ -23,12 +18,11 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider)
         .then(function() {
-          console.log({
-            content: 'You have successfully logged in',
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
+
+          console.log($auth.getToken());
+          console.log($auth.getPayload());
+
+          $scope.name = $auth.getPayload().sub.name;
         })
         .catch(function(response) {
           console.log({
@@ -212,13 +206,13 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     };
 
     $scope.watchAlert = function(id, user) {
-      Alert.tag({id: id}, {tags: ['watch:' + user]}, function(data) {
+      Alert.tag({id: id}, {tags: ['watch:' + $auth.getPayload().sub.name]}, function(data) {
         $route.reload();
       });
     };
 
     $scope.unwatchAlert = function(id, user) {
-      Alert.untag({id: id}, {tags: ['watch:' + user]}, function(data) {
+      Alert.untag({id: id}, {tags: ['watch:' + $auth.getPayload().sub.name]}, function(data) {
         $route.reload();
       });
     };
@@ -360,15 +354,13 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
 
   }]);
 
-alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', 'Profile', 'Alert',
-  function($scope, $timeout, Profile, Alert){
+alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', '$auth', 'Alert',
+  function($scope, $timeout, $auth, Alert){
 
     $scope.watches = [];
 
-
-
     var refresh = function() {
-      Alert.query({'tags': 'watch:' + 'foo'}, function(response) {
+      Alert.query({'tags': 'watch:' + $auth.getPayload().sub.name}, function(response) {
         if (response.status == 'ok') {
           $scope.watches = response.alerts;
         }
@@ -397,15 +389,15 @@ alertaControllers.controller('AlertLinkController', ['$scope', '$location',
     };
   }]);
 
-alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 'Profile', 'Users',
-  function($scope, $route, $timeout, Profile, Users) {
+alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'Users',
+  function($scope, $route, $timeout, $auth, Users) {
 
     $scope.domains = [];
     $scope.users = [];
     $scope.email = '';
 
-    $scope.createUser = function(user) {
-      Users.save({}, {user: user, sponsor: 'foo'}, function(data) {
+    $scope.createUser = function(name, email) {
+      Users.save({}, {name: name, email: email, provider: $auth.getPayload().sub.name}, function(data) {
         $route.reload();
       });
     };
@@ -423,14 +415,14 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
 
   }]);
 
-alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', 'Profile', 'Keys',
-  function($scope, $route, $timeout, Profile, Keys) {
+alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'Keys',
+  function($scope, $route, $timeout, $auth, Keys) {
 
     $scope.keys = [];
     $scope.text = '';
 
     $scope.createKey = function(text) {
-      Keys.save({}, {user: 'foo', text: text}, function(data) {
+      Keys.save({}, {user: $auth.getPayload().sub.id, text: text}, function(data) {
         $route.reload();
       });
     };
@@ -441,20 +433,16 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
       });
     };
 
-    Keys.query({user: 'foo'}, function(response) {
+    Keys.query({user: $auth.getPayload().sub.id}, function(response) {
       $scope.keys = response.keys;
     });
 
   }]);
 
-alertaControllers.controller('ProfileController', ['$scope', '$auth', 'Profile',
-  function($scope, $auth, Profile) {
+alertaControllers.controller('ProfileController', ['$scope', '$auth',
+  function($scope, $auth) {
 
-    Profile.getProfile(function(response) {
-      $scope.name = response.name;
-      $scope.email = response.email;
-    });
-
+    $scope.user = $auth.getPayload().sub;
     $scope.token = $auth.getToken();
     $scope.payload = $auth.getPayload();
   }]);
