@@ -185,6 +185,8 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
   function($scope, $route, $routeParams, $location, $auth, Alert){
 
+    $scope.user = $auth.getPayload().sub.name;
+
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
     };
@@ -206,13 +208,13 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     };
 
     $scope.watchAlert = function(id, user) {
-      Alert.tag({id: id}, {tags: ['watch:' + $auth.getPayload().sub.name]}, function(data) {
+      Alert.tag({id: id}, {tags: ['watch:' + user]}, function(data) {
         $route.reload();
       });
     };
 
     $scope.unwatchAlert = function(id, user) {
-      Alert.untag({id: id}, {tags: ['watch:' + $auth.getPayload().sub.name]}, function(data) {
+      Alert.untag({id: id}, {tags: ['watch:' + user]}, function(data) {
         $route.reload();
       });
     };
