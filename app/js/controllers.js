@@ -7,6 +7,10 @@ var alertaControllers = angular.module('alertaControllers', []);
 alertaControllers.controller('MenuController', ['$scope', '$location', '$auth',
   function($scope, $location, $auth) {
 
+    if ($auth.isAuthenticated()) {
+      $scope.name = $auth.getPayload().sub.name;
+    };
+
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
@@ -424,7 +428,7 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
     $scope.text = '';
 
     $scope.createKey = function(text) {
-      Keys.save({}, {user: $auth.getPayload().sub.id, text: text}, function(data) {
+      Keys.save({}, {text: text}, function(data) {
         $route.reload();
       });
     };
