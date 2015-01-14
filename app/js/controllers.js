@@ -8,7 +8,7 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth',
   function($scope, $location, $auth) {
 
     if ($auth.isAuthenticated()) {
-      $scope.name = $auth.getPayload().sub.name;
+      $scope.name = $auth.getPayload().name;
     };
 
     $scope.isActive = function (viewLocation) {
@@ -26,7 +26,7 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth',
           console.log($auth.getToken());
           console.log($auth.getPayload());
 
-          $scope.name = $auth.getPayload().sub.name;
+          $scope.name = $auth.getPayload().name;
         })
         .catch(function(response) {
           console.log({
@@ -189,7 +189,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
   function($scope, $route, $routeParams, $location, $auth, Alert){
 
-    $scope.user = $auth.getPayload().sub.name;
+    $scope.user = $auth.getPayload().name;
 
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
@@ -366,7 +366,7 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', '$au
     $scope.watches = [];
 
     var refresh = function() {
-      Alert.query({'tags': 'watch:' + $auth.getPayload().sub.name}, function(response) {
+      Alert.query({'tags': 'watch:' + $auth.getPayload().name}, function(response) {
         if (response.status == 'ok') {
           $scope.watches = response.alerts;
         }
@@ -403,7 +403,7 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
     $scope.email = '';
 
     $scope.createUser = function(name, email) {
-      Users.save({}, {name: name, email: email, provider: $auth.getPayload().sub.name}, function(data) {
+      Users.save({}, {name: name, email: email, provider: $auth.getPayload().name}, function(data) {
         $route.reload();
       });
     };
@@ -439,7 +439,7 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
       });
     };
 
-    Keys.query({user: $auth.getPayload().sub.id}, function(response) {
+    Keys.query({user: $auth.getPayload().sub}, function(response) {
       $scope.keys = response.keys;
     });
 
@@ -448,7 +448,11 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
 alertaControllers.controller('ProfileController', ['$scope', '$auth',
   function($scope, $auth) {
 
-    $scope.user = $auth.getPayload().sub;
+    $scope.user_id = $auth.getPayload().sub;
+    $scope.name = $auth.getPayload().name;
+    $scope.email = $auth.getPayload().email;
+    $scope.provider = $auth.getPayload().provider;
+
     $scope.token = $auth.getToken();
     $scope.payload = $auth.getPayload();
   }]);
