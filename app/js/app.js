@@ -86,6 +86,10 @@ alertaApp.config(['config', '$authProvider',
       url: config.endpoint+'/auth/google',
       clientId: config.client_id,
       redirectUri: config.redirect_url
-
+    });
+    $authProvider.github({
+      url: config.endpoint+'/auth/github',
+      clientId: config.client_id,
+      redirectUri: config.redirect_url
     });
 }]);

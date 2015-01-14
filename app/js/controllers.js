@@ -4,8 +4,8 @@
 
 var alertaControllers = angular.module('alertaControllers', []);
 
-alertaControllers.controller('MenuController', ['$scope', '$location', '$auth',
-  function($scope, $location, $auth) {
+alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 'config',
+  function($scope, $location, $auth, config) {
 
     if ($auth.isAuthenticated()) {
       $scope.name = $auth.getPayload().name;
@@ -19,8 +19,8 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth',
       return $auth.isAuthenticated();
     };
 
-    $scope.authenticate = function(provider) {
-      $auth.authenticate(provider)
+    $scope.authenticate = function() {
+      $auth.authenticate(config.provider)
         .then(function() {
 
           console.log($auth.getToken());
@@ -428,7 +428,7 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
     $scope.text = '';
 
     $scope.createKey = function(text) {
-      Keys.save({}, {text: text}, function(data) {
+      Keys.save({}, {user: $auth.getPayload().name, text: text}, function(data) {
         $route.reload();
       });
     };
@@ -439,7 +439,7 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
       });
     };
 
-    Keys.query({user: $auth.getPayload().sub}, function(response) {
+    Keys.query({user: $auth.getPayload().name}, function(response) {
       $scope.keys = response.keys;
     });
 
