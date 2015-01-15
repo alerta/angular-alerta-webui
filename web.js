@@ -8,6 +8,7 @@ app.get('/config.js', function(request, response) {
     angular.module('config', []) \
       .constant('config', { \
         'endpoint'    : '" + process.env.ALERTA_ENDPOINT + "', \
+        'provider'    : 'google',
         'client_id'   : '" + process.env.CLIENT_ID + "', \
         'redirect_url': '" + process.env.REDIRECT_URL + "' \
       });";
