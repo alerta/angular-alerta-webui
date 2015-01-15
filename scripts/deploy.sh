@@ -11,6 +11,7 @@ fi
 HOSTED_ZONE_ID=Z2RNJ4H6FV67LG
 DOMAIN=try.alerta.io
 GOOGLE_TRACKING_ID=UA-44644195-1
+OAUTH2_CLIENT_ID=744241357326-2m37jti56hjvapc1137la03d27pnpoa1.apps.googleusercontent.com
 REGION=eu-west-1
 S3_HOSTED_ZONE_ID=Z1BKCTXD74EZPE
 
@@ -37,8 +38,9 @@ cat >${TMP_CONFIG_JS} << EOF
 angular.module('config', [])
   .constant('config', {
     'endpoint'    : "http://api.alerta.io",
-    'client_id'   : "379647311730-h7eh836lg77cbbm2pmh0b66nlb3nnpm8.apps.googleusercontent.com",
-    'redirect_url': "http://try.alerta.io/oauth2callback.html"
+    'provider'    : "google",
+    'client_id'   : "${OAUTH2_CLIENT_ID}",
+    'redirect_url': "http://try.alerta.io/auth/google"
   });
 EOF
 
