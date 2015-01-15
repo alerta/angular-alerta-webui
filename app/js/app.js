@@ -84,12 +84,10 @@ alertaApp.config(['config', '$authProvider',
   function (config, $authProvider) {
     $authProvider.google({
       url: config.endpoint+'/auth/google',
-      clientId: config.client_id,
-      redirectUri: config.redirect_url
+      clientId: config.client_id
     });
     $authProvider.github({
       url: config.endpoint+'/auth/github',
-      clientId: config.client_id,
-      redirectUri: config.redirect_url
+      clientId: config.client_id
     });
 }]);

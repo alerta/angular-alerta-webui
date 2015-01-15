@@ -14,12 +14,12 @@
       "description": "Alerta API endpoint",
       "value": "http://api.alerta.io"
     },
-    "CLIENT_ID": {
-      "description": "Google OAuth2 Client ID",
-      "required": false
+    "PROVIDER": {
+      "description": "OAuth2 Provider",
+      "value": "google or github"
     },
-    "REDIRECT_URL": {
-      "description": "Google OAuth2 redirect URL",
+    "CLIENT_ID": {
+      "description": "OAuth2 Client ID",
       "required": false
     }
   }
