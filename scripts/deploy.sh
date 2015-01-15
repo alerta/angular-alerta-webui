@@ -39,8 +39,7 @@ angular.module('config', [])
   .constant('config', {
     'endpoint'    : "http://api.alerta.io",
     'provider'    : "google",
-    'client_id'   : "${OAUTH2_CLIENT_ID}",
-    'redirect_url': "http://try.alerta.io/auth/google"
+    'client_id'   : "${OAUTH2_CLIENT_ID}"
   });
 EOF
 
