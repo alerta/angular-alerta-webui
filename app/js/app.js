@@ -9,7 +9,7 @@ var alertaApp = angular.module('alertaApp', [
   'alertaServices',
   'alertaDirectives',
   'alertaControllers',
-  'googleOauth'
+  'satellizer'
 ])
 
 alertaApp.config(['$routeProvider',
@@ -62,7 +62,8 @@ alertaApp.config(['$routeProvider',
     });
   }]);
 
-alertaApp.config(['$httpProvider', function ($httpProvider) {
+alertaApp.config(['$httpProvider',
+  function ($httpProvider) {
     $httpProvider.interceptors.push(function ($q, $location) {
         return {
             'response': function (response) {
@@ -79,11 +80,16 @@ alertaApp.config(['$httpProvider', function ($httpProvider) {
     });
 }]);
 
-alertaApp.config(['config', 'TokenProvider',
-  function(config, TokenProvider) {
-    TokenProvider.extendConfig({
+alertaApp.config(['config', '$authProvider',
+  function (config, $authProvider) {
+    $authProvider.google({
+      url: config.endpoint+'/auth/google',
       clientId: config.client_id,
-      redirectUri: config.redirect_url,
-      scopes: ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"]
+      redirectUri: config.redirect_url
     });
-  }]);
+    $authProvider.github({
+      url: config.endpoint+'/auth/github',
+      clientId: config.client_id,
+      redirectUri: config.redirect_url
+    });
+}]);
