@@ -25,7 +25,7 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
           $scope.name = $auth.getPayload().name;
         })
         .catch(function(e) {
-          alert(e);
+          alert(JSON.stringify(e));
         });
     };
 
