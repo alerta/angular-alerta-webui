@@ -12,8 +12,9 @@ HOSTED_ZONE_ID=Z2RNJ4H6FV67LG
 DOMAIN=try.alerta.io
 GOOGLE_TRACKING_ID=UA-44644195-1
 OAUTH2_CLIENT_ID=379647311730-sj130ru952o3o7ig8u0ts8np2ojivr8d.apps.googleusercontent.com
-REGION=eu-west-1
 S3_HOSTED_ZONE_ID=Z1BKCTXD74EZPE
+AWS_DEFAULT_REGION=eu-west-1
+export AWS_DEFAULT_REGION
 
 TMP_CONFIG_JS=/tmp/config.js.$$
 TMP_INDEX_HTML=/tmp/index.html.$$
@@ -52,7 +53,7 @@ rm ${TMP_INDEX_HTML}
 
 ##### Route53 #####
 
-echo "# Alias Record on ROUTE53: http://${DOMAIN} -> http://${DOMAIN}.s3-website-${REGION}.amazonaws.com ..."
+echo "# Alias Record on ROUTE53: http://${DOMAIN} -> http://${DOMAIN}.s3-website-${AWS_DEFAULT_REGION}.amazonaws.com ..."
 
 cat >${TMP_INPUT_JSON} << EOF
 {
@@ -65,7 +66,7 @@ cat >${TMP_INPUT_JSON} << EOF
         "Type": "A",
         "AliasTarget": {
           "HostedZoneId": "${S3_HOSTED_ZONE_ID}",
-          "DNSName": "s3-website-${REGION}.amazonaws.com.",
+          "DNSName": "s3-website-${AWS_DEFAULT_REGION}.amazonaws.com.",
           "EvaluateTargetHealth": false
         }
       }
