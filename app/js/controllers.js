@@ -169,7 +169,11 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
   function($scope, $route, $routeParams, $location, $auth, Alert){
 
-    $scope.user = $auth.getPayload().name;
+    if ($auth.isAuthenticated()) {
+      $scope.user = $auth.getPayload().name;
+     } else {
+       $scope.user = undefined;
+     };
 
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
