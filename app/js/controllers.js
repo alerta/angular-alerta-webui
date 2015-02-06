@@ -22,19 +22,10 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
     $scope.authenticate = function() {
       $auth.authenticate(config.provider)
         .then(function() {
-
-          console.log($auth.getToken());
-          console.log($auth.getPayload());
-
           $scope.name = $auth.getPayload().name;
         })
-        .catch(function(response) {
-          console.log({
-            content: response.data.message,
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
+        .catch(function(e) {
+          alert(e);
         });
     };
 
@@ -74,14 +65,12 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       $scope.service = service;
       updateQuery();
       refresh();
-      // console.log('refresh after svc change=' + service + '/' + $scope.environment);
     };
 
     $scope.setEnv = function(environment) {
       $scope.environment = environment;
       updateQuery();
       refresh();
-      // console.log('refresh after env change=' + $scope.service + '/' + environment);
     };
 
     $scope.setStatus = function(status) {
@@ -115,27 +104,22 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         delete $scope.query['status'];
       }
       $location.search($scope.query);
-      // console.log('update url...');
     };
 
     var refresh = function() {
       $scope.refreshText = 'Refreshing...';
-      // console.log('start env ' + $scope.environment);
       Count.query({}, function(response) {
         $scope.statusCounts = response.statusCounts;
       });
       Environment.all(function(response) {
         $scope.environments = response.environments;
       });
-      // console.log('scope.service=' + $scope.service);
       updateQuery();
-      // console.log($scope.query);
       Alert.query($scope.query, function(response) {
         if (response.status == 'ok') {
           $scope.alerts = response.alerts;
         }
         $scope.message = response.status + ' - ' + response.message;
-        // console.log(response.status);
         $scope.autoRefresh = response.autoRefresh;
         if ($scope.autoRefresh) {
           $scope.refreshText = 'Auto Update';
@@ -143,9 +127,6 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
           $scope.refreshText = 'Refresh';
         }
       });
-      // console.log('end env ' + $scope.environment);
-
-      //console.log(timer);
     };
     var refreshWithTimeout = function() {
       if ($scope.autoRefresh) {
@@ -158,7 +139,6 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
     $scope.$on('$destroy', function() {
       if (timer) {
         $timeout.cancel(timer);
-        // console.log('destroyed...');
       }
     });
 
@@ -244,10 +224,8 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     $scope.tagged = function(tags, tagged) {
       angular.forEach(tags, function(tag) {
         if (tag == tagged) {
-          // console.log('tagged with ' + tagged);
           return true;
         };
-        // console.log('tag ' + tagged + ' not found');
         return false;
       });
     };
@@ -287,14 +265,12 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
       $scope.service = service;
       updateQuery();
       refresh();
-      // console.log('refresh after svc change=' + service + '/' + $scope.environment);
     };
 
     $scope.setEnv = function(environment) {
       $scope.environment = environment;
       updateQuery();
       refresh();
-      // console.log('refresh after env change=' + $scope.service + '/' + environment);
     };
 
     $scope.setStatus = function(status) {
@@ -328,7 +304,6 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
         delete $scope.query['status'];
       }
       $location.search($scope.query);
-      // console.log('update url...');
     };
 
     var refresh = function() {
@@ -344,17 +319,14 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
           $scope.top10 = response.top10;
         }
         $scope.message = response.status + ' - ' + response.message;
-        // console.log(response.status);
       });
       timer = $timeout(refresh, 5000);
-      // console.log(timer);
     };
     var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
         $timeout.cancel(timer);
-        // console.log('destroyed...');
       }
     });
 
@@ -371,17 +343,14 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', '$au
           $scope.watches = response.alerts;
         }
         $scope.message = response.status + ' - ' + response.message;
-        // console.log(response.status);
       });
       timer = $timeout(refresh, 5000);
-      // console.log(timer);
     };
     var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
         $timeout.cancel(timer);
-        // console.log('destroyed...');
       }
     });
 
@@ -468,9 +437,6 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
     $scope.heartbeats = [];
 
     var refresh = function() {
-      // Management.healthcheck(function(response) {
-      //   $scope.healthcheck = response;
-      // });
       Management.status(function(response) {
         $scope.metrics = response.metrics;
         $scope.lastTime = response.time;
@@ -480,60 +446,29 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
         $scope.heartbeats = response.heartbeats;
       });
       timer = $timeout(refresh, 10000);
-      // console.log(timer);
     };
     var timer = $timeout(refresh, 200);
 
     $scope.$on('$destroy', function() {
       if (timer) {
         $timeout.cancel(timer);
-        // console.log('destroyed...');
       }
     });
 
   }]);
-
-// alertaControllers.controller('LoginController', ['$scope', '$http', 'Token', 'Profile',
-//   function($scope, $http, Token, Profile) {
-
-//     Profile.clear();
-//     Token.clear();
-//     delete $http.defaults.headers.common.Authorization;
-
-// }]);
 
 alertaControllers.controller('LoginController', ['$scope', '$auth',
  function($scope, $auth) {
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider)
         .then(function() {
-          console.log({
-            content: 'You have successfully logged in',
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
+          console.log('You have successfully logged in');
         })
-        .catch(function(response) {
-          console.log({
-            content: response.data.message,
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
+        .catch(function(e) {
+          console.log(e);
         });
     };
   }]);
-
-// alertaControllers.controller('LogoutController', ['$scope', '$http', '$location', 'Profile',
-//   function($scope, $http, $location, Profile){
-
-//     Profile.clear();
-//   //  Token.clear();
-//     delete $http.defaults.headers.common.Authorization;
-
-//     $location.path('/')
-// }]);
 
   alertaControllers.controller('LogoutController', ['$auth',
     function($auth) {
@@ -542,11 +477,6 @@ alertaControllers.controller('LoginController', ['$scope', '$auth',
     }
     $auth.logout()
       .then(function() {
-        console.log({
-          content: 'You have been logged out',
-          animation: 'fadeZoomFadeDown',
-          type: 'material',
-          duration: 3
-        });
+        console.log('You have been logged out');
       });
   }]);
