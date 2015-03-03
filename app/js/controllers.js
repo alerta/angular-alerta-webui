@@ -373,10 +373,10 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
 
     $scope.domains = [];
     $scope.users = [];
-    $scope.email = '';
+    $scope.login = '';
 
-    $scope.createUser = function(name, email) {
-      Users.save({}, {name: name, email: email, provider: $auth.getPayload().name}, function(data) {
+    $scope.createUser = function(name, login) {
+      Users.save({}, {name: name, login: login, provider: $auth.getPayload().provider, text: 'Added by '+$auth.getPayload().name}, function(data) {
         $route.reload();
       });
     };
@@ -389,6 +389,7 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
 
     Users.query(function(response) {
       $scope.domains = response.domains;
+      $scope.orgs = response.orgs;
       $scope.users = response.users;
     });
 
@@ -423,7 +424,7 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
 
     $scope.user_id = $auth.getPayload().sub;
     $scope.name = $auth.getPayload().name;
-    $scope.email = $auth.getPayload().email;
+    $scope.login = $auth.getPayload().login;
     $scope.provider = $auth.getPayload().provider;
 
     $scope.token = $auth.getToken();
