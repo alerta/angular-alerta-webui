@@ -90,4 +90,8 @@ alertaApp.config(['config', '$authProvider',
       url: config.endpoint+'/auth/github',
       clientId: config.client_id
     });
+    $authProvider.twitter({
+      url: config.endpoint+'/auth/twitter',
+      clientId: config.client_id
+    });
 }]);
