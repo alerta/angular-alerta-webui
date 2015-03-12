@@ -413,10 +413,13 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
   function($scope, $route, $timeout, $auth, Keys) {
 
     $scope.keys = [];
+    $scope.type = 'read-only';
     $scope.text = '';
 
-    $scope.createKey = function(text) {
-      Keys.save({}, {user: $auth.getPayload().name, text: text}, function(data) {
+    $scope.types = ['read-only', 'read-write'];
+
+    $scope.createKey = function(type, text) {
+      Keys.save({}, {user: $auth.getPayload().login, type: type, text: text}, function(data) {
         $route.reload();
       });
     };
@@ -427,7 +430,7 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
       });
     };
 
-    Keys.query({user: $auth.getPayload().name}, function(response) {
+    Keys.query({user: $auth.getPayload().login}, function(response) {
       $scope.keys = response.keys;
     });
 

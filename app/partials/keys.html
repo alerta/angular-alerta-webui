@@ -8,6 +8,7 @@
       <table class="table">
         <tr>
           <th>API Key</th>
+          <th class="hidden-xs">Access</th>
           <th class="hidden-xs">Description</th>
           <th class="hidden-xs">Expires</th>
           <th>Valid</th>
@@ -17,6 +18,7 @@
         </tr>
         <tr ng-repeat="key in keys">
           <td><tt>{{ key.key }}</tt></td>
+          <td class="hidden-xs">{{ key.type}}</td>
           <td class="hidden-xs">{{ key.text}}</td>
           <td class="hidden-xs">{{ key.expireTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
           <td><i class="glyphicon glyphicon-warning-sign" ng-show="key.expireTime | isExpired" title="Expired"></i><i class="glyphicon glyphicon-ok" ng-hide="key.expireTime | isExpired" title="Active"></i></td>
@@ -30,7 +32,11 @@
         <div class="form-group col-md-4">
               <input type="text" class="form-control" id="text" placeholder="Application requiring API Key" ng-model="text" name="text" required />
         </div>
-        <button type="button" class="btn btn-primary" ng-click="createKey(text)" ng-disabled="form.$invalid">Create new API Key</button>
+        <div class="col-md-2 col-sm-2 col-xs-12">
+          <select class="form-control input-sm" ng-model="type" ng-options="type for type in types">
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="createKey(type, text)" ng-disabled="form.$invalid">Create new API Key</button>
       </form>
 
 
