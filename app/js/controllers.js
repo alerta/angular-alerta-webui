@@ -375,6 +375,20 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
     $scope.users = [];
     $scope.login = '';
 
+    switch ($auth.getPayload().provider) {
+      case "google":
+        $scope.placeholder = "Google Email";
+        break;
+      case "github":
+        $scope.placeholder = "GitHub username";
+        break;
+      case "twitter":
+        $scope.placeholder = "Twitter username";
+        break;
+      default:
+        $scope.placeholder = "Login username";
+    }
+
     $scope.createUser = function(name, login) {
       Users.save({}, {name: name, login: login, provider: $auth.getPayload().provider, text: 'Added by '+$auth.getPayload().name}, function(data) {
         $route.reload();

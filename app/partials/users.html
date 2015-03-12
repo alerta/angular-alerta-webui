@@ -43,7 +43,7 @@
           <div class="input-group ">
               <span class="input-group-addon">@</span>
               <label class="sr-only" for="login">Login</label>
-              <input class="form-control" id="login" placeholder="E-mail or GitHub username" ng-model="login" name="login" required />
+              <input class="form-control" id="login" placeholder="{{ placeholder }}" ng-model="login" name="login" required />
           </div>
         </div>
         <button type="button" class="btn btn-primary" ng-click="createUser(displayname,login)" ng-disabled="form.$invalid">Add new User</button>
