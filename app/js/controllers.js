@@ -83,10 +83,6 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       refresh();
     };
 
-    Service.all(function(response) {
-      $scope.services = response.services;
-    });
-
     var updateQuery = function() {
       if ($scope.service) {
         $scope.query['service'] = $scope.service
@@ -110,6 +106,9 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       $scope.refreshText = 'Refreshing...';
       Count.query({}, function(response) {
         $scope.statusCounts = response.statusCounts;
+      });
+      Service.all({status: $scope.status}, function(response) {
+        $scope.services = response.services;
       });
       Environment.all(function(response) {
         $scope.environments = response.environments;
