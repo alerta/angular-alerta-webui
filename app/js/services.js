@@ -28,7 +28,7 @@ alertaServices.factory('Alert', ['$resource', 'config',
 
 alertaServices.factory('Environment', ['$resource', 'config',
   function($resource, config) {
-    return $resource(config.endpoint+'/environments?status=open', {}, {
+    return $resource(config.endpoint+'/environments', {}, {
       'all':  {method: 'GET'},
     });
   }]);

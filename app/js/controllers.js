@@ -110,7 +110,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       Service.all({status: $scope.status}, function(response) {
         $scope.services = response.services;
       });
-      Environment.all(function(response) {
+      Environment.all({status: $scope.status}, function(response) {
         $scope.environments = response.environments;
       });
       updateQuery();
