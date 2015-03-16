@@ -20,18 +20,18 @@ In production, copy the files under the `app/` directory to a web server.
 Configuration
 -------------
 
-By default, the dashboard will assume the alerta API endpoint is located at port 8080 on the same domain
-that the dashboard is served from. That is:
+By default, the dashboard will assume the alerta API endpoint is located at port 8080 on the same domain that the dashboard is served from. If the API endpoint is at a non-default location modify the `config.js` file:
 
-    var config = {
-      'alerta': "http://"+window.location.hostname+":8080"
-    };
+    'use strict';
 
-Modify the file `app/js/services.js` to use a different alert API endpoint. For example:
+    angular.module('config', [])
+      .constant('config', {
+        'endpoint'    : "http://"+window.location.hostname+":8080",
+        'provider'    : "google", // google, github or twitter
+        'client_id'   : "INSERT-CLIENT-ID-HERE"
+      });
 
-    var config = {
-      'alerta': "http://api.alerta.io"
-    };
+Also, if the Alerta API has set `AUTH_REQUIRED` to `True` then set the `provider` and `client_id` accordingly.
 
 Deploy to the Cloud
 -------------------
@@ -47,7 +47,7 @@ All dependencies are included, however, for reference they are:
   * [AngularJS](http://angularjs.org/)
   * [Bootstrap 3.0](http://getbootstrap.com/2.3.2/)
   * [Sintony Font](http://www.google.com/fonts/specimen/Sintony)
-  
+
 
 License
 -------
