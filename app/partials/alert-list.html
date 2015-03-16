@@ -25,7 +25,7 @@
   <div class="row">
     <div class="col-md-12">
     <ul class="nav nav-tabs">
-      <li ng-class="{active: !environment}"><a data-toggle="tab" ng-click="setEnv(null)">ALL&nbsp;<span class="badge">{{ statusCounts.open || 0 }}</span></a></li>
+      <li ng-class="{active: !environment}"><a data-toggle="tab" ng-click="setEnv(null)">ALL&nbsp;<span class="badge">{{ total || 0 }}</span></a></li>
       <li ng-class="{active: environment == e.environment}" ng-repeat="e in environments"><a data-toggle="tab" ng-click="setEnv(e.environment)">{{ e.environment }}&nbsp;<span class="badge">{{ e.count || 0 }}</span></a></li>
     </ul>
     </div>
