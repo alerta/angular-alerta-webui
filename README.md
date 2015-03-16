@@ -8,7 +8,7 @@ It replaces alerta dashboard [version 2.0](https://github.com/alerta/alerta-dash
 Example
 -------
 
-![dashboard](/docs/images/alerta-webui-v3.png?raw=true)
+![dashboard](/docs/images/alerta-webui-v3.png?raw=true&v=1)
 
 
 Installation
