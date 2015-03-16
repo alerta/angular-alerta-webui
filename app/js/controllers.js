@@ -287,10 +287,6 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
       refresh();
     };
 
-    Service.all(function(response) {
-      $scope.services = response.services;
-    });
-
     var updateQuery = function() {
       if ($scope.service) {
         $scope.query['service'] = $scope.service
@@ -315,7 +311,10 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
         $scope.total = response.total;
         $scope.statusCounts = response.statusCounts;
       });
-      Environment.all(function(response) {
+      Service.all({status: $scope.status}, function(response) {
+        $scope.services = response.services;
+      });
+      Environment.all({status: $scope.status}, function(response) {
         $scope.environments = response.environments;
       });
       updateQuery();
