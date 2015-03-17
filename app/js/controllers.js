@@ -221,7 +221,7 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 
     $scope.deleteAlert = function(id) {
       Alert.delete({id: id}, {}, function(data) {
-        window.history.back();
+        $location.path('/');
       });
     };
 
@@ -232,10 +232,6 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
         };
         return false;
       });
-    };
-
-    $scope.back = function() {
-      window.history.back();
     };
 
   }]);
