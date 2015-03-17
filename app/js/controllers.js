@@ -481,6 +481,7 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
 
 alertaControllers.controller('LoginController', ['$scope', '$auth',
  function($scope, $auth) {
+    $auth.logout();
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider)
         .then(function() {
