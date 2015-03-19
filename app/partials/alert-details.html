@@ -89,6 +89,6 @@
     <td><span class="label label-{{ history.status || history.severity }}">{{ history.status || history.severity }}</span></td>
     <td>{{ history.event }}</td>
     <td class="hidden-xs">{{ history.value }}</td>
-    <td class="hidden-xs">{{ history.text }}</td>
+    <td class="hidden-xs"><span ng-bind-html="history.text"></span></td>
   </tr>
 </table>
