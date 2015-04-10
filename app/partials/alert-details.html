@@ -41,7 +41,7 @@
   <tr><td><b>Group</b></td><td>{{ alert.group }}</td></tr>
   <tr><td><b>Severity</b></td>
     <td>
-      <span class="label label-{{ alert.previousSeverity }}">{{ alert.previousSeverity }}</span>&nbsp;->&nbsp;
+      <span class="label label-{{ alert.previousSeverity }}">{{ alert.previousSeverity }}</span>&nbsp;&rarr;&nbsp;
       <span class="label label-{{ alert.severity }}">{{ alert.severity }}</span>
     </td>
   </tr>
@@ -92,3 +92,4 @@
     <td class="hidden-xs"><span ng-bind-html="history.text"></span></td>
   </tr>
 </table>
+
