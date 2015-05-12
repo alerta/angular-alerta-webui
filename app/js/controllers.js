@@ -372,14 +372,15 @@ alertaControllers.controller('AlertLinkController', ['$scope', '$location',
     };
   }]);
 
-alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'Users',
-  function($scope, $route, $timeout, $auth, Users) {
+alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users',
+  function($scope, $route, $timeout, $auth, config, Users) {
 
     $scope.domains = [];
     $scope.users = [];
     $scope.login = '';
+    $scope.provider = config.provider;
 
-    switch ($auth.getPayload().provider) {
+    switch (config.provider) {
       case "google":
         $scope.placeholder = "Google Email";
         break;
@@ -390,11 +391,11 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
         $scope.placeholder = "Twitter username";
         break;
       default:
-        $scope.placeholder = "Login username";
+        $scope.placeholder = "Email";
     }
 
-    $scope.createUser = function(name, login) {
-      Users.save({}, {name: name, login: login, provider: $auth.getPayload().provider, text: 'Added by '+$auth.getPayload().name}, function(data) {
+    $scope.createUser = function(name, login, password) {
+      Users.save({}, {name: name, login: login, password: password, provider: config.provider, text: 'Added by '+$auth.getPayload().name}, function(data) {
         $route.reload();
       });
     };

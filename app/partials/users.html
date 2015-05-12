@@ -3,7 +3,6 @@
 
   <div class="row-fluid">
     <div class="span12">
-      <!--Body content-->
 
       <div>
         <table class="table">
@@ -36,17 +35,20 @@
       </table>
 
       <form name="form" class="form-inline css-form" novalidate>
-         <div class="form-group col-md-3">
-          <input class="form-control" id="displayname" placeholder="Name eg. Joe Bloggs" ng-model="displayname" name="displayname" required />
+         <div class="form-group">
+          <input class="form-control" id="input-name" placeholder="Name" ng-model="name" name="name" required />
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group">
           <div class="input-group ">
               <span class="input-group-addon">@</span>
               <label class="sr-only" for="login">Login</label>
-              <input class="form-control" id="login" placeholder="{{ placeholder }}" ng-model="login" name="login" required />
+              <input class="form-control" id="input-login" placeholder="{{ placeholder }}" ng-model="login" name="login" required />
           </div>
         </div>
-        <button type="button" class="btn btn-primary" ng-click="createUser(displayname,login)" ng-disabled="form.$invalid">Add new User</button>
+        <div class="form-group" ng-show="provider == 'basic'">
+          <input type="password" class="form-control" id="input-password" ng-model="password" placeholder="Password" required>
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="createUser(name,login, password)" ng-disabled="form.$invalid">Add new User</button>
       </form>
 
     </div>
