@@ -20,6 +20,9 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
     };
 
     $scope.authenticate = function() {
+      if (config.provider == 'basic') {
+         $location.path('/login');
+      } else {
       $auth.authenticate(config.provider)
         .then(function() {
           $scope.name = $auth.getPayload().name;
@@ -27,6 +30,7 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
         .catch(function(e) {
           alert(JSON.stringify(e));
         });
+      }
     };
 
   }]);
@@ -475,9 +479,45 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
 
   }]);
 
-alertaControllers.controller('LoginController', ['$scope', '$auth',
- function($scope, $auth) {
-    $auth.logout();
+alertaControllers.controller('LoginController', ['$scope', '$auth', 'config',
+ function($scope, $auth, config) {
+    // $auth.logout();
+
+    $scope.provider = config.provider;
+
+    $scope.login = function(email, password) {
+      $auth.login({
+        email: $scope.email,
+        password: $scope.password
+      });
+    };
+
+    $scope.authenticate = function(provider) {
+      $auth.authenticate(provider)
+        .then(function() {
+          console.log('You have successfully logged in');
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
+    };
+  }]);
+
+alertaControllers.controller('SignupController', ['$scope', '$auth', 'config',
+ function($scope, $auth, config) {
+    // $auth.logout();
+
+    $scope.provider = config.provider;
+
+    $scope.userSignup = function(name, email, password, text) {
+        $auth.signup({
+          name: $scope.name,
+          email: $scope.email,
+          password: $scope.password,
+          text: $scope.text
+        });
+      };
+
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider)
         .then(function() {
