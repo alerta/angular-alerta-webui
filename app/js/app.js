@@ -86,7 +86,8 @@ alertaApp.config(['$httpProvider',
 
 alertaApp.config(['config', '$authProvider',
   function (config, $authProvider) {
-    $authProvider.baseUrl = config.endpoint;
+    $authProvider.loginUrl = config.endpoint+'/auth/login';
+    $authProvider.signupUrl = config.endpoint+'/auth/signup';
     $authProvider.logoutRedirect = '/login';
     $authProvider.google({
       url: config.endpoint+'/auth/google',
