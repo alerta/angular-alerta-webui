@@ -11,6 +11,10 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
       $scope.name = $auth.getPayload().name;
     };
 
+    $scope.$on('login:name', function(evt, name) {
+      $scope.name = name;
+    });
+
     $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
@@ -20,13 +24,17 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
     };
 
     $scope.authenticate = function() {
-      $auth.authenticate(config.provider)
-        .then(function() {
-          $scope.name = $auth.getPayload().name;
-        })
-        .catch(function(e) {
-          alert(JSON.stringify(e));
-        });
+      if (config.provider == 'basic') {
+        $location.path('/login');
+      } else {
+        $auth.authenticate(config.provider)
+          .then(function() {
+            $scope.name = $auth.getPayload().name;
+          })
+          .catch(function(e) {
+            alert(JSON.stringify(e));
+          });
+        }
     };
 
   }]);
@@ -475,9 +483,55 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
 
   }]);
 
-alertaControllers.controller('LoginController', ['$scope', '$auth',
- function($scope, $auth) {
-    $auth.logout();
+alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$auth', 'config',
+ function($scope, $rootScope, $auth, config) {
+
+    $scope.provider = config.provider;
+
+    $scope.login = function(email, password) {
+      $auth.login({
+        email: $scope.email,
+        password: $scope.password
+      })
+        .then(function() {
+          $rootScope.$broadcast('login:name', $auth.getPayload().name);
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
+    };
+
+    $scope.authenticate = function(provider) {
+      $auth.authenticate(provider)
+        .then(function() {
+          console.log('You have successfully logged in');
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
+    };
+  }]);
+
+alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$auth', 'config',
+ function($scope, $rootScope, $auth, config) {
+
+    $scope.provider = config.provider;
+
+    $scope.signup = function(name, email, password, text) {
+        $auth.signup({
+          name: $scope.name,
+          email: $scope.email,
+          password: $scope.password,
+          text: $scope.text
+        })
+          .then(function() {
+            $rootScope.$broadcast('login:name', $auth.getPayload().name);
+          })
+          .catch(function(e) {
+            console.log(e);
+          });
+      };
+
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider)
         .then(function() {

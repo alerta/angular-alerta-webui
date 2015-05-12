@@ -53,6 +53,10 @@ alertaApp.config(['$routeProvider',
       templateUrl: 'partials/login.html',
       controller: 'LoginController'
     })
+    .when('/signup', {
+      templateUrl: 'partials/signup.html',
+      controller: 'SignupController'
+    })
     .when('/logout', {
       templateUrl: 'partials/logout.html',
       controller: 'LogoutController'
@@ -82,6 +86,8 @@ alertaApp.config(['$httpProvider',
 
 alertaApp.config(['config', '$authProvider',
   function (config, $authProvider) {
+    $authProvider.loginUrl = config.endpoint+'/auth/login';
+    $authProvider.signupUrl = config.endpoint+'/auth/signup';
     $authProvider.logoutRedirect = '/login';
     $authProvider.google({
       url: config.endpoint+'/auth/google',
