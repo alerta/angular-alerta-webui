@@ -499,8 +499,11 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$auth'
         })
         .catch(function(e) {
           console.log(e);
-          if (e.status == 403) {
+          if (e.status == 401) {
             $scope.error = "Incorrect username or password.";
+          };
+          if (e.status == 403) {
+            $scope.error = "Unauthorized access.";
           };
         });
     };
