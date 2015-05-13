@@ -499,6 +499,9 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$auth'
         })
         .catch(function(e) {
           console.log(e);
+          if (e.status == 403) {
+            $scope.error = "Incorrect username or password.";
+          };
         });
     };
 
@@ -509,6 +512,7 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$auth'
         })
         .catch(function(e) {
           console.log(e);
+          $scope.error = e.statusText;
         });
     };
   }]);
@@ -530,6 +534,7 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$auth
           })
           .catch(function(e) {
             console.log(e);
+            $scope.error = e.statusText;
           });
       };
 
@@ -540,6 +545,7 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$auth
         })
         .catch(function(e) {
           console.log(e);
+          $scope.error = e.statusText;
         });
     };
   }]);
