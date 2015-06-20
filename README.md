@@ -27,7 +27,7 @@ By default, the dashboard will assume the alerta API endpoint is located at port
     angular.module('config', [])
       .constant('config', {
         'endpoint'    : "http://"+window.location.hostname+":8080",
-        'provider'    : "google", // google, github or twitter
+        'provider'    : "basic", // basic, google, github or twitter
         'client_id'   : "INSERT-CLIENT-ID-HERE"
       });
 
@@ -52,5 +52,5 @@ All dependencies are included, however, for reference they are:
 License
 -------
 
-Copyright (c) 2014 Nick Satterly. Available under the MIT License.
+Copyright (c) 2015 Nick Satterly. Available under the MIT License.
 
