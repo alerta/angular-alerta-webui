@@ -39,8 +39,28 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
 
   }]);
 
-alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, $location, $timeout, Count, Environment, Service, Alert){
+alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'colors', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $location, $timeout, colors, Count, Environment, Service, Alert){
+
+    var defaults = {
+      severity: {
+        critical: 'red',
+        major: 'orange',
+        minor: 'yellow',
+        warning: '#1E90FF',
+        indeterminate: 'silver',
+        cleared: '#00CC00',
+        normal: '#00CC00',
+        ok: '#00CC00',
+        informational: '#00CC00',
+        debug: '#7554BF',
+        security: 'black',
+        unknown: 'silver'
+      },
+      text: 'black'
+    };
+
+    $scope.colors = angular.merge(defaults, colors);
 
     $scope.autoRefresh = true;
     $scope.refreshText = 'Auto Update';
@@ -158,9 +178,10 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
         'indeterminate': 5,
         'cleared': 5,
         'normal': 5,
+        'ok': 5,
         'informational': 6,
         'debug': 7,
-        'auth': 8,
+        'security': 8,
         'unknown': 9
     };
 

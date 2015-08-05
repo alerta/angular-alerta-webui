@@ -49,7 +49,7 @@
         </tr>
 
         <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
-            class="severity severity-{{ alert.severity}}"
+            ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': colors.severity[alert.severity] }"
             ng-controller="AlertLinkController" ng-click="getDetails(alert);">
           <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
           <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>

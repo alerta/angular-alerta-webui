@@ -39,37 +39,6 @@ table {
     border: 1px solid #000;
 }
 
-.severity {
-    background-color: silver;
-}
-
-.severity-critical {
-    background-color: red;
-}
-
-.severity-major {
-    background-color: orange;
-}
-
-.severity-minor {
-    background-color: yellow;
-}
-
-.severity-warning {
-    background-color: #1E90FF; // dodger-blue
-}
-
-.severity-normal,
-.severity-cleared,
-.severity-ok,
-.severity-informational {
-    background-color: #00CC00;
-}
-
-.severity-debug {
-    background-color: #7554BF;
-}
-
 .label {
     font-size: 10.998px;
     font-weight: bold;
