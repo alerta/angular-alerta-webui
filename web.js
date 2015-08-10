@@ -10,7 +10,8 @@ app.get('/config.js', function(request, response) {
         'endpoint'    : '" + process.env.ALERTA_ENDPOINT + "', \
         'provider'    : '" + process.env.PROVIDER + "', \
         'client_id'   : '" + process.env.CLIENT_ID + "' \
-      });";
+      }) \
+      .constant('colors', {});";
 
   response.send(config);
 });
