@@ -29,9 +29,19 @@ By default, the dashboard will assume the alerta API endpoint is located at port
         'endpoint'    : "http://"+window.location.hostname+":8080",
         'provider'    : "basic", // basic, google, github or twitter
         'client_id'   : "INSERT-CLIENT-ID-HERE"
-      });
+      })
+      .constant('colors', {}); // use default colors
 
 Also, if the Alerta API has set `AUTH_REQUIRED` to `True` then set the `provider` and `client_id` accordingly.
+
+Server Configuration
+--------------------
+
+Ensure the Alerta API server configuration is updated to include the web UI address in the `CORS_ORIGINS` setting:
+
+    CORS_ORIGINS = [
+        'http://web.example.com'
+    ]
 
 Deploy to the Cloud
 -------------------
