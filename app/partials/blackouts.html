@@ -47,12 +47,13 @@
       </div>
       <div class="form-group">
         <select class="form-control" ng-model="environment" ng-options="e.environment as e.environment for e in environments" required>
-          <option value="" ng-model="environment">Environment</option>
+          <option value disabled selected>Environment</option>
         </select>
       </div>
 
       <div class="form-group">
         <select class="form-control" name="option" ng-model="option">
+          <option value selected>--choose--</option>
           <option value="resource">Resource</option>
           <option value="service">Service</option>
           <option value="event">Event</option>
