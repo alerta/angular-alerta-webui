@@ -393,6 +393,49 @@ alertaControllers.controller('AlertLinkController', ['$scope', '$location',
     };
   }]);
 
+alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service',
+  function($scope, $route, $timeout, $auth, Blackouts, Environment, Service) {
+
+    $scope.blackouts = [];
+
+    var now = new Date();
+    now.setSeconds(0,0);
+    $scope.start = now;
+    $scope.end = new Date(now);
+    $scope.end.setMinutes(now.getMinutes() + 60);
+
+    Service.all({status: $scope.status}, function(response) {
+      $scope.services = response.services;
+    });
+    Environment.all({status: $scope.status}, function(response) {
+      $scope.environments = response.environments;
+    });
+
+    $scope.createBlackout = function(environment,service,resource,event,group,tags,start,end) {
+      if (service) {
+        service = service.split(",");
+      }
+      if (tags) {
+        tags = tags.split(",");
+      }
+      Blackouts.save({}, {environment: environment, service: service, resource: resource, event: event, group: group, tags: tags, startTime: start, endTime: end}, function(data) {
+        $route.reload();
+      });
+    };
+
+    $scope.deleteBlackout = function(id) {
+      Blackouts.delete({id: id}, {}, function(data) {
+        $route.reload();
+      });
+    };
+
+    Blackouts.query({}, function(response) {
+      $scope.blackouts = response.blackouts;
+    });
+
+  }]);
+
+
 alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users',
   function($scope, $route, $timeout, $auth, config, Users) {
 

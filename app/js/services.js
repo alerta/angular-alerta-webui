@@ -40,6 +40,15 @@ alertaServices.factory('Service', ['$resource', 'config',
     });
   }]);
 
+alertaServices.factory('Blackouts', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/blackout', {}, {
+      'query':  {method:'GET', url: config.endpoint+'/blackouts'},
+      'save':   {method:'POST'},
+      'delete': {method:'DELETE', url: config.endpoint+'/blackout/:id'}
+    });
+  }]);
+
 alertaServices.factory('Users', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/user', {}, {
