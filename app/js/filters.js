@@ -56,6 +56,26 @@ alertaFilters.filter('since', function() {
   };
 });
 
+alertaFilters.filter('hms', function() {
+  return function(delta) {
+    function pad(n) {
+      return (n < 10) ? ("0" + n) : n;
+    }
+    var days = Math.floor(delta / 86400);
+    delta -= days * 86400;
+    var hours = Math.floor(delta / 3600) % 24;
+    delta -= hours * 3600;
+    var minutes = Math.floor(delta / 60) % 60;
+    delta -= minutes * 60;
+    var seconds = Math.floor(delta % 60);
+    if (days > 0) {
+      return days + ' days ' + hours + ':' + pad(minutes) + ':' + pad(seconds);
+    } else {
+      return hours + ':' + pad(minutes) + ':' + pad(seconds);
+    }
+  };
+});
+
 alertaFilters.filter('diff', function() {
   return function(receive, create) {
     return new Date(receive).getTime() - new Date(create).getTime();
