@@ -33,6 +33,10 @@ alertaApp.config(['$routeProvider',
       templateUrl: 'partials/alert-watch.html',
       controller: 'AlertWatchController'
     })
+    .when('/blackouts', {
+      templateUrl: 'partials/blackouts.html',
+      controller: 'AlertBlackoutController'
+    })
     .when('/users', {
       templateUrl: 'partials/users.html',
       controller: 'UserController'
