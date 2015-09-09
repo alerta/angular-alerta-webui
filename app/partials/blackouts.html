@@ -39,33 +39,58 @@
   <div>
     <form name="form" class="form-inline css-form validate" >
       <div class="form-group">
-        <select class="form-control" ng-model="environment" ng-options="e.environment as e.environment for e in environments" required>
-          <option value="" ng-model="environment">Environment</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <select class="form-control" ng-model="service" ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
-        <option value="" ng-model="service">Service</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <input class="form-control" id="input-resource" placeholder="Resource" ng-model="resource" name="resource"/>
-      </div>
-      <div class="form-group">
-        <input class="form-control" id="input-event" placeholder="Event" ng-model="event" name="event"/>
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" id="input-group" placeholder="Group" ng-model="group" name="group"/>
-      </div>
-      <div class="form-group">
-        <input class="form-control" id="input-tags" placeholder="Tags" ng-model="tags" name="tags"/>
-      </div>
-      <div class="form-group">
         <input type="datetime-local" class="form-control" id="input-start" ng-model="start" name="start" ng-max="end" required/>
       </div>
       <div class="form-group">
         <input type="datetime-local" class="form-control" id="input-end" ng-model="end" name="end" ng-min="start"/>
       </div>
+      <div class="form-group">
+        <select class="form-control" ng-model="environment" ng-options="e.environment as e.environment for e in environments" required>
+          <option value="" ng-model="environment">Environment</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select class="form-control" name="option" ng-model="option">
+          <option value="resource">Resource</option>
+          <option value="service">Service</option>
+          <option value="event">Event</option>
+          <option value="group">Group</option>
+          <option value="resource-event">Res-Event</option>
+          <option value="tags">Tags</option>
+        </select>
+      </div>
+
+      <div class="form-group" ng-show="option == 'resource'">
+        <input class="form-control" id="input-resource" placeholder="Resource" ng-model="resource" name="resource"/>
+      </div>
+
+      <div class="form-group" ng-show="option == 'service'">
+        <select class="form-control" ng-model="service" ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
+        <!-- option value="" ng-model="service">Service</option -->
+        </select>
+      </div>
+
+      <div class="form-group" ng-show="option == 'event'">
+        <input class="form-control" id="input-event" placeholder="Event" ng-model="event" name="event"/>
+      </div>
+
+      <div class="form-group" ng-show="option == 'group'">
+        <input type="text" class="form-control" id="input-group" placeholder="Group" ng-model="group" name="group"/>
+      </div>
+
+      <div class="form-group" ng-show="option == 'resource-event'">
+        <input class="form-control" id="input-resource" placeholder="Resource" ng-model="resource" name="resource"/>
+      </div>
+
+      <div class="form-group" ng-show="option == 'resource-event'">
+        <input class="form-control" id="input-event" placeholder="Event" ng-model="event" name="event"/>
+      </div>
+
+      <div class="form-group" ng-show="option == 'tags'">
+        <input class="form-control" id="input-tags" placeholder="Tags" ng-model="tags" name="tags"/>
+      </div>
+
       <button type="button" class="btn btn-primary" ng-click="createBlackout(environment,service,resource,event,group,tags,start,end)" ng-disabled="form.$invalid">Blackout</button>
     </form>
   </div>
