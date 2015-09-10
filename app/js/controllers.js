@@ -361,8 +361,28 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
 
   }]);
 
-alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', '$auth', 'Alert',
-  function($scope, $timeout, $auth, Alert){
+alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', '$auth', 'colors', 'Alert',
+  function($scope, $timeout, $auth, colors, Alert){
+
+    var defaults = {
+      severity: {
+        critical: 'red',
+        major: 'orange',
+        minor: 'yellow',
+        warning: '#1E90FF',
+        indeterminate: 'silver',
+        cleared: '#00CC00',
+        normal: '#00CC00',
+        ok: '#00CC00',
+        informational: '#00CC00',
+        debug: '#7554BF',
+        security: 'black',
+        unknown: 'silver'
+      },
+      text: 'black'
+    };
+
+    $scope.colors = angular.merge(defaults, colors);
 
     $scope.watches = [];
 
