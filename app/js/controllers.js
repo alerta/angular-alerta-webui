@@ -67,7 +67,8 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
         security: 'black',
         unknown: 'silver'
       },
-      text: 'black'
+      text: 'black',
+      highlight: 'skyblue '
     };
 
     $scope.colors = angular.merge(defaults, colors);
@@ -205,9 +206,14 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 
     $scope.bulkAlerts = [];
 
-    $scope.getDetails = function($event,alert) {
-      if ($event.metaKey || $event.altKey) {
-        $scope.bulkAlerts.push(alert.id);
+    $scope.click = function($event,alert) {
+      if ($event.metaKey) {
+        var index = $scope.bulkAlerts.indexOf(alert.id);
+        if (index > -1) {
+          $scope.bulkAlerts.splice(index, 1);
+        } else {
+          $scope.bulkAlerts.push(alert.id);
+        }
       } else {
         $location.url('/alert/' + alert.id);
       }
@@ -440,8 +446,18 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
 
   }]);
 
-alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', '$auth', 'colors', 'Alert',
-  function($scope, $timeout, $auth, colors, Alert){
+alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'colors', 'Alert',
+  function($scope, $route, $location, $timeout, $auth,  colors, Alert){
+
+    if ($auth.isAuthenticated()) {
+      $scope.user = $auth.getPayload().name;
+     } else {
+       $scope.user = undefined;
+     };
+
+    $scope.isAuthenticated = function() {
+      return $auth.isAuthenticated();
+    };
 
     var defaults = {
       severity: {
@@ -458,7 +474,8 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', '$au
         security: 'black',
         unknown: 'silver'
       },
-      text: 'black'
+      text: 'black',
+      highlight: 'skyblue '
     };
 
     $scope.colors = angular.merge(defaults, colors);
@@ -482,15 +499,81 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', '$au
       }
     });
 
-    $scope.getDetails = function($event,alert) {
-      console.log($event.metaKey);
+
+    $scope.bulkAlerts = [];
+
+    $scope.click = function($event,alert) {
       if ($event.metaKey) {
-        $scope.bulkAlerts.push(alert.id);
+        var index = $scope.bulkAlerts.indexOf(alert.id);
+        if (index > -1) {
+          $scope.bulkAlerts.splice(index, 1);
+        } else {
+          $scope.bulkAlerts.push(alert.id);
+        }
       } else {
         $location.url('/alert/' + alert.id);
       }
     };
 
+    $scope.bulkOpenAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        Alert.status({id: id}, {status: 'open', text: 'bulk status change via console'}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    // $scope.bulkTagAlert = function(id, tags) {
+    //   Alert.tag({id: id}, {tags: tags}, function(data) {
+    //     $route.reload();
+    //   });
+    // };
+
+    $scope.bulkWatchAlert = function(ids, user) {
+      angular.forEach(ids, function(id) {
+        Alert.tag({id: id}, {tags: ['watch:' + user]}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    $scope.bulkUnwatchAlert = function(ids, user) {
+      angular.forEach(ids, function(id) {
+        Alert.untag({id: id}, {tags: ['watch:' + user]}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    $scope.bulkAckAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        Alert.status({id: id}, {status: 'ack', text: 'bulk status change via console'}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    $scope.bulkCloseAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        Alert.status({id: id}, {status: 'closed', text: 'bulk status change via console'}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    $scope.bulkDeleteAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        Alert.delete({id: id}, {}, function(data) {
+          // $location.path('/');
+        });
+      });
+      $route.reload();
+    };
   }]);
 
 alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service',

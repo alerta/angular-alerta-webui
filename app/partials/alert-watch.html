@@ -18,8 +18,8 @@
         </tr>
 
         <tr ng-repeat="alert in watches | orderBy:predicate:reverse"
-            ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': colors.severity[alert.severity] }"
-            ng-click="getDetails(alert);">
+            ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? colors.highlight : colors.severity[alert.severity] }"
+            ng-click="click($event,alert);">
           <td class="hidden-xs"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
           <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
           <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
@@ -51,4 +51,29 @@
   </div>
   </div> <!-- row -->
 
+  <p>
+
+  <div class="row" ng-show="bulkAlerts.length > 0">
+    <div class="col-md-12">
+    <button type="button" class="btn btn-success"
+            ng-click="bulkOpenAlert(bulkAlerts)"
+            ng-disabled="status.indexOf('open') > -1"><i class="glyphicon glyphicon-arrow-up"></i> Open</button>
+    <!-- button type="button" class="btn btn-default"
+            ng-click="bulkTagAlert(alert.id, ['foo'])">Tag</button -->
+    <button type="button" class="btn btn-default"
+            ng-click="bulkWatchAlert(bulkAlerts, user)"
+            ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-open"></i> Watch</button>
+    <button type="button" class="btn btn-default"
+            ng-click="bulkUnwatchAlert(bulkAlerts, user)"
+            ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-close"></i> Unwatch</button>
+    <button type="button" class="btn btn-primary"
+            ng-click="bulkAckAlert(bulkAlerts)"
+            ng-disabled="status.indexOf('ack') > -1"><i class="glyphicon glyphicon-ok-circle"></i> Ack</button>
+    <button type="button" class="btn btn-warning"
+            ng-click="bulkCloseAlert(bulkAlerts)"
+            ng-disabled="status.indexOf('closed') > -1"><i class="glyphicon glyphicon-remove-circle"></i> Close</button>
+    <button type="button" class="btn btn-danger"
+            ng-click="bulkDeleteAlert(bulkAlerts)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+    </div>
+  </div>
 </div> <!-- container -->

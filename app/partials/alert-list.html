@@ -49,8 +49,8 @@
         </tr>
 
         <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
-            ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? '#E0D8E0' : colors.severity[alert.severity] }"
-            ng-click="getDetails($event,alert);">
+            ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? colors.highlight : colors.severity[alert.severity] }"
+            ng-click="click($event,alert);">
           <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
           <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
           <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
@@ -105,6 +105,6 @@
             ng-disabled="status.indexOf('closed') > -1"><i class="glyphicon glyphicon-remove-circle"></i> Close</button>
     <button type="button" class="btn btn-danger"
             ng-click="bulkDeleteAlert(bulkAlerts)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-  </div>
+    </div>
   </div>
 </div> <!-- container -->

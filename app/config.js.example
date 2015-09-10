@@ -21,5 +21,6 @@ angular.module('config', [])
       'security'     : '#333333',
       'unknown'      : '#A6ACA8'
     },
-    'text': 'white'
+    'text': 'white',
+    'highlight': 'lightgray'
   });
