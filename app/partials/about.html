@@ -63,7 +63,7 @@
         <table class="table">
           <tr>
             <td><b>Last Update</b></td><td>{{ lastTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss'}}</td>
-            <td><b>Uptime</b></td><td>{{ uptime / 1000 | number:1 || 0 }} seconds</td>
+            <td><b>Uptime</b></td><td>{{ uptime / 1000 | hms }}</td>
           </tr>
         </table>
       </div>
