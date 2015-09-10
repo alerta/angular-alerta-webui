@@ -39,8 +39,8 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
 
   }]);
 
-alertaControllers.controller('AlertListController', ['$scope', '$location', '$timeout', 'colors', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, $location, $timeout, colors, Count, Environment, Service, Alert){
+alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', 'colors', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $route, $location, $timeout, colors, Count, Environment, Service, Alert){
 
     var defaults = {
       severity: {
@@ -193,6 +193,75 @@ alertaControllers.controller('AlertListController', ['$scope', '$location', '$ti
       return SEVERITY_MAP[alert.severity];
     };
 
+    $scope.bulkAlerts = [];
+
+    $scope.getDetails = function($event,alert) {
+      if ($event.metaKey) {
+        $scope.bulkAlerts.push(alert.id);
+      } else {
+        $location.url('/alert/' + alert.id);
+      }
+    };
+
+    $scope.bulkOpenAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        Alert.status({id: id}, {status: 'open', text: 'bulk status change via console'}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    // $scope.bulkTagAlert = function(id, tags) {
+    //   Alert.tag({id: id}, {tags: tags}, function(data) {
+    //     $route.reload();
+    //   });
+    // };
+
+    $scope.bulkWatchAlert = function(ids, user) {
+      angular.forEach(ids, function(id) {
+        Alert.tag({id: id}, {tags: ['watch:' + user]}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    $scope.bulkUnwatchAlert = function(ids, user) {
+      angular.forEach(ids, function(id) {
+        Alert.untag({id: id}, {tags: ['watch:' + user]}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    $scope.bulkAckAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        Alert.status({id: id}, {status: 'ack', text: 'bulk status change via console'}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    $scope.bulkCloseAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        Alert.status({id: id}, {status: 'closed', text: 'bulk status change via console'}, function(data) {
+          // $route.reload();
+        });
+      });
+      $route.reload();
+    };
+
+    $scope.bulkDeleteAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        Alert.delete({id: id}, {}, function(data) {
+          // $location.path('/');
+        });
+      });
+      $route.reload();
+    };
   }]);
 
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
@@ -218,11 +287,11 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       });
     };
 
-    $scope.tagAlert = function(id, tags) {
-      Alert.tag({id: id}, {tags: tags}, function(data) {
-        $route.reload();
-      });
-    };
+    // $scope.tagAlert = function(id, tags) {
+    //   Alert.tag({id: id}, {tags: tags}, function(data) {
+    //     $route.reload();
+    //   });
+    // };
 
     $scope.watchAlert = function(id, user) {
       Alert.tag({id: id}, {tags: ['watch:' + user]}, function(data) {
@@ -403,14 +472,15 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$timeout', '$au
       }
     });
 
-  }]);
-
-alertaControllers.controller('AlertLinkController', ['$scope', '$location',
-  function($scope, $location) {
-
-    $scope.getDetails = function(alert) {
-      $location.url('/alert/' + alert.id);
+    $scope.getDetails = function($event,alert) {
+      console.log($event.metaKey);
+      if ($event.metaKey) {
+        $scope.bulkAlerts.push(alert.id);
+      } else {
+        $location.url('/alert/' + alert.id);
+      }
     };
+
   }]);
 
 alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service',

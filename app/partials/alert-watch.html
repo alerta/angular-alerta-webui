@@ -19,7 +19,7 @@
 
         <tr ng-repeat="alert in watches | orderBy:predicate:reverse"
             ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': colors.severity[alert.severity] }"
-            ng-controller="AlertLinkController" ng-click="getDetails(alert);">
+            ng-click="getDetails(alert);">
           <td class="hidden-xs"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
           <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
           <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
