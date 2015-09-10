@@ -206,7 +206,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
     $scope.bulkAlerts = [];
 
     $scope.getDetails = function($event,alert) {
-      if ($event.metaKey) {
+      if ($event.metaKey || $event.altKey) {
         $scope.bulkAlerts.push(alert.id);
       } else {
         $location.url('/alert/' + alert.id);
