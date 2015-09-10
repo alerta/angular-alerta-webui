@@ -39,8 +39,18 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
 
   }]);
 
-alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', 'colors', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, $route, $location, $timeout, colors, Count, Environment, Service, Alert){
+alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', 'colors', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $route, $location, $timeout, $auth, colors, Count, Environment, Service, Alert){
+
+    if ($auth.isAuthenticated()) {
+      $scope.user = $auth.getPayload().name;
+     } else {
+       $scope.user = undefined;
+     };
+
+    $scope.isAuthenticated = function() {
+      return $auth.isAuthenticated();
+    };
 
     var defaults = {
       severity: {
