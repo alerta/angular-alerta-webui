@@ -2,16 +2,17 @@
 
 /* Services */
 
-var alertaServices = angular.module('alertaServices', ['config', 'ngResource']);
+angular
+  .module('alertaServices', ['config', 'ngResource'])
 
-alertaServices.factory('Count', ['$resource', 'config',
+  .factory('Count', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/alerts/count', {}, {
       'query': {method:'GET'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Alert', ['$resource', 'config',
+  .factory('Alert', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/alert/:id', {}, {
       'query':  {method:'GET', url: config.endpoint+'/alerts'},
@@ -24,57 +25,57 @@ alertaServices.factory('Alert', ['$resource', 'config',
       'untag':  {method:'POST', url: config.endpoint+'/alert/:id/untag'},
       'top10':  {method:'GET', url: config.endpoint+'/alerts/top10'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Environment', ['$resource', 'config',
+  .factory('Environment', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/environments', {}, {
       'all':  {method: 'GET'},
     });
-  }]);
+  }])
 
-alertaServices.factory('Service', ['$resource', 'config',
+  .factory('Service', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/services', {}, {
       'all':  {method: 'GET'},
     });
-  }]);
+  }])
 
-alertaServices.factory('Blackouts', ['$resource', 'config',
+  .factory('Blackouts', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/blackout', {}, {
       'query':  {method:'GET', url: config.endpoint+'/blackouts'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/blackout/:id'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Users', ['$resource', 'config',
+  .factory('Users', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/user', {}, {
       'query':  {method:'GET', url: config.endpoint+'/users'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/user/:user'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Keys', ['$resource', 'config',
+  .factory('Keys', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/key', {}, {
       'query':  {method:'GET', url: config.endpoint+'/keys/:user'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/key/:key'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Heartbeat', ['$resource', 'config',
+  .factory('Heartbeat', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/heartbeats', {}, {
       'query':  {method:'GET'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Management', ['$resource', 'config',
+  .factory('Management', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/management/manifest', {}, {
       'manifest':    {method:'GET'},
@@ -82,5 +83,3 @@ alertaServices.factory('Management', ['$resource', 'config',
       'status':      {method:'GET', url: config.endpoint+'/management/status'}
     });
   }]);
-
-

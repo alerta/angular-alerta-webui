@@ -1,110 +1,172 @@
-
-
-<div class="container-fluid">
-
-  <div class="row">
-    <div class="col-md-3 col-sm-3 col-xs-12">
-        <select class="form-control input-sm" ng-model="service" ng-change="setService(service)"
-        ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
-          <option value="" ng-model="service" ng-change="setService(null)">Service</option>
-        </select>
+<md-toolbar ng-show="!showSearch">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Menu">
+            <md-icon md-svg-icon="menu" ng-click="menu()"></md-icon>
+        </md-button>
+        <h2>
+            <span>Alerta</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Search">
+            <md-icon md-svg-icon="search"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Settings">
+            <md-icon md-svg-icon="more_vert" ng-click="settings()"></md-icon>
+        </md-button>
     </div>
-    <div class="col-md-5 col-sm-5 col-xs-12">
-      <input class="form-control input" ng-model="search" size="8" placeholder="Search">
+</md-toolbar>
+
+<md-toolbar ng-show="showSearch">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Back">
+            <md-icon md-svg-icon="arrow_back"></md-icon>
+        </md-button>
+        <h2>
+            <span>Alerta</span>
+        </h2>
+        <md-input-container md-no-float flex>
+            <label>Search</label>
+            <input type="text" ng-model="search" autofocus />
+        </md-input-container>
+        <md-button class="md-icon-button" ng-click="clear();" aria-label="Close">
+            <md-icon md-svg-icon="close"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Settings">
+            <md-icon md-svg-icon="more_vert" ng-click="settings()"></md-icon>
+        </md-button>
     </div>
-    <div class="col-md-2 col-sm-2 col-xs-12">
-      <select class="form-control input-sm" ng-model="status" ng-change="setStatus(status)"
-      ng-options="s.status as s.name for s in show">
-      </select>
+</md-toolbar>
+
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Menu">
+            <md-icon md-svg-icon="menu" ng-click="menu()"></md-icon>
+        </md-button>
+        <h2>
+            <span>Alerta</span>
+        </h2>
+        <span flex=""></span>
     </div>
-    <div class="col-md-2 col-sm-2 col-xs-12">
-      <button type="button" class="btn btn-primary btn-block" ng-click="refresh()" ng-disabled="autoRefresh">{{ refreshText }}</button>
-    </div>
-  </div> <!-- row -->
+    </md-toolbar>
 
-  <div class="row">
-    <div class="col-md-12">
-    <ul class="nav nav-tabs">
-      <li ng-class="{active: !environment}"><a data-toggle="tab" ng-click="setEnv(null)">ALL&nbsp;<span class="badge">{{ total || 0 }}</span></a></li>
-      <li ng-class="{active: environment == e.environment}" ng-repeat="e in environments"><a data-toggle="tab" ng-click="setEnv(e.environment)">{{ e.environment }}&nbsp;<span class="badge">{{ e.count || 0 }}</span></a></li>
-    </ul>
-    </div>
-  </div> <!-- row -->
+    <md-list>
+        <md-list-item ng-repeat="s in services">
+            <md-button ng-click="ul.selectUser(it)" ng-class="{'selected' : it === ul.selected }" style="width: 100%;">
+                <md-icon md-svg-icon="{{it.avatar}}" class="avatar"></md-icon>
+                {{ s.service }}
+            </md-button>
+        </md-list-item>
+    </md-list>
+</md-sidenav>
 
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table">
-        <tr ng-init="predicate = [reverseSeverityCode,'lastReceiveTime']">
-          <th class="hidden-xs"><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="visible-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="visible-lg"><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource&nbsp;<span ng-hide="predicate != 'resource'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'event'; reverse=!reverse">Event&nbsp;<span ng-hide="predicate != 'event'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value&nbsp;<span ng-hide="predicate != 'value'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-        </tr>
 
-        <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
-            ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? colors.highlight : colors.severity[alert.severity] }"
-            ng-click="click($event,alert);">
-          <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
-          <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
-          <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
-          <td class="visible-lg">{{ alert.lastReceiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
-          <td class="visible-lg">{{ alert.duplicateCount }}</td>
-          <td class="hidden-xs">{{ alert.environment }}</td>
-          <td class="hidden-xs">{{ alert.service.join(', ') }}</td>
-          <td>{{ alert.resource }}</td>
-          <td>{{ alert.event }}</td>
-          <td class="hidden-xs">{{ alert.value }}</td>
-          <td class="hidden-xs"><span ng-bind-html="alert.text"></span></td>
-        </tr>
-      </table>
+<md-tabs md-selected="selectedIndex" md-border-bottom md-dynamic-height>
+    <md-tab ng-repeat="e in environments"
+            ng-disabled="e.disabled"
+            label="{{ e.environment }}">
 
-      <div ng-show="!alerts">
-          <center><img src="img/loading.gif"/></center>
-      </div>
+            <table class="table">
+                <tr ng-init="predicate = [reverseSeverityCode,'lastReceiveTime']">
+                    <th class="hidden-xs"><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
+                    <th class="hidden-xs"><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th class="hidden-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th class="visible-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th class="visible-lg"><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th class="hidden-xs"><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th class="hidden-xs"><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource&nbsp;<span ng-hide="predicate != 'resource'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th><a href="" ng-click="predicate = 'event'; reverse=!reverse">Event&nbsp;<span ng-hide="predicate != 'event'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th class="hidden-xs"><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value&nbsp;<span ng-hide="predicate != 'value'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th class="hidden-xs"><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                </tr>
 
-      <div ng-show="alerts.length == 0">
-          <center>{{ message }}</center>
-      </div>
+                <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
+                    ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? colors.highlight : colors.severity[alert.severity] }"
+                    ng-click="getDetails(alert, $event);">
+                    <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
+                    <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
+                    <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
+                    <td class="visible-lg">{{ alert.lastReceiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
+                    <td class="visible-lg">{{ alert.duplicateCount }}</td>
+                    <td class="hidden-xs">{{ alert.environment }}</td>
+                    <td class="hidden-xs">{{ alert.service.join(', ') }}</td>
+                    <td>{{ alert.resource }}</td>
+                    <td>{{ alert.event }}</td>
+                    <td class="hidden-xs">{{ alert.value }}</td>
+                    <td class="hidden-xs"><span ng-bind-html="alert.text"></span></td>
+                </tr>
+            </table>
 
-    </div>
-  </div> <!-- row -->
+        <div layout="row" layout-sm="column" layout-align="space-around" layout-margin style="padding:25px;" ng-hide="alerts.length > 0">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <div ng-show="alerts.length == 0">
+            <center>{{ message }}</center>
+        </div>
+    </md-tab>
+</md-tabs>
 
-  <div class="row" ng-show="alerts">
-    <div class="col-md-12">
-    <button type="button" class="btn btn-default full-width" ng-click="alertLimit = alertLimit + 20">{{(alerts|filter:search).length | showing:alertLimit }}</button>
-  </div>
-  </div> <!-- row -->
+<section layout="row" layout-sm="column" layout-align="center center">
+    <md-button type="button" class="btn btn-default full-width" ng-click="alertLimit = alertLimit + 20">{{(alerts|filter:search).length | showing:alertLimit }}</md-button>
+</section>
 
-  <p>
+<md-button class="md-fab md-fab-bottom-right" ng-click="add($event)">
+    <md-icon md-svg-icon="cloud_upload" aria-label="Upload"></md-icon>
+</md-button>
 
-  <div class="row" ng-show="bulkAlerts.length > 0">
-    <div class="col-md-12">
-    <button type="button" class="btn btn-success"
-            ng-click="bulkOpenAlert(bulkAlerts)"
-            ng-disabled="status.indexOf('open') > -1"><i class="glyphicon glyphicon-arrow-up"></i> Open</button>
-    <!-- button type="button" class="btn btn-default"
-            ng-click="bulkTagAlert(alert.id, ['foo'])">Tag</button -->
-    <button type="button" class="btn btn-default"
-            ng-click="bulkWatchAlert(bulkAlerts, user)"
-            ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-open"></i> Watch</button>
-    <button type="button" class="btn btn-default"
-            ng-click="bulkUnwatchAlert(bulkAlerts, user)"
-            ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-close"></i> Unwatch</button>
-    <button type="button" class="btn btn-primary"
-            ng-click="bulkAckAlert(bulkAlerts)"
-            ng-disabled="status.indexOf('ack') > -1"><i class="glyphicon glyphicon-ok-circle"></i> Ack</button>
-    <button type="button" class="btn btn-warning"
-            ng-click="bulkCloseAlert(bulkAlerts)"
-            ng-disabled="status.indexOf('closed') > -1"><i class="glyphicon glyphicon-remove-circle"></i> Close</button>
-    <button type="button" class="btn btn-danger"
-            ng-click="bulkDeleteAlert(bulkAlerts)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-    </div>
-  </div>
-</div> <!-- container -->
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+    <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools">{{ selected.id }}</h1>
+    </md-toolbar>
+
+    <md-content flex id="content">
+        <img ng-src="{{ selected.data.rawUrl }}" err-src="img/icons/ic_photo_camera_24px.svg" class="original-image">
+
+        <md-button class="md-fab">
+            <md-icon md-svg-icon="thumb_up" ng-click="approve(selected.data.id)" aria-label="Thumbs Up"></md-icon>
+        </md-button>
+        <md-button class="md-fab">
+            <md-icon md-svg-icon="thumb_down" ng-click="reject(selected.data.id)" aria-label="Thumbs Down"></md-icon>
+        </md-button>
+
+        <md-divider></md-divider>
+        <md-subheader class="md-no-sticky">Info</md-subheader>
+        <md-list>
+            <md-list-item><p><b>Alert ID</b></p><p>{{ selected.id }}</p></md-list-item>
+            <md-list-item><p><b>Last Receive Alert ID</b></p><p>{{ selected.lastReceiveId }}</p></md-list-item>
+            <md-list-item><p><b>Create Time</b></p><p>{{ selected.createTime | date:'d/M/yyyy h:mm:ss.sss a' }}</p></md-list-item>
+            <md-list-item><p><b>Receive Time</b></p><p>{{ selected.receiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</p></md-list-item>
+            <md-list-item><p><b>Last Receive Time</b></p><p>{{ selected.lastReceiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</p></md-list-item>
+            <md-list-item><p><b>Service</b></p><p>{{ selected.service.join(', ') }}</p></md-list-item>
+            <md-list-item><p><b>Environment</b></p><p>{{ selected.environment }}</p></md-list-item>
+            <md-list-item><p><b>Resource</b></p><p>{{ selected.resource }}</p></md-list-item>
+            <md-list-item><p><b>Event</b></p><p>{{ selected.event }}</p></md-list-item>
+            <md-list-item><p><b>Correlate</b></p><p>{{ selected.correlate.join(', ') }}</p></md-list-item>
+            <md-list-item><p><b>Group</b></p><p>{{ selected.group }}</p></md-list-item>
+            <md-list-item><p><b>Severity</b></p><p>{{ selected.severity }}</p></md-list-item>
+            <md-list-item><p><b>Status</b></p><p>{{ selected.status }}</p></md-list-item>
+            <md-list-item><p><b>Value</b></p><p>{{ selected.value }}</p></md-list-item>
+            <md-list-item><p><b>Text</b></p><p>{{ selected.text | linky:'_blank' }}</p></md-list-item>
+            <md-list-item><p><b>Trend Indication</b></p><p>{{ selected.trendIndication }}</p></md-list-item>
+            <md-list-item><p><b>Timeout</b></p><p>{{ selected.timeout }}</p></md-list-item>
+            <md-list-item><p><b>Type</b></p><p>{{ selected.type }}</p></md-list-item>
+            <md-list-item><p><b>Duplicate Count</b></p><p>{{ selected.duplicateCount }}</p></md-list-item>
+            <md-list-item><p><b>Repeat</b></p><p>{{ selected.repeat }}</p></md-list-item>
+            <md-list-item><p><b>Origin</b></p><p>{{ selected.origin }}</p></md-list-item>
+            <md-list-item><p><b>Tags</b></p><p ng-repeat="tag in selected.tags">{{ tag }}</p></md-list-item>
+            <md-list-item ng-repeat="(key, value) in selected.attributes"><p><b>{{ key | capitalize }}</b></p><p>{{ value }}</p></md-list-item>
+        </md-list>
+
+        <md-divider></md-divider>
+        <md-subheader class="md-no-sticky">Who can access</md-subheader>
+        <div ng-show="selected.data.isActive">
+            <md-icon md-svg-icon="lock_open"></md-icon> Publicly accessible
+        </div>
+        <div ng-hide="selected.data.isActive">
+            <md-icon md-svg-icon="lock"></md-icon> Private access only
+        </div>
+
+        <p>
+
+    </md-content>
+</md-sidenav>

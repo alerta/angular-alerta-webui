@@ -2,9 +2,10 @@
 
 /* Controllers */
 
-var alertaControllers = angular.module('alertaControllers', []);
+angular
+  .module('alertaControllers', [])
 
-alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 'config',
+  .controller('MenuController', ['$scope', '$location', '$auth', 'config',
   function($scope, $location, $auth, config) {
 
     if ($auth.isAuthenticated()) {
@@ -37,10 +38,10 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
         }
     };
 
-  }]);
+  }])
 
-alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', 'colors', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, $route, $location, $timeout, $auth, colors, Count, Environment, Service, Alert){
+  .controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', '$mdSidenav', 'colors', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $route, $location, $timeout, $auth, $mdSidenav, colors, Count, Environment, Service, Alert){
 
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
@@ -89,11 +90,29 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       $scope.status = 'open';
     }
 
+    $scope.search = undefined;
+
+    $scope.menu = function() {
+      $mdSidenav('left').toggle();
+    };
+    $scope.showSearch = false;
+    $scope.clear = function () {
+      $scope.showSearch = false;
+      $scope.search = undefined;
+    };
+
+    $scope.selectedIndex = 1;
+    $scope.$watch('selectedIndex', function(current, old){
+      // $scope.status = $scope.tabs[current];
+      // $scope.query = {status: $scope.status};
+      refresh();
+    });
+
     $scope.show = [
       {name: 'Open', status: 'open'},
       {name: 'Active', status: ['open', 'ack', 'assign']},
       {name: 'Closed', status: 'closed'}
-    ]
+    ];
 
     $scope.alerts = [];
     $scope.alertLimit = 20;
@@ -204,6 +223,11 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       return SEVERITY_MAP[alert.severity];
     };
 
+    $scope.getDetails = function (alert, event) {
+      $scope.selected = alert;
+      $mdSidenav('right').toggle();
+    };
+
     $scope.bulkAlerts = [];
 
     $scope.click = function($event,alert) {
@@ -278,9 +302,9 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       });
       $route.reload();
     };
-  }]);
+  }])
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
+  .controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
   function($scope, $route, $routeParams, $location, $auth, Alert){
 
     if ($auth.isAuthenticated()) {
@@ -348,9 +372,9 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       });
     };
 
-  }]);
+  }])
 
-alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
+  .controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $location, $timeout, Count, Environment, Service, Alert){
 
     var search = $location.search();
@@ -444,9 +468,9 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
       }
     });
 
-  }]);
+  }])
 
-alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'colors', 'Alert',
+  .controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'colors', 'Alert',
   function($scope, $route, $location, $timeout, $auth,  colors, Alert){
 
     if ($auth.isAuthenticated()) {
@@ -574,9 +598,9 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
       });
       $route.reload();
     };
-  }]);
+  }])
 
-alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service',
+  .controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service',
   function($scope, $route, $timeout, $auth, Blackouts, Environment, Service) {
 
     $scope.blackouts = [];
@@ -616,10 +640,9 @@ alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$t
       $scope.blackouts = response.blackouts;
     });
 
-  }]);
+  }])
 
-
-alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users',
+  .controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users',
   function($scope, $route, $timeout, $auth, config, Users) {
 
     $scope.domains = [];
@@ -659,9 +682,9 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
       $scope.users = response.users;
     });
 
-  }]);
+  }])
 
-alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'Keys',
+  .controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'Keys',
   function($scope, $route, $timeout, $auth, Keys) {
 
     $scope.keys = [];
@@ -686,9 +709,9 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
       $scope.keys = response.keys;
     });
 
-  }]);
+  }])
 
-alertaControllers.controller('ProfileController', ['$scope', '$auth',
+  .controller('ProfileController', ['$scope', '$auth',
   function($scope, $auth) {
 
     $scope.user_id = $auth.getPayload().sub;
@@ -698,9 +721,9 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
 
     $scope.token = $auth.getToken();
     $scope.payload = $auth.getPayload();
-  }]);
+  }])
 
-alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Management', 'Heartbeat',
+  .controller('AboutController', ['$scope', '$timeout', 'Management', 'Heartbeat',
   function($scope, $timeout, Management, Heartbeat) {
 
     Management.manifest(function(response) {
@@ -729,9 +752,9 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
       }
     });
 
-  }]);
+  }])
 
-alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$auth', 'config',
+  .controller('LoginController', ['$scope', '$rootScope', '$auth', 'config',
  function($scope, $rootScope, $auth, config) {
 
     $scope.provider = config.provider;
@@ -765,10 +788,10 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$auth'
           $scope.error = e.statusText;
         });
     };
-  }]);
+  }])
 
-alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$auth', 'config',
- function($scope, $rootScope, $auth, config) {
+  .controller('SignupController', ['$scope', '$rootScope', '$auth', 'config',
+  function($scope, $rootScope, $auth, config) {
 
     $scope.provider = config.provider;
 
@@ -798,9 +821,9 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$auth
           $scope.error = e.statusText;
         });
     };
-  }]);
+  }])
 
-  alertaControllers.controller('LogoutController', ['$auth',
+  .controller('LogoutController', ['$auth',
     function($auth) {
     if (!$auth.isAuthenticated()) {
         return;

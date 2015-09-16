@@ -30,6 +30,32 @@ table {
     font-weight: normal;
 }
 
+table {
+    margin-bottom: 8px;
+    max-width: 100%;
+    width: 100%;
+    border-spacing: 0;
+    border-radius: 2px;
+    overflow: hidden;
+}
+td, th {
+    padding: 12px 16px;
+    text-align: left;
+}
+td {
+    vertical-align: top;
+}
+td.description *:first-child {
+    margin-top: 0;
+}
+td.description *:last-child {
+    margin-bottom: 0;
+}
+th {
+    background-color: #4C9EF0;
+    color: white;
+}
+
 .logo {
     font-family: "Sonsie One";
     font-size: 26pt;
