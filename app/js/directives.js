@@ -2,5 +2,4 @@
 
 /* Directives */
 
-angular
-  .module('alertaDirectives', []);
+angular.module('alertaDirectives', []);

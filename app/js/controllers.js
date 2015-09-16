@@ -2,10 +2,9 @@
 
 /* Controllers */
 
-angular
-  .module('alertaControllers', [])
+angular.module('alertaControllers', [])
 
-  .controller('MenuController', ['$scope', '$location', '$auth', 'config',
+.controller('MenuController', ['$scope', '$location', '$auth', 'config',
   function($scope, $location, $auth, config) {
 
     if ($auth.isAuthenticated()) {
@@ -17,7 +16,7 @@ angular
     });
 
     $scope.isActive = function (viewLocation) {
-        return viewLocation === $location.path();
+      return viewLocation === $location.path();
     };
 
     $scope.isAuthenticated = function() {
@@ -29,25 +28,25 @@ angular
         $location.path('/login');
       } else {
         $auth.authenticate(config.provider)
-          .then(function() {
-            $scope.name = $auth.getPayload().name;
-          })
-          .catch(function(e) {
-            alert(JSON.stringify(e));
-          });
-        }
+        .then(function() {
+          $scope.name = $auth.getPayload().name;
+        })
+        .catch(function(e) {
+          alert(JSON.stringify(e));
+        });
+      }
     };
 
   }])
 
-  .controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', '$mdSidenav', 'colors', 'Count', 'Environment', 'Service', 'Alert',
+.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', '$mdSidenav', 'colors', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $route, $location, $timeout, $auth, $mdSidenav, colors, Count, Environment, Service, Alert){
 
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
-     } else {
-       $scope.user = undefined;
-     };
+    } else {
+      $scope.user = undefined;
+    };
 
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
@@ -201,18 +200,18 @@ angular
     });
 
     var SEVERITY_MAP = {
-        'critical': 1,
-        'major': 2,
-        'minor': 3,
-        'warning': 4,
-        'indeterminate': 5,
-        'cleared': 5,
-        'normal': 5,
-        'ok': 5,
-        'informational': 6,
-        'debug': 7,
-        'security': 8,
-        'unknown': 9
+      'critical': 1,
+      'major': 2,
+      'minor': 3,
+      'warning': 4,
+      'indeterminate': 5,
+      'cleared': 5,
+      'normal': 5,
+      'ok': 5,
+      'informational': 6,
+      'debug': 7,
+      'security': 8,
+      'unknown': 9
     };
 
     $scope.reverseSeverityCode = function(alert) {
@@ -304,14 +303,14 @@ angular
     };
   }])
 
-  .controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
+.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
   function($scope, $route, $routeParams, $location, $auth, Alert){
 
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
-     } else {
-       $scope.user = undefined;
-     };
+    } else {
+      $scope.user = undefined;
+    };
 
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
@@ -374,7 +373,7 @@ angular
 
   }])
 
-  .controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
+.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $location, $timeout, Count, Environment, Service, Alert){
 
     var search = $location.search();
@@ -470,14 +469,14 @@ angular
 
   }])
 
-  .controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'colors', 'Alert',
+.controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'colors', 'Alert',
   function($scope, $route, $location, $timeout, $auth,  colors, Alert){
 
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
-     } else {
-       $scope.user = undefined;
-     };
+    } else {
+      $scope.user = undefined;
+    };
 
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
@@ -600,7 +599,7 @@ angular
     };
   }])
 
-  .controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service',
+.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service',
   function($scope, $route, $timeout, $auth, Blackouts, Environment, Service) {
 
     $scope.blackouts = [];
@@ -642,7 +641,7 @@ angular
 
   }])
 
-  .controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users',
+.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users',
   function($scope, $route, $timeout, $auth, config, Users) {
 
     $scope.domains = [];
@@ -684,7 +683,7 @@ angular
 
   }])
 
-  .controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'Keys',
+.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'Keys',
   function($scope, $route, $timeout, $auth, Keys) {
 
     $scope.keys = [];
@@ -711,7 +710,7 @@ angular
 
   }])
 
-  .controller('ProfileController', ['$scope', '$auth',
+.controller('ProfileController', ['$scope', '$auth',
   function($scope, $auth) {
 
     $scope.user_id = $auth.getPayload().sub;
@@ -723,7 +722,7 @@ angular
     $scope.payload = $auth.getPayload();
   }])
 
-  .controller('AboutController', ['$scope', '$timeout', 'Management', 'Heartbeat',
+.controller('AboutController', ['$scope', '$timeout', 'Management', 'Heartbeat',
   function($scope, $timeout, Management, Heartbeat) {
 
     Management.manifest(function(response) {
@@ -754,8 +753,8 @@ angular
 
   }])
 
-  .controller('LoginController', ['$scope', '$rootScope', '$auth', 'config',
- function($scope, $rootScope, $auth, config) {
+.controller('LoginController', ['$scope', '$rootScope', '$auth', 'config',
+  function($scope, $rootScope, $auth, config) {
 
     $scope.provider = config.provider;
 
@@ -764,72 +763,72 @@ angular
         email: $scope.email,
         password: $scope.password
       })
-        .then(function() {
-          $rootScope.$broadcast('login:name', $auth.getPayload().name);
-        })
-        .catch(function(e) {
-          console.log(e);
-          if (e.status == 401) {
-            $scope.error = "Incorrect username or password.";
-          };
-          if (e.status == 403) {
-            $scope.error = "Unauthorized access.";
-          };
-        });
+      .then(function() {
+        $rootScope.$broadcast('login:name', $auth.getPayload().name);
+      })
+      .catch(function(e) {
+        console.log(e);
+        if (e.status == 401) {
+          $scope.error = "Incorrect username or password.";
+        };
+        if (e.status == 403) {
+          $scope.error = "Unauthorized access.";
+        };
+      });
     };
 
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider)
-        .then(function() {
-          console.log('You have successfully logged in');
-        })
-        .catch(function(e) {
-          console.log(e);
-          $scope.error = e.statusText;
-        });
+      .then(function() {
+        console.log('You have successfully logged in');
+      })
+      .catch(function(e) {
+        console.log(e);
+        $scope.error = e.statusText;
+      });
     };
   }])
 
-  .controller('SignupController', ['$scope', '$rootScope', '$auth', 'config',
+.controller('SignupController', ['$scope', '$rootScope', '$auth', 'config',
   function($scope, $rootScope, $auth, config) {
 
     $scope.provider = config.provider;
 
     $scope.signup = function(name, email, password, text) {
-        $auth.signup({
-          name: $scope.name,
-          email: $scope.email,
-          password: $scope.password,
-          text: $scope.text
-        })
-          .then(function() {
-            $rootScope.$broadcast('login:name', $auth.getPayload().name);
-          })
-          .catch(function(e) {
-            console.log(e);
-            $scope.error = e.statusText;
-          });
-      };
+      $auth.signup({
+        name: $scope.name,
+        email: $scope.email,
+        password: $scope.password,
+        text: $scope.text
+      })
+      .then(function() {
+        $rootScope.$broadcast('login:name', $auth.getPayload().name);
+      })
+      .catch(function(e) {
+        console.log(e);
+        $scope.error = e.statusText;
+      });
+    };
 
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider)
-        .then(function() {
-          console.log('You have successfully logged in');
-        })
-        .catch(function(e) {
-          console.log(e);
-          $scope.error = e.statusText;
-        });
+      .then(function() {
+        console.log('You have successfully logged in');
+      })
+      .catch(function(e) {
+        console.log(e);
+        $scope.error = e.statusText;
+      });
     };
   }])
 
-  .controller('LogoutController', ['$auth',
-    function($auth) {
+.controller('LogoutController', ['$auth',
+  function($auth) {
     if (!$auth.isAuthenticated()) {
-        return;
+      return;
     }
     $auth.logout()
-      .then(function() {
-        console.log('You have been logged out');
-      });
+    .then(function() {
+      console.log('You have been logged out');
+    });
   }]);
