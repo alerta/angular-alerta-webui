@@ -27,7 +27,7 @@ pushd ../app > /dev/null
 echo "# Copy to S3: LOCAL -> s3://${DOMAIN} ..."
 
 aws s3 mb s3://${DOMAIN}
-aws s3 sync . s3://${DOMAIN} --recursive --acl public-read
+aws s3 sync . s3://${DOMAIN} --acl public-read
 aws s3 website s3://${DOMAIN} --index-document index.html
 
 ##### APP CONFIG #####
@@ -41,7 +41,8 @@ angular.module('config', [])
     'endpoint'    : "http://api.alerta.io",
     'provider'    : "google",
     'client_id'   : "${OAUTH2_CLIENT_ID}"
-  });
+  })
+  .constant('colors', {});
 EOF
 
 aws s3 cp ${TMP_CONFIG_JS} s3://${DOMAIN}/config.js --acl public-read --content-type application/javascript
