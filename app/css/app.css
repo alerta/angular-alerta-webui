@@ -56,6 +56,10 @@ th {
     color: white;
 }
 
+[role="tabpanel"] {
+    transition: none;
+}
+
 .logo {
     font-family: "Sonsie One";
     font-size: 26pt;
