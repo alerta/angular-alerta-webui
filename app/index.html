@@ -25,149 +25,137 @@
 
   <body layout="column" ng-controller="NavController">
 
-  <md-toolbar ng-show="!showSearch">
-    <div class="md-toolbar-tools">
-      <md-button class="md-icon-button" aria-label="Menu">
-        <md-icon md-svg-icon="menu" ng-click="menu()"></md-icon>
-      </md-button>
-      <h2>
-        <span>Alerta</span>
-      </h2>
-      <span flex></span>
-      <md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Search">
-        <md-icon md-svg-icon="search"></md-icon>
-      </md-button>
-                <md-menu>
-                    <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-                        <md-icon md-svg-icon="more_vert"></md-icon>
-                    </md-button>
-                    <md-menu-content>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="thumbs_up_down" md-menu-align-target></md-icon>
-                                Your Actions
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="mail" md-menu-align-target></md-icon>
-                                Help & feedback
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="info" md-menu-align-target></md-icon>
-                                About
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="settings" md-menu-align-target></md-icon>
-                                Settings
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="exit_to_app" md-menu-align-target></md-icon>
-                                Sign out
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-    </div>
-  </md-toolbar>
-
-  <md-toolbar ng-show="showSearch">
-    <div class="md-toolbar-tools">
-        <md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Back">
-            <md-icon md-svg-icon="arrow_back"></md-icon>
-        </md-button>
-      <h2>
-        <span>Alerta</span>
-      </h2>
-      <span flex></span>
-        <md-input-container md-no-float flex>
-            <label>Search</label>
-            <input type="text" ng-model="search" autofocus />
-        </md-input-container>
-        <md-button class="md-icon-button" ng-click="clear();" aria-label="Close">
-            <md-icon md-svg-icon="close"></md-icon>
-        </md-button>
-                <md-menu>
-                    <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-                        <md-icon md-svg-icon="more_vert"></md-icon>
-                    </md-button>
-                    <md-menu-content>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="thumbs_up_down" md-menu-align-target></md-icon>
-                                Your Actions
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="mail" md-menu-align-target></md-icon>
-                                Help & feedback
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="info" md-menu-align-target></md-icon>
-                                About
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="settings" md-menu-align-target></md-icon>
-                                Settings
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="logout($event)">
-                                <md-icon md-svg-icon="exit_to_app" md-menu-align-target></md-icon>
-                                Sign out
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-    </div>
-  </md-toolbar>
-
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
-  <md-toolbar>
-    <div class="md-toolbar-tools">
+    <md-toolbar ng-show="!showSearch">
+      <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Menu">
-            <md-icon md-svg-icon="menu" ng-click="menu()"></md-icon>
+          <md-icon md-svg-icon="menu" ng-click="menu()"></md-icon>
         </md-button>
         <h2>
-            <span>Alerta</span>
+          <span>Alerta</span>
         </h2>
-        <span flex=""></span>
-    </div>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Search">
+          <md-icon md-svg-icon="search"></md-icon>
+        </md-button>
+        <md-menu>
+          <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+          </md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button ng-click="logout($event)">
+                <md-icon md-svg-icon="mail" md-menu-align-target></md-icon>
+                Help &amp; feedback
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="logout($event)">
+                <md-icon md-svg-icon="info" md-menu-align-target></md-icon>
+                About
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="logout($event)">
+                <md-icon md-svg-icon="settings" md-menu-align-target></md-icon>
+                Settings
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="logout($event)">
+                <md-icon md-svg-icon="exit_to_app" md-menu-align-target></md-icon>
+                Sign out
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
     </md-toolbar>
 
-    <md-content layout-padding>
-    <md-list>
-    <md-subheader>Services</md-subheader>
-        <md-list-item ng-repeat="s in services">
+    <md-toolbar ng-show="showSearch">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Back">
+          <md-icon md-svg-icon="arrow_back"></md-icon>
+        </md-button>
+        <h2>
+          <span>Alerta</span>
+        </h2>
+        <span flex></span>
+        <md-input-container md-no-float flex>
+          <label>Search</label>
+          <input type="text" ng-model="search" autofocus />
+        </md-input-container>
+        <md-button class="md-icon-button" ng-click="clear();" aria-label="Close">
+          <md-icon md-svg-icon="close"></md-icon>
+        </md-button>
+        <md-menu>
+          <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+          </md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button ng-click="logout($event)">
+                <md-icon md-svg-icon="mail" md-menu-align-target></md-icon>
+                Help &amp; feedback
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="logout($event)">
+                <md-icon md-svg-icon="info" md-menu-align-target></md-icon>
+                About
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="logout($event)">
+                <md-icon md-svg-icon="settings" md-menu-align-target></md-icon>
+                Settings
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="logout($event)">
+                <md-icon md-svg-icon="exit_to_app" md-menu-align-target></md-icon>
+                Sign out
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
+    </md-toolbar>
+
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <md-button class="md-icon-button" aria-label="Menu">
+            <md-icon md-svg-icon="menu" ng-click="menu()"></md-icon>
+          </md-button>
+          <h2>
+              <span>Alerta</span>
+          </h2>
+          <span flex=""></span>
+        </div>
+      </md-toolbar>
+
+      <md-content layout-padding>
+        <md-list>
+          <md-subheader>Services</md-subheader>
+          <md-list-item ng-repeat="s in services">
             <md-button ng-click="setService(s)" ng-class="{'selected' : it === ul.selected }" style="width: 100%;">
-                <md-icon md-svg-icon="service"></md-icon><p>{{ s.service }}</p>
+              <md-icon md-svg-icon="service"></md-icon><p>{{ s.service }}</p>
             </md-button>
-        </md-list-item>
-                    <md-divider></md-divider>
-                    <md-subheader>Other</md-subheader>
-                    <md-list-item ng-click="goto('',$event)">
-                        <md-icon md-svg-icon="comment"></md-icon><p>Discussions</p>
-                    </md-list-item>
-                    <md-list-item ng-click="goto('',$event)">
-                        <md-icon md-svg-icon="people"></md-icon><p>Users</p>
-                    </md-list-item>
-                    <md-list-item ng-click="goto('',$event)">
-                        <md-icon md-svg-icon="security"></md-icon><p>Anti-spam</p>
-                    </md-list-item>
-    </md-list>
-  </md-content>
-  </md-sidenav>
+          </md-list-item>
+          <md-divider></md-divider>
+          <md-subheader>Other</md-subheader>
+          <md-list-item ng-click="goto('',$event)">
+            <md-icon md-svg-icon="comment"></md-icon><p>Discussions</p>
+          </md-list-item>
+          <md-list-item ng-click="goto('',$event)">
+            <md-icon md-svg-icon="people"></md-icon><p>Users</p>
+          </md-list-item>
+          <md-list-item ng-click="goto('',$event)">
+            <md-icon md-svg-icon="security"></md-icon><p>Anti-spam</p>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </md-sidenav>
 
     <div ng-view></div>
 
