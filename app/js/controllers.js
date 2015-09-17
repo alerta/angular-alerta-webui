@@ -4,8 +4,19 @@
 
 angular.module('alertaControllers', [])
 
-.controller('MenuController', ['$scope', '$location', '$auth', 'config',
-  function($scope, $location, $auth, config) {
+.controller('NavController', ['$scope', '$location', '$auth', '$mdSidenav', 'config',
+  function($scope, $location, $auth, $mdSidenav, config) {
+
+    $scope.search = undefined;
+
+    $scope.menu = function() {
+      $mdSidenav('left').toggle();
+    };
+    $scope.showSearch = false;
+    $scope.clear = function () {
+      $scope.showSearch = false;
+      $scope.search = undefined;
+    };
 
     if ($auth.isAuthenticated()) {
       $scope.name = $auth.getPayload().name;

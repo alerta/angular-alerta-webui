@@ -16,10 +16,6 @@
     src: url('../fonts/SonsieOne-Regular.ttf');
 }
 
-body {
-    padding: 10px !important;
-}
-
 table {
     margin: 0;
     font-family: Sintony, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -58,15 +54,6 @@ th {
 
 [role="tabpanel"] {
     transition: none;
-}
-
-.logo {
-    font-family: "Sonsie One";
-    font-size: 26pt;
-}
-
-.ng-table {
-    border: 1px solid #000;
 }
 
 .label {
