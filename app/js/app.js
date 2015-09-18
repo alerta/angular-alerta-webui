@@ -110,8 +110,7 @@ angular.module('alerta', [
 
 .config(['$mdThemingProvider', '$mdIconProvider', function($mdThemingProvider, $mdIconProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('deep-orange')
-    .accentPalette('blue-grey');
+    .primaryPalette('blue-grey');
   $mdIconProvider
     .icon("menu"        , "img/icons/ic_menu_24px.svg" , 24)
     .icon("close"       , "img/icons/ic_close_24px.svg" , 24)

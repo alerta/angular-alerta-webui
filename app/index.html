@@ -137,6 +137,9 @@
       <md-content layout-padding>
         <md-list>
           <md-subheader>Services</md-subheader>
+          <md-list-item ng-click="goto('',$event)">
+            <md-icon md-svg-icon="service"></md-icon><p>All</p>
+          </md-list-item>
           <md-list-item ng-repeat="s in services">
             <md-button ng-click="setService(s)" ng-class="{'selected' : it === ul.selected }" style="width: 100%;">
               <md-icon md-svg-icon="service"></md-icon><p>{{ s.service }}</p>
@@ -145,10 +148,10 @@
           <md-divider></md-divider>
           <md-subheader>Other</md-subheader>
           <md-list-item ng-click="goto('',$event)">
-            <md-icon md-svg-icon="comment"></md-icon><p>Discussions</p>
+            <md-icon md-svg-icon="comment"></md-icon><p>Top 10</p>
           </md-list-item>
           <md-list-item ng-click="goto('',$event)">
-            <md-icon md-svg-icon="people"></md-icon><p>Users</p>
+            <md-icon md-svg-icon="people"></md-icon><p>Watched</p>
           </md-list-item>
           <md-list-item ng-click="goto('',$event)">
             <md-icon md-svg-icon="security"></md-icon><p>Anti-spam</p>
