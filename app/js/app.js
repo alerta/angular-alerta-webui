@@ -19,6 +19,7 @@ angular.module('alerta', [
     .when('/alerts', {
       templateUrl: 'partials/alert-list.html',
       controller: 'AlertListController',
+      controllerAs: 'vm',
       reloadOnSearch: false
     })
     .when('/alert/:id', {

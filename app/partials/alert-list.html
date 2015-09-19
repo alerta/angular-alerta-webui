@@ -1,27 +1,27 @@
 
-<md-tabs md-selected="selectedIndex" md-border-bottom md-dynamic-height>
-    <md-tab ng-repeat="e in environments"
+<md-tabs md-selected="vm.selectedIndex" md-border-bottom md-dynamic-height>
+    <md-tab ng-repeat="e in vm.environments"
             ng-disabled="e.disabled"
             label="{{ e.environment }}">
 
             <table class="table">
-                <tr ng-init="predicate = [reverseSeverityCode,'lastReceiveTime']">
-                    <th class="hidden-xs"><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
-                    <th class="hidden-xs"><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-                    <th class="hidden-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-                    <th class="visible-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-                    <th class="visible-lg"><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                <tr ng-init="predicate = [vm.reverseSeverityCode,'lastReceiveTime']">
+                    <th class="hidden-xs"><a href="" ng-click="predicate = vm.severityCode; vm.reverse=!vm.reverse">Severity&nbsp;<span ng-hide="predicate != vm.severityCode"><span ng-show="!vm.reverse">v</span><span ng-show="vm.reverse">^</span></span></a></th>
+                    <th class="hidden-xs"><a href="" ng-click="predicate = 'status'; vm.reverse=!vm.reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!vm.reverse">^</span><span ng-show="vm.reverse">v</span></span></a></th>
+                    <th class="hidden-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; vm.reverse=!vm.reverse">Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!vm.reverse">^</span><span ng-show="vm.reverse">v</span></span></a></th>
+                    <th class="visible-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; vm.reverse=!vm.reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!vm.reverse">^</span><span ng-show="vm.reverse">v</span></span></a></th>
+                    <th class="visible-lg"><a href="" ng-click="predicate = 'duplicateCount'; vm.reverse=!vm.reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!vm.reverse">^</span><span ng-show="vm.reverse">v</span></span></a></th>
                     <th class="hidden-xs"><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-                    <th class="hidden-xs"><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-                    <th><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource&nbsp;<span ng-hide="predicate != 'resource'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-                    <th><a href="" ng-click="predicate = 'event'; reverse=!reverse">Event&nbsp;<span ng-hide="predicate != 'event'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-                    <th class="hidden-xs"><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value&nbsp;<span ng-hide="predicate != 'value'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-                    <th class="hidden-xs"><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+                    <th class="hidden-xs"><a href="" ng-click="predicate = 'service'; vm.reverse=!vm.reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!vm.reverse">^</span><span ng-show="vm.reverse">v</span></span></a></th>
+                    <th><a href="" ng-click="predicate = 'resource'; vm.reverse=!vm.reverse">Resource&nbsp;<span ng-hide="predicate != 'resource'"><span ng-show="!vm.reverse">^</span><span ng-show="vm.reverse">v</span></span></a></th>
+                    <th><a href="" ng-click="predicate = 'event'; vm.reverse=!vm.reverse">Event&nbsp;<span ng-hide="predicate != 'event'"><span ng-show="!vm.reverse">^</span><span ng-show="vm.reverse">v</span></span></a></th>
+                    <th class="hidden-xs"><a href="" ng-click="predicate = 'value'; vm.reverse=!vm.reverse">Value&nbsp;<span ng-hide="predicate != 'value'"><span ng-show="!vm.reverse">^</span><span ng-show="vm.reverse">v</span></span></a></th>
+                    <th class="hidden-xs"><a href="" ng-click="predicate = 'text'; vm.reverse=!vm.reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!vm.reverse">^</span><span ng-show="vm.reverse">v</span></span></a></th>
                 </tr>
 
-                <tr ng-repeat="alert in alerts | filter:nav.search | orderBy:predicate:reverse | limitTo:alertLimit"
-                    ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? colors.highlight : colors.severity[alert.severity] }"
-                    ng-click="getDetails(alert, $event);">
+                <tr ng-repeat="alert in vm.alerts | filter:nav.search | orderBy:predicate:vm.reverse | limitTo:vm.alertLimit"
+                    ng-style="{ 'color':  vm.colors.severity[alert.severity] == 'black' ? 'white' : vm.colors.text, 'background-color': (vm.bulkAlerts.indexOf(alert.id) > -1) ? vm.colors.highlight : vm.colors.severity[alert.severity] }"
+                    ng-click="vm.getDetails(alert, $event);">
                     <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
                     <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
                     <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
@@ -36,30 +36,30 @@
                 </tr>
             </table>
 
-        <div layout="row" layout-sm="column" layout-align="space-around" layout-margin style="padding:25px;" ng-hide="alerts.length > 0">
+        <div layout="row" layout-sm="column" layout-align="space-around" layout-margin style="padding:25px;" ng-hide="vm.alerts.length > 0">
             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
         </div>
-        <div ng-show="alerts.length == 0">
-            <center>{{ message }}</center>
+        <div ng-show="vm.alerts.length == 0">
+            <center>{{ vm.message }}</center>
         </div>
     </md-tab>
 </md-tabs>
 
 <section layout="row" layout-sm="column" layout-align="center center">
-    <md-button type="button" class="btn btn-default full-width" ng-click="alertLimit = alertLimit + 20">{{(alerts|filter:search).length | showing:alertLimit }}</md-button>
+    <md-button type="button" class="btn btn-default full-width" ng-click="vm.alertLimit = vm.alertLimit + 20">{{(vm.alerts|filter:nav.search).length | showing:vm.alertLimit }}</md-button>
 </section>
 
-<md-button class="md-fab md-fab-bottom-right" ng-click="add($event)">
+<md-button class="md-fab md-fab-bottom-right" ng-click="vm.add($event)">
     <md-icon md-svg-icon="cloud_upload" aria-label="Upload"></md-icon>
 </md-button>
 
 <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
     <md-toolbar class="md-theme-light">
-        <h1 class="md-toolbar-tools">{{ selected.id }}</h1>
+        <h1 class="md-toolbar-tools">{{ vm.selected.id }}</h1>
     </md-toolbar>
 
     <md-content flex id="content">
-        <img ng-src="{{ selected.data.rawUrl }}" err-src="img/icons/ic_photo_camera_24px.svg" class="original-image">
+        <img ng-src="{{ vm.selected.data.rawUrl }}" err-src="img/icons/ic_photo_camera_24px.svg" class="original-image">
 
         <md-button class="md-fab">
             <md-icon md-svg-icon="thumb_up" ng-click="approve(selected.data.id)" aria-label="Thumbs Up"></md-icon>
@@ -71,29 +71,29 @@
         <md-divider></md-divider>
         <md-subheader class="md-no-sticky">Info</md-subheader>
         <md-list>
-            <md-list-item><p><b>Alert ID</b></p><p>{{ selected.id }}</p></md-list-item>
-            <md-list-item><p><b>Last Receive Alert ID</b></p><p>{{ selected.lastReceiveId }}</p></md-list-item>
-            <md-list-item><p><b>Create Time</b></p><p>{{ selected.createTime | date:'d/M/yyyy h:mm:ss.sss a' }}</p></md-list-item>
-            <md-list-item><p><b>Receive Time</b></p><p>{{ selected.receiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</p></md-list-item>
-            <md-list-item><p><b>Last Receive Time</b></p><p>{{ selected.lastReceiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</p></md-list-item>
-            <md-list-item><p><b>Service</b></p><p>{{ selected.service.join(', ') }}</p></md-list-item>
-            <md-list-item><p><b>Environment</b></p><p>{{ selected.environment }}</p></md-list-item>
-            <md-list-item><p><b>Resource</b></p><p>{{ selected.resource }}</p></md-list-item>
-            <md-list-item><p><b>Event</b></p><p>{{ selected.event }}</p></md-list-item>
-            <md-list-item><p><b>Correlate</b></p><p>{{ selected.correlate.join(', ') }}</p></md-list-item>
-            <md-list-item><p><b>Group</b></p><p>{{ selected.group }}</p></md-list-item>
-            <md-list-item><p><b>Severity</b></p><p>{{ selected.severity }}</p></md-list-item>
-            <md-list-item><p><b>Status</b></p><p>{{ selected.status }}</p></md-list-item>
-            <md-list-item><p><b>Value</b></p><p>{{ selected.value }}</p></md-list-item>
-            <md-list-item><p><b>Text</b></p><p>{{ selected.text | linky:'_blank' }}</p></md-list-item>
-            <md-list-item><p><b>Trend Indication</b></p><p>{{ selected.trendIndication }}</p></md-list-item>
-            <md-list-item><p><b>Timeout</b></p><p>{{ selected.timeout }}</p></md-list-item>
-            <md-list-item><p><b>Type</b></p><p>{{ selected.type }}</p></md-list-item>
-            <md-list-item><p><b>Duplicate Count</b></p><p>{{ selected.duplicateCount }}</p></md-list-item>
-            <md-list-item><p><b>Repeat</b></p><p>{{ selected.repeat }}</p></md-list-item>
-            <md-list-item><p><b>Origin</b></p><p>{{ selected.origin }}</p></md-list-item>
-            <md-list-item><p><b>Tags</b></p><p ng-repeat="tag in selected.tags">{{ tag }}</p></md-list-item>
-            <md-list-item ng-repeat="(key, value) in selected.attributes"><p><b>{{ key | capitalize }}</b></p><p>{{ value }}</p></md-list-item>
+            <md-list-item><p><b>Alert ID</b></p><p>{{ vm.selected.id }}</p></md-list-item>
+            <md-list-item><p><b>Last Receive Alert ID</b></p><p>{{ vm.selected.lastReceiveId }}</p></md-list-item>
+            <md-list-item><p><b>Create Time</b></p><p>{{ vm.selected.createTime | date:'d/M/yyyy h:mm:ss.sss a' }}</p></md-list-item>
+            <md-list-item><p><b>Receive Time</b></p><p>{{ vm.selected.receiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</p></md-list-item>
+            <md-list-item><p><b>Last Receive Time</b></p><p>{{ vm.selected.lastReceiveTime | date:'d/M/yyyy h:mm:ss.sss a' }}</p></md-list-item>
+            <md-list-item><p><b>Service</b></p><p>{{ vm.selected.service.join(', ') }}</p></md-list-item>
+            <md-list-item><p><b>Environment</b></p><p>{{ vm.selected.environment }}</p></md-list-item>
+            <md-list-item><p><b>Resource</b></p><p>{{ vm.selected.resource }}</p></md-list-item>
+            <md-list-item><p><b>Event</b></p><p>{{ vm.selected.event }}</p></md-list-item>
+            <md-list-item><p><b>Correlate</b></p><p>{{ vm.selected.correlate.join(', ') }}</p></md-list-item>
+            <md-list-item><p><b>Group</b></p><p>{{ vm.selected.group }}</p></md-list-item>
+            <md-list-item><p><b>Severity</b></p><p>{{ vm.selected.severity }}</p></md-list-item>
+            <md-list-item><p><b>Status</b></p><p>{{ vm.selected.status }}</p></md-list-item>
+            <md-list-item><p><b>Value</b></p><p>{{ vm.selected.value }}</p></md-list-item>
+            <md-list-item><p><b>Text</b></p><p>{{ vm.selected.text | linky:'_blank' }}</p></md-list-item>
+            <md-list-item><p><b>Trend Indication</b></p><p>{{ vm.selected.trendIndication }}</p></md-list-item>
+            <md-list-item><p><b>Timeout</b></p><p>{{ vm.selected.timeout }}</p></md-list-item>
+            <md-list-item><p><b>Type</b></p><p>{{ vm.selected.type }}</p></md-list-item>
+            <md-list-item><p><b>Duplicate Count</b></p><p>{{ vm.selected.duplicateCount }}</p></md-list-item>
+            <md-list-item><p><b>Repeat</b></p><p>{{ vm.selected.repeat }}</p></md-list-item>
+            <md-list-item><p><b>Origin</b></p><p>{{ vm.selected.origin }}</p></md-list-item>
+            <md-list-item><p><b>Tags</b></p><p ng-repeat="tag in vm.selected.tags">{{ tag }}</p></md-list-item>
+            <md-list-item ng-repeat="(key, value) in vm.selected.attributes"><p><b>{{ key | capitalize }}</b></p><p>{{ value }}</p></md-list-item>
         </md-list>
 
         <md-divider></md-divider>

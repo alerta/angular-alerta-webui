@@ -55,13 +55,15 @@ angular.module('alertaControllers', [])
 .controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', '$mdSidenav', 'colors', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $route, $location, $timeout, $auth, $mdSidenav, colors, Count, Environment, Service, Alert){
 
+    var vm = this;
+
     if ($auth.isAuthenticated()) {
-      $scope.user = $auth.getPayload().name;
+      vm.user = $auth.getPayload().name;
     } else {
-      $scope.user = undefined;
+      vm.user = undefined;
     };
 
-    $scope.isAuthenticated = function() {
+    vm.isAuthenticated = function() {
       return $auth.isAuthenticated();
     };
 
@@ -84,122 +86,115 @@ angular.module('alertaControllers', [])
       highlight: 'skyblue '
     };
 
-    $scope.colors = angular.merge(defaults, colors);
+    vm.colors = angular.merge(defaults, colors);
 
-    $scope.autoRefresh = true;
-    $scope.refreshText = 'Auto Update';
+    vm.autoRefresh = true;
+    vm.refreshText = 'Auto Update';
 
     var search = $location.search();
     if (search.environment) {
-      $scope.environment = search.environment;
+      vm.environment = search.environment;
     }
     if (search.service) {
-      $scope.service = search.service;
+      vm.service = search.service;
     }
     if (search.status) {
-      $scope.status = search.status;
+      vm.status = search.status;
     } else {
-      $scope.status = 'open';
+      vm.status = 'open';
     }
 
-    $scope.search = undefined;
-
-    $scope.menu = function() {
+    vm.menu = function() {
       $mdSidenav('left').toggle();
     };
-    $scope.showSearch = false;
-    $scope.clear = function () {
-      $scope.showSearch = false;
-      $scope.search = undefined;
-    };
 
-    $scope.selectedIndex = 1;
+    vm.selectedIndex = 1;
     $scope.$watch('selectedIndex', function(current, old){
-      // $scope.status = $scope.tabs[current];
-      // $scope.query = {status: $scope.status};
+      // vm.status = vm.tabs[current];
+      // vm.query = {status: vm.status};
       refresh();
     });
 
-    $scope.show = [
+    vm.show = [
       {name: 'Open', status: 'open'},
       {name: 'Active', status: ['open', 'ack', 'assign']},
       {name: 'Closed', status: 'closed'}
     ];
 
-    $scope.alerts = [];
-    $scope.alertLimit = 20;
-    $scope.reverse = true;
-    $scope.query = {};
+    vm.alerts = [];
+    vm.alertLimit = 20;
+    vm.reverse = true;
+    vm.query = {};
 
-    $scope.setService = function(service) {
-      $scope.service = service;
+    vm.setService = function(service) {
+      vm.service = service;
       updateQuery();
       refresh();
     };
 
-    $scope.setEnv = function(environment) {
-      $scope.environment = environment;
+    vm.setEnv = function(environment) {
+      vm.environment = environment;
       updateQuery();
       refresh();
     };
 
-    $scope.setStatus = function(status) {
-      $scope.status = status;
+    vm.setStatus = function(status) {
+      vm.status = status;
       updateQuery();
       refresh();
     };
 
-    $scope.refresh = function() {
+    vm.refresh = function() {
       refresh();
     };
 
     var updateQuery = function() {
-      if ($scope.service) {
-        $scope.query['service'] = $scope.service
+      if (vm.service) {
+        vm.query['service'] = vm.service
       } else {
-        delete $scope.query['service'];
+        delete vm.query['service'];
       }
-      if ($scope.environment) {
-        $scope.query['environment'] = $scope.environment
+      if (vm.environment) {
+        vm.query['environment'] = vm.environment
       } else {
-        delete $scope.query['environment'];
+        delete vm.query['environment'];
       }
-      if ($scope.status) {
-        $scope.query['status'] = $scope.status;
+      if (vm.status) {
+        vm.query['status'] = vm.status;
       } else {
-        delete $scope.query['status'];
+        delete vm.query['status'];
       }
-      $location.search($scope.query);
+      $location.search(vm.query);
     };
 
     var refresh = function() {
-      $scope.refreshText = 'Refreshing...';
-      Count.query({status: $scope.status}, function(response) {
-        $scope.total = response.total;
-        $scope.statusCounts = response.statusCounts;
+      vm.refreshText = 'Refreshing...';
+      Count.query({status: vm.status}, function(response) {
+        vm.total = response.total;
+        vm.statusCounts = response.statusCounts;
       });
-      Service.all({status: $scope.status}, function(response) {
-        $scope.services = response.services;
+      Service.all({status: vm.status}, function(response) {
+        vm.services = response.services;
       });
-      Environment.all({status: $scope.status}, function(response) {
-        $scope.environments = response.environments;
+      Environment.all({status: vm.status}, function(response) {
+        vm.environments = response.environments;
       });
       updateQuery();
-      Alert.query($scope.query, function(response) {
+      Alert.query(vm.query, function(response) {
         if (response.status == 'ok') {
-          $scope.alerts = response.alerts;
+          vm.alerts = response.alerts;
         }
-        $scope.message = response.status + ' - ' + response.message;
-        $scope.autoRefresh = response.autoRefresh;
-        if ($scope.autoRefresh) {
-          $scope.refreshText = 'Auto Update';
+        vm.message = response.status + ' - ' + response.message;
+        vm.autoRefresh = response.autoRefresh;
+        if (vm.autoRefresh) {
+          vm.refreshText = 'Auto Update';
         } else {
-          $scope.refreshText = 'Refresh';
+          vm.refreshText = 'Refresh';
         }
       });
     };
     var refreshWithTimeout = function() {
-      if ($scope.autoRefresh) {
+      if (vm.autoRefresh) {
         refresh();
       }
       timer = $timeout(refreshWithTimeout, 5000);
@@ -227,35 +222,35 @@ angular.module('alertaControllers', [])
       'unknown': 9
     };
 
-    $scope.reverseSeverityCode = function(alert) {
+    vm.reverseSeverityCode = function(alert) {
       return -SEVERITY_MAP[alert.severity];
     };
 
-    $scope.severityCode = function(alert) {
+    vm.severityCode = function(alert) {
       return SEVERITY_MAP[alert.severity];
     };
 
-    $scope.getDetails = function (alert, event) {
-      $scope.selected = alert;
+    vm.getDetails = function (alert, event) {
+      vm.selected = alert;
       $mdSidenav('right').toggle();
     };
 
-    $scope.bulkAlerts = [];
+    vm.bulkAlerts = [];
 
-    $scope.click = function($event,alert) {
+    vm.click = function($event,alert) {
       if ($event.metaKey) {
-        var index = $scope.bulkAlerts.indexOf(alert.id);
+        var index = vm.bulkAlerts.indexOf(alert.id);
         if (index > -1) {
-          $scope.bulkAlerts.splice(index, 1);
+          vm.bulkAlerts.splice(index, 1);
         } else {
-          $scope.bulkAlerts.push(alert.id);
+          vm.bulkAlerts.push(alert.id);
         }
       } else {
         $location.url('/alert/' + alert.id);
       }
     };
 
-    $scope.bulkOpenAlert = function(ids) {
+    vm.bulkOpenAlert = function(ids) {
       angular.forEach(ids, function(id) {
         Alert.status({id: id}, {status: 'open', text: 'bulk status change via console'}, function(data) {
           // $route.reload();
@@ -264,13 +259,13 @@ angular.module('alertaControllers', [])
       $route.reload();
     };
 
-    // $scope.bulkTagAlert = function(id, tags) {
+    // vm.bulkTagAlert = function(id, tags) {
     //   Alert.tag({id: id}, {tags: tags}, function(data) {
     //     $route.reload();
     //   });
     // };
 
-    $scope.bulkWatchAlert = function(ids, user) {
+    vm.bulkWatchAlert = function(ids, user) {
       angular.forEach(ids, function(id) {
         Alert.tag({id: id}, {tags: ['watch:' + user]}, function(data) {
           // $route.reload();
@@ -279,7 +274,7 @@ angular.module('alertaControllers', [])
       $route.reload();
     };
 
-    $scope.bulkUnwatchAlert = function(ids, user) {
+    vm.bulkUnwatchAlert = function(ids, user) {
       angular.forEach(ids, function(id) {
         Alert.untag({id: id}, {tags: ['watch:' + user]}, function(data) {
           // $route.reload();
@@ -288,7 +283,7 @@ angular.module('alertaControllers', [])
       $route.reload();
     };
 
-    $scope.bulkAckAlert = function(ids) {
+    vm.bulkAckAlert = function(ids) {
       angular.forEach(ids, function(id) {
         Alert.status({id: id}, {status: 'ack', text: 'bulk status change via console'}, function(data) {
           // $route.reload();
@@ -297,7 +292,7 @@ angular.module('alertaControllers', [])
       $route.reload();
     };
 
-    $scope.bulkCloseAlert = function(ids) {
+    vm.bulkCloseAlert = function(ids) {
       angular.forEach(ids, function(id) {
         Alert.status({id: id}, {status: 'closed', text: 'bulk status change via console'}, function(data) {
           // $route.reload();
@@ -306,7 +301,7 @@ angular.module('alertaControllers', [])
       $route.reload();
     };
 
-    $scope.bulkDeleteAlert = function(ids) {
+    vm.bulkDeleteAlert = function(ids) {
       angular.forEach(ids, function(id) {
         Alert.delete({id: id}, {}, function(data) {
           // $location.path('/');
