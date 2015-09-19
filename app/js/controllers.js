@@ -7,40 +7,42 @@ angular.module('alertaControllers', [])
 .controller('NavController', ['$scope', '$location', '$auth', '$mdSidenav', 'config',
   function($scope, $location, $auth, $mdSidenav, config) {
 
-    $scope.search = undefined;
+    var nav = this;
+    nav.showSearch = false;
+    nav.search = undefined;
 
-    $scope.menu = function() {
-      $mdSidenav('left').toggle();
+    nav.clear = function () {
+      nav.showSearch = false;
+      nav.search = undefined;
     };
-    $scope.showSearch = false;
-    $scope.clear = function () {
-      $scope.showSearch = false;
-      $scope.search = undefined;
+
+    nav.menu = function() {
+      $mdSidenav('left').toggle();
     };
 
     if ($auth.isAuthenticated()) {
-      $scope.name = $auth.getPayload().name;
+      nav.name = $auth.getPayload().name;
     };
 
     $scope.$on('login:name', function(evt, name) {
-      $scope.name = name;
+      nav.name = name;
     });
 
-    $scope.isActive = function (viewLocation) {
+    nav.isActive = function (viewLocation) {
       return viewLocation === $location.path();
     };
 
-    $scope.isAuthenticated = function() {
+    nav.isAuthenticated = function() {
       return $auth.isAuthenticated();
     };
 
-    $scope.authenticate = function() {
+    nav.authenticate = function() {
       if (config.provider == 'basic') {
         $location.path('/login');
       } else {
         $auth.authenticate(config.provider)
         .then(function() {
-          $scope.name = $auth.getPayload().name;
+          nav.name = $auth.getPayload().name;
         })
         .catch(function(e) {
           alert(JSON.stringify(e));

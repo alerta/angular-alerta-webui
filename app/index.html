@@ -23,18 +23,18 @@
     </script>
   </head>
 
-  <body layout="column" ng-controller="NavController">
+  <body layout="column" ng-controller="NavController as nav">
 
-    <md-toolbar ng-show="!showSearch">
+    <md-toolbar ng-show="!nav.showSearch">
       <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Menu">
-          <md-icon md-svg-icon="menu" ng-click="menu()"></md-icon>
+          <md-icon md-svg-icon="menu" ng-click="nav.menu()"></md-icon>
         </md-button>
         <h2>
           <span>Alerta</span>
         </h2>
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Search">
+        <md-button class="md-icon-button" ng-click="nav.showSearch = !nav.showSearch" aria-label="Search">
           <md-icon md-svg-icon="search"></md-icon>
         </md-button>
         <md-menu>
@@ -71,9 +71,9 @@
       </div>
     </md-toolbar>
 
-    <md-toolbar ng-show="showSearch">
+    <md-toolbar ng-show="nav.showSearch">
       <div class="md-toolbar-tools">
-        <md-button class="md-icon-button" ng-click="showSearch = !showSearch" aria-label="Back">
+        <md-button class="md-icon-button" ng-click="nav.showSearch = !nav.showSearch" aria-label="Back">
           <md-icon md-svg-icon="arrow_back"></md-icon>
         </md-button>
         <h2>
@@ -82,9 +82,9 @@
         <span flex></span>
         <md-input-container md-no-float flex>
           <label>Search</label>
-          <input type="text" ng-model="search" autofocus />
+          <input type="text" ng-model="nav.search" autofocus />
         </md-input-container>
-        <md-button class="md-icon-button" ng-click="clear();" aria-label="Close">
+        <md-button class="md-icon-button" ng-click="nav.clear();" aria-label="Close">
           <md-icon md-svg-icon="close"></md-icon>
         </md-button>
         <md-menu>
@@ -125,7 +125,7 @@
       <md-toolbar>
         <div class="md-toolbar-tools">
           <md-button class="md-icon-button" aria-label="Menu">
-            <md-icon md-svg-icon="menu" ng-click="menu()"></md-icon>
+            <md-icon md-svg-icon="menu" ng-click="nav.menu()"></md-icon>
           </md-button>
           <h2>
               <span>Alerta</span>
