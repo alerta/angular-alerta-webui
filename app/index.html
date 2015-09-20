@@ -33,6 +33,12 @@
         <h2>
           <span>Alerta</span>
         </h2>
+        <md-select ng-model="nav.status">
+          <md-option ng-repeat="s in nav.showStatus" ng-value="s.status" ng-selected="s.name == 'All'">{{ s.name }}</md-option>
+        </md-select>
+<!--         <md-select ng-model="nav.status">
+          <md-option ng-repeat="status in nav.statuses" value="{{ status }}" ng-selected="status.name == 'All'">{{ status.name }}</md-option>
+        </md-select> -->
         <span flex></span>
         <md-button class="md-icon-button" ng-click="nav.showSearch = !nav.showSearch" aria-label="Search">
           <md-icon md-svg-icon="search"></md-icon>

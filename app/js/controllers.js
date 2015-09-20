@@ -8,6 +8,15 @@ angular.module('alertaControllers', [])
   function($scope, $location, $auth, $mdSidenav, config) {
 
     var nav = this;
+
+    nav.showStatus = [
+      {name: 'All', status: ['open', 'ack', 'assign', 'closed']},
+      {name: 'Open', status: 'open'},
+      {name: 'Active', status: ['open', 'ack', 'assign']},
+      {name: 'Closed', status: 'closed'}
+    ];
+    nav.status = undefined;
+
     nav.showSearch = false;
     nav.search = undefined;
 
@@ -110,12 +119,6 @@ angular.module('alertaControllers', [])
 
     vm.selectedIndex = 0;
 
-    vm.show = [
-      {name: 'Open', status: 'open'},
-      {name: 'Active', status: ['open', 'ack', 'assign']},
-      {name: 'Closed', status: 'closed'}
-    ];
-
     vm.alerts = [];
     vm.alertLimit = 20;
     vm.reverse = true;
@@ -132,6 +135,12 @@ angular.module('alertaControllers', [])
       updateQuery();
       refresh();
     };
+
+    $scope.$watchCollection('nav.status', function(current, previous) {
+      vm.status = current;
+      updateQuery();
+      refresh();
+    });
 
     vm.setStatus = function(status) {
       vm.status = status;
