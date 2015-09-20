@@ -141,28 +141,28 @@
       </md-toolbar>
 
       <md-content layout-padding>
-        <md-list>
-          <md-subheader>Services</md-subheader>
-          <md-list-item ng-click="goto('',$event)">
-            <md-icon md-svg-icon="service"></md-icon><p>All</p>
-          </md-list-item>
-          <md-list-item ng-repeat="s in services">
-            <md-button ng-click="setService(s)" ng-class="{'selected' : it === ul.selected }" style="width: 100%;">
-              <md-icon md-svg-icon="service"></md-icon><p>{{ s.service }}</p>
-            </md-button>
-          </md-list-item>
-          <md-divider></md-divider>
-          <md-subheader>Other</md-subheader>
-          <md-list-item ng-click="goto('',$event)">
-            <md-icon md-svg-icon="comment"></md-icon><p>Top 10</p>
-          </md-list-item>
-          <md-list-item ng-click="goto('',$event)">
-            <md-icon md-svg-icon="people"></md-icon><p>Watched</p>
-          </md-list-item>
-          <md-list-item ng-click="goto('',$event)">
-            <md-icon md-svg-icon="security"></md-icon><p>Anti-spam</p>
-          </md-list-item>
-        </md-list>
+
+      <md-list>
+      <md-subheader class="md-no-sticky">Services</md-subheader>
+      <md-list-item ng-repeat="s in nav.services | orderBy:['environment','service'] track by $index" ng-click="nav.setService(s.service);" style="width: 100%;">
+        <md-icon class="md-default-theme" class="material-icons">&#xE7F9;</md-icon>
+        <p>{{ s.service }}</p>
+        <div class="md-secondary">{{ s.count }}</div>
+      </md-list-item>
+      <md-divider></md-divider>
+      <md-subheader class="md-no-sticky">Pages</md-subheader>
+      <md-list-item ng-click="nav.pages();">
+        <md-icon class="md-default-theme" class="material-icons">&#xE7F9;</md-icon>
+        <p>Pages Feed</p>
+        <div class="md-secondary">2</div>
+      </md-list-item>
+      <md-list-item>
+        <md-icon class="md-default-theme" class="material-icons">&#xE1BC;</md-icon>
+        <p>Like Pages</p>
+        <div class="md-secondary">20+</div>
+      </md-list-item>
+      </md-list>
+
       </md-content>
     </md-sidenav>
 

@@ -4,8 +4,8 @@
 
 angular.module('alertaControllers', [])
 
-.controller('NavController', ['$scope', '$location', '$auth', '$mdSidenav', 'config',
-  function($scope, $location, $auth, $mdSidenav, config) {
+.controller('NavController', ['$scope', '$location', '$auth', '$mdSidenav', 'config', 'Service',
+  function($scope, $location, $auth, $mdSidenav, config, Service) {
 
     var nav = this;
 
@@ -29,8 +29,16 @@ angular.module('alertaControllers', [])
       $mdSidenav('left').toggle();
     };
 
+      Service.all({}, function(response) {
+        nav.services = response.services;
+      });
+
     if ($auth.isAuthenticated()) {
       nav.name = $auth.getPayload().name;
+    };
+
+    nav.setService = function(service) {
+      nav.service = service;
     };
 
     $scope.$on('login:name', function(evt, name) {
@@ -124,11 +132,11 @@ angular.module('alertaControllers', [])
     vm.reverse = true;
     vm.query = {};
 
-    vm.setService = function(service) {
-      vm.service = service;
-      updateQuery();
-      refresh();
-    };
+    // vm.setService = function(service) {
+    //   vm.service = service;
+    //   updateQuery();
+    //   refresh();
+    // };
 
     vm.setEnv = function(environment) {
       vm.environment = environment;
@@ -138,6 +146,12 @@ angular.module('alertaControllers', [])
 
     $scope.$watchCollection('nav.status', function(current, previous) {
       vm.status = current;
+      updateQuery();
+      refresh();
+    });
+
+    $scope.$watch('nav.service', function(current) {
+      vm.service = current;
       updateQuery();
       refresh();
     });
@@ -177,9 +191,9 @@ angular.module('alertaControllers', [])
         vm.total = response.total;
         vm.statusCounts = response.statusCounts;
       });
-      Service.all({status: vm.status}, function(response) {
-        vm.services = response.services;
-      });
+      // Service.all({status: vm.status}, function(response) {
+      //   vm.services = response.services;
+      // });
       Environment.all({status: vm.status}, function(response) {
         vm.environments = response.environments;
       });
