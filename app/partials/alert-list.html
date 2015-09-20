@@ -21,7 +21,7 @@
 
                 <tr ng-repeat="alert in vm.alerts | filter:nav.search | orderBy:predicate:vm.reverse | limitTo:vm.alertLimit"
                     ng-style="{ 'color':  vm.colors.severity[alert.severity] == 'black' ? 'white' : vm.colors.text, 'background-color': (vm.bulkAlerts.indexOf(alert.id) > -1) ? vm.colors.highlight : vm.colors.severity[alert.severity] }"
-                    ng-click="vm.getDetails(alert, $event);">
+                    ng-click="vm.clickAlert($event, alert);">
                     <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
                     <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
                     <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
@@ -44,13 +44,43 @@
         </div>
 
 
-<section layout="row" layout-sm="column" layout-align="center center">
-    <md-button type="button" class="btn btn-default full-width" ng-click="vm.alertLimit = vm.alertLimit + 20">{{(vm.alerts|filter:nav.search).length | showing:vm.alertLimit }}</md-button>
-</section>
+        <section layout="row" layout-sm="column" layout-align="center center">
+            <md-button type="button" class="btn btn-default full-width" ng-click="vm.alertLimit = vm.alertLimit + 20">{{(vm.alerts|filter:nav.search).length | showing:vm.alertLimit }}</md-button>
+        </section>
 
-<md-button class="md-fab md-fab-bottom-right" ng-click="vm.add($event)">
-    <md-icon md-svg-icon="cloud_upload" aria-label="Upload"></md-icon>
-</md-button>
+      <md-fab-speed-dial class="md-fab md-fab-bottom-right" md-direction="left">
+        <md-fab-trigger>
+          <md-button aria-label="fab" class="md-fab md-warn">
+            <md-icon md-svg-icon="menu"></md-icon>
+          </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+          <md-button aria-label="Delete" class="md-fab md-mini">
+            <md-tooltip md-direction="top">Delete</md-tooltip>
+            <md-icon md-svg-icon="delete" ng-click="vm.bulkDeleteAlert(vm.bulkAlerts);"></md-icon>
+          </md-button>
+          <md-button aria-label="Close" class="md-fab md-mini">
+            <md-tooltip md-direction="top">Close</md-tooltip>
+            <md-icon md-svg-icon="close" ng-click="vm.bulkCloseAlert(vm.bulkAlerts);"></md-icon>
+          </md-button>
+          <md-button aria-label="Ack" class="md-fab md-mini">
+            <md-tooltip md-direction="top">Acknowledge</md-tooltip>
+            <md-icon md-svg-icon="check" ng-click="vm.bulkAckAlert(vm.bulkAlerts);"></md-icon>
+          </md-button>
+          <md-button aria-label="Unwatch" class="md-fab md-mini">
+            <md-tooltip md-direction="top">Unwatch</md-tooltip>
+            <md-icon md-svg-icon="invisible" ng-click="vm.bulkUnwatchAlert(vm.bulkAlerts, 'foo');"></md-icon>
+          </md-button>
+          <md-button aria-label="Watch" class="md-fab md-mini">
+            <md-tooltip md-direction="top">Watch</md-tooltip>
+            <md-icon md-svg-icon="visible" ng-click="vm.bulkWatchAlert(vm.bulkAlerts, 'foo');"></md-icon>
+          </md-button>
+          <md-button aria-label="Open" class="md-fab md-primary md-mini">
+            <md-tooltip md-direction="top">Open</md-tooltip>
+            <md-icon md-svg-icon="undo" ng-click="vm.bulkOpenAlert(vm.bulkAlerts);"></md-icon>
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>
 
 <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
     <md-toolbar class="md-theme-light">

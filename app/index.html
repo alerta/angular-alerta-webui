@@ -144,6 +144,12 @@
 
       <md-list>
       <md-subheader class="md-no-sticky">Services</md-subheader>
+      <md-list-item ng-click="nav.setService(null);" style="width: 100%;">
+        <md-icon class="md-default-theme" class="material-icons">&#xE7F9;</md-icon>
+        <p>ALL</p>
+        <div class="md-secondary">??</div>
+      </md-list-item>
+
       <md-list-item ng-repeat="s in nav.services | orderBy:['environment','service'] track by $index" ng-click="nav.setService(s.service);" style="width: 100%;">
         <md-icon class="md-default-theme" class="material-icons">&#xE7F9;</md-icon>
         <p>{{ s.service }}</p>

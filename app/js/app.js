@@ -116,7 +116,13 @@ angular.module('alerta', [
     .icon("menu"        , "img/icons/ic_menu_24px.svg" , 24)
     .icon("close"       , "img/icons/ic_close_24px.svg" , 24)
     .icon("arrow_back"  , "img/icons/ic_arrow_back_24px.svg" , 24)
-    .icon("search"      , "img/icons/ic_search_24px.svg" , 512)
-    .icon("more_horiz"  , "img/icons/ic_more_horiz_24px.svg" , 512)
-    .icon("more_vert"   , "img/icons/ic_more_vert_24px.svg" , 512);
+    .icon("search"      , "img/icons/ic_search_24px.svg" , 24)
+    .icon("more_horiz"  , "img/icons/ic_more_horiz_24px.svg" , 24)
+    .icon("more_vert"   , "img/icons/ic_more_vert_24px.svg" , 24)
+    .icon("undo"        , "img/icons/ic_undo_24px.svg" , 24)
+    .icon("visible"     , "img/icons/ic_visibility_24px.svg" , 24)
+    .icon("invisible"   , "img/icons/ic_visibility_off_24px.svg" , 24)
+    .icon("check"       , "img/icons/ic_check_24px.svg" , 24)
+    .icon("close"       , "img/icons/ic_close_24px.svg" , 24)
+    .icon("delete"      , "img/icons/ic_delete_24px.svg" , 24);
 }]);

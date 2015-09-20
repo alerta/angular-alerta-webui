@@ -255,7 +255,7 @@ angular.module('alertaControllers', [])
 
     vm.bulkAlerts = [];
 
-    vm.click = function($event,alert) {
+    vm.clickAlert = function($event, alert) {
       if ($event.metaKey) {
         var index = vm.bulkAlerts.indexOf(alert.id);
         if (index > -1) {
