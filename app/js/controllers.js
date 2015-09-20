@@ -108,12 +108,7 @@ angular.module('alertaControllers', [])
       $mdSidenav('left').toggle();
     };
 
-    vm.selectedIndex = 1;
-    $scope.$watch('selectedIndex', function(current, old){
-      // vm.status = vm.tabs[current];
-      // vm.query = {status: vm.status};
-      refresh();
-    });
+    vm.selectedIndex = 0;
 
     vm.show = [
       {name: 'Open', status: 'open'},

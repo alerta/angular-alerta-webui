@@ -1,8 +1,8 @@
 
-<md-tabs md-selected="vm.selectedIndex" md-border-bottom md-dynamic-height>
-    <md-tab ng-repeat="e in vm.environments"
-            ng-disabled="e.disabled"
-            label="{{ e.environment }}">
+    <md-tabs md-selected="vm.selectedIndex">
+      <md-tab><a ng-click="vm.setEnv(null)">ALL&nbsp;<span class="label">{{ vm.total || 0 }}</span></a></md-tab>
+      <md-tab ng-repeat="e in vm.environments"><a ng-click="vm.setEnv(e.environment)">{{ e.environment }}&nbsp;<span class="label">{{ e.count || 0 }}</span></a></md-tab>
+    </md-tabs>
 
             <table class="table">
                 <tr ng-init="predicate = [vm.reverseSeverityCode,'lastReceiveTime']">
@@ -42,8 +42,7 @@
         <div ng-show="vm.alerts.length == 0">
             <center>{{ vm.message }}</center>
         </div>
-    </md-tab>
-</md-tabs>
+
 
 <section layout="row" layout-sm="column" layout-align="center center">
     <md-button type="button" class="btn btn-default full-width" ng-click="vm.alertLimit = vm.alertLimit + 20">{{(vm.alerts|filter:nav.search).length | showing:vm.alertLimit }}</md-button>
