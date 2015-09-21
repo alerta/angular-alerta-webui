@@ -111,13 +111,16 @@ angular.module('alerta', [
 
 .config(['$mdThemingProvider', '$mdIconProvider', function($mdThemingProvider, $mdIconProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('blue-grey');
+    .primaryPalette('blue-grey')
+    .accentPalette('purple');
   $mdIconProvider
     .icon("menu"        , "img/icons/ic_menu_24px.svg" , 24)
     .icon("close"       , "img/icons/ic_close_24px.svg" , 24)
     .icon("arrow_back"  , "img/icons/ic_arrow_back_24px.svg" , 24)
     .icon("search"      , "img/icons/ic_search_24px.svg" , 24)
+    .icon("account"     , "img/icons/ic_account_circle_24px.svg" , 24)
     .icon("more_horiz"  , "img/icons/ic_more_horiz_24px.svg" , 24)
+    .icon("exit_to_app" , "img/icons/ic_exit_to_app_24px.svg" , 24)
     .icon("more_vert"   , "img/icons/ic_more_vert_24px.svg" , 24)
     .icon("undo"        , "img/icons/ic_undo_24px.svg" , 24)
     .icon("visible"     , "img/icons/ic_visibility_24px.svg" , 24)
