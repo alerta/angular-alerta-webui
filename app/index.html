@@ -43,10 +43,28 @@
         <md-button class="md-icon-button" ng-click="nav.showSearch = !nav.showSearch" aria-label="Search">
           <md-icon md-svg-icon="search"></md-icon>
         </md-button>
-        <md-button class="md-icon-button" ng-show="nav.isAuthenticated()" aria-label="Account">
-          <md-tooltip md-direction="bottom">{{ nav.name }}</md-tooltip>
-          <md-icon md-svg-icon="account"></md-icon>
-        </md-button>
+
+        <md-menu>
+          <md-button class="md-icon-button" ng-show="nav.isAuthenticated()" aria-label="Account" ng-click="$mdOpenMenu($event)">
+            <md-tooltip md-direction="bottom">{{ nav.name }}</md-tooltip>
+            <md-icon md-svg-icon="account"></md-icon>
+          </md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button ng-click="logout($event)">
+                <md-icon md-svg-icon="account" md-menu-align-target></md-icon>
+                Profile
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-href="#/logout">
+                <md-icon md-svg-icon="exit_to_app" md-menu-align-target></md-icon>
+                Sign out
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+
         <md-menu>
           <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
             <md-icon md-svg-icon="more_vert"></md-icon>
@@ -68,12 +86,6 @@
               <md-button ng-href="#">
                 <md-icon md-svg-icon="settings" md-menu-align-target></md-icon>
                 Settings
-              </md-button>
-            </md-menu-item>
-            <md-menu-item>
-              <md-button ng-href="#/logout">
-                <md-icon md-svg-icon="exit_to_app" md-menu-align-target></md-icon>
-                Sign out
               </md-button>
             </md-menu-item>
           </md-menu-content>
