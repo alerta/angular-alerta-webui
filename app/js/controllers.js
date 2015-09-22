@@ -94,6 +94,10 @@ angular.module('alertaControllers', [])
       });
     };
 
+    nav.navigateTo = function(to, event) {
+      $location.path(to);
+    };
+
   }])
 
 .controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', '$mdSidenav', 'colors', 'Count', 'Environment', 'Service', 'Alert',
