@@ -25,6 +25,14 @@ angular.module('alertaControllers', [])
       nav.search = undefined;
     };
 
+    nav.profile = function($mdOpenMenu, ev) {
+      if (nav.isAuthenticated()) {
+        $mdOpenMenu(ev);
+      } else {
+        nav.authenticate();
+      }
+    };
+
     nav.menu = function() {
       $mdSidenav('left').toggle();
     };
@@ -35,6 +43,7 @@ angular.module('alertaControllers', [])
 
     if ($auth.isAuthenticated()) {
       nav.name = $auth.getPayload().name;
+      nav.login = $auth.getPayload().login;
     };
 
     nav.setService = function(service) {
@@ -60,6 +69,7 @@ angular.module('alertaControllers', [])
         $auth.authenticate(config.provider)
         .then(function() {
           nav.name = $auth.getPayload().name;
+          nav.login = $auth.getPayload().login;
         })
         .catch(function(e) {
           alert(JSON.stringify(e));

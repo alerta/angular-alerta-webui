@@ -45,15 +45,15 @@
         </md-button>
 
         <md-menu>
-          <md-button class="md-icon-button" ng-show="nav.isAuthenticated()" aria-label="Account" ng-click="$mdOpenMenu($event)">
-            <md-tooltip md-direction="bottom">{{ nav.name }}</md-tooltip>
+          <md-button class="md-icon-button" aria-label="Account" ng-click="nav.profile($mdOpenMenu, $event);">
+            <md-tooltip md-direction="bottom">{{ nav.isAuthenticated() ? nav.name : 'Login' }}</md-tooltip>
             <md-icon md-svg-icon="account"></md-icon>
           </md-button>
           <md-menu-content>
             <md-menu-item>
-              <md-button ng-href="#">
+              <md-button disabled="disabled" ng-href="#">
                 <md-icon md-svg-icon="account" md-menu-align-target></md-icon>
-                Profile
+                {{ nav.login }}
               </md-button>
             </md-menu-item>
             <md-menu-item>
