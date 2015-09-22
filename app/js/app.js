@@ -41,7 +41,8 @@ angular.module('alerta', [
     })
     .when('/keys', {
       templateUrl: 'partials/keys.html',
-      controller: 'ApiKeyController'
+      controller: 'ApiKeyController',
+      controllerAs: 'vm'
     })
     .when('/blackouts', {
       templateUrl: 'partials/blackouts.html',

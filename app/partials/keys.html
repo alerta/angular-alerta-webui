@@ -16,33 +16,39 @@
           <th class="hidden-xs">Times Used</th>
           <th>Access</th>
         </tr>
-        <tr ng-repeat="key in keys">
+        <tr ng-repeat="key in vm.keys">
           <td><tt>{{ key.key }}</tt></td>
           <td class="hidden-xs">{{ key.text}}</td>
           <td class="hidden-xs">{{ key.type}}</td>
           <td class="hidden-xs">{{ key.expireTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
-          <td><i class="glyphicon glyphicon-warning-sign" ng-show="key.expireTime | isExpired" title="Expired"></i><i class="glyphicon glyphicon-ok" ng-hide="key.expireTime | isExpired" title="Active"></i></td>
+          <td><md-icon class="md-default-theme" class="material-icons" ng-show="key.expireTime | isExpired" title="Expired">block</md-icon><md-icon class="md-default-theme" class="material-icons" ng-hide="key.expireTime | isExpired" title="Active">check</md-icon></td>
           <td class="hidden-xs">{{ key.lastUsedTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
           <td class="hidden-xs">{{ key.count }}</td>
-          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteKey(key.key);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
+          <td><md-icon class="md-default-theme" class="material-icons" ng-click="vm.deleteKey(key.key)" class="md-secondary md-hue-3" aria-label="Delete Key">delete</md-icon></td>
         </tr>
       </table>
 
-      <form name="form" class="form-inline css-form" novalidate>
-        <div class="row">
-        <div class="form-group col-md-4 col-sm-4 col-xs-4">
-              <input type="text" class="form-control" id="text" placeholder="Application requiring API Key" ng-model="text" name="text" required />
-        </div>
-        <div class="col-md-4 col-sm-4 col-xs-4">
-          <select class="form-control input-medium" ng-model="type" ng-options="type for type in types">
-          </select>
-        </div>
-        <button type="button" class="btn btn-primary" ng-click="createKey(type, text)" ng-disabled="form.$invalid">Create new API Key</button>
-        </div>
-      </form>
-
+      <md-content layout-padding>
+        <form name="form">
+          <div layout layout-sm="column">
+            <md-input-container flex>
+              <label>Application Description</label>
+              <input ng-model="vm.text" required />
+            </md-input-container>
+            <md-input-container>
+              <label>Type</label>
+              <md-select ng-model="vm.type">
+                <md-option ng-repeat="type in vm.types" value="{{ type }}">{{ type }}</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div layout="row">
+            <md-button ng-click="vm.clearForm()" ng-disabled="!vm.text" style="margin-right: 20px;">Clear</md-button>
+            <md-button ng-click="vm.createKey(vm.type, vm.text)" ng-disabled="myForm.$invalid" class="md-primary" layout layout-align="center end">Create</md-button>
+          </div>
+        </form>
+      </md-content>
 
     </div>
   </div>
-
 </div>

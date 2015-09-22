@@ -48,6 +48,7 @@ angular.module('alertaControllers', [])
 
     nav.setService = function(service) {
       nav.service = service;
+      $location.path('/alerts');
     };
 
     $scope.$on('login:name', function(evt, name) {
@@ -743,27 +744,34 @@ angular.module('alertaControllers', [])
 .controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'Keys',
   function($scope, $route, $timeout, $auth, Keys) {
 
-    $scope.keys = [];
-    $scope.type = 'read-only';
-    $scope.text = '';
+    var vm = this;
 
-    $scope.types = ['read-only', 'read-write'];
+    vm.keys = [];
+    vm.text = undefined;
+    vm.type = 'read-only';
 
-    $scope.createKey = function(type, text) {
-      Keys.save({}, {user: $auth.getPayload().login, type: type, text: text}, function(data) {
-        $route.reload();
-      });
-    };
+    vm.types = ['read-only', 'read-write'];
 
-    $scope.deleteKey = function(key) {
+    Keys.query({user: $auth.getPayload().login}, function(response) {
+      vm.keys = response.keys;
+    });
+
+    vm.deleteKey = function(key) {
       Keys.delete({key: key}, {}, function(data) {
         $route.reload();
       });
     };
 
-    Keys.query({user: $auth.getPayload().login}, function(response) {
-      $scope.keys = response.keys;
-    });
+    vm.createKey = function(type, text) {
+      Keys.save({}, {user: $auth.getPayload().login, type: type, text: text}, function(data) {
+        $route.reload();
+      });
+    };
+
+    vm.clearForm = function() {
+      vm.text = undefined;
+      vm.type = 'read-only';
+    };
 
   }])
 
