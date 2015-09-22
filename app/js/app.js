@@ -51,14 +51,10 @@ angular.module('alerta', [
       templateUrl: 'partials/profile.html',
       controller: 'ProfileController'
     })
-    .when('/about', {
-      templateUrl: 'partials/about.html',
-      controller: 'AboutController'
-    })
     .when('/stats', {
       templateUrl: 'partials/stats.html',
       controller: 'StatsController',
-      controllerAs: 'stats',
+      controllerAs: 'stats'
     })
     .when('/login', {
       templateUrl: 'partials/login.html',

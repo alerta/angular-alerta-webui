@@ -4,8 +4,8 @@
 
 angular.module('alertaControllers', [])
 
-.controller('NavController', ['$scope', '$location', '$auth', '$mdSidenav', 'config', 'Service',
-  function($scope, $location, $auth, $mdSidenav, config, Service) {
+.controller('NavController', ['$scope', '$location', '$auth', '$mdDialog', '$mdSidenav', 'config', 'Service',
+  function($scope, $location, $auth, $mdDialog, $mdSidenav, config, Service) {
 
     var nav = this;
 
@@ -75,6 +75,23 @@ angular.module('alertaControllers', [])
           alert(JSON.stringify(e));
         });
       }
+    };
+
+    nav.showAbout = function ($event) {
+      $mdDialog.show({
+        scope: $scope,
+        preserveScope: true,
+        targetEvent: $event,
+        templateUrl: 'partials/about.html',
+        controller: function($scope, $mdDialog) {
+          $scope.cancel = function() {
+            $mdDialog.cancel();
+          };
+          $scope.hide = function() {
+            $mdDialog.hide();
+          };
+        }
+      });
     };
 
   }])
@@ -756,11 +773,6 @@ angular.module('alertaControllers', [])
 
     $scope.token = $auth.getToken();
     $scope.payload = $auth.getPayload();
-  }])
-
-.controller('AboutController', ['$scope',
-  function($scope) {
-
   }])
 
 .controller('StatsController', ['$scope', '$timeout', 'Management', 'Heartbeat',
