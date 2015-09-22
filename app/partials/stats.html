@@ -13,10 +13,10 @@
           <th class="hidden-xs">Revision</th>
         </tr>
         <tr>
-          <td>{{ manifest.alerta.label }} {{ manifest.alerta.release }}</td>
-          <td>{{ manifest.alerta.build }}</td>
-          <td class="hidden-xs">{{ manifest.alerta.date }}</td>
-          <td class="hidden-xs">{{ manifest.alerta.revision }}</td>
+          <td>{{ stats.manifest.alerta.label }} {{ stats.manifest.alerta.release }}</td>
+          <td>{{ stats.manifest.alerta.build }}</td>
+          <td class="hidden-xs">{{ stats.manifest.alerta.date }}</td>
+          <td class="hidden-xs">{{ stats.manifest.alerta.revision }}</td>
         </tr>
       </table>
 
@@ -28,7 +28,7 @@
           <th>Value</th>
           <th>Avg. Time</th>
         </tr>
-        <tr ng-repeat="metric in metrics">
+        <tr ng-repeat="metric in stats.metrics">
           <td>{{ metric.title }}</td>
           <td class="hidden-xs">{{ metric.type | capitalize }}</td>
           <td class="hidden-xs">{{ metric.group }}.{{ metric.name }}</td>
@@ -47,7 +47,7 @@
           <th class="hidden-xs">Timeout</th>
           <th>Since</th>
         </tr>
-        <tr ng-repeat="heartbeat in heartbeats | orderBy:'-receiveTime'"
+        <tr ng-repeat="heartbeat in stats.heartbeats | orderBy:'-receiveTime'"
             class="heartbeat heartbeat-stale">
           <td>{{ heartbeat.origin }}</td>
           <td class="hidden-xs"><span ng-repeat="tag in heartbeat.tags"><span class="label label-primary">{{ tag }}</span> </span></td>
@@ -62,8 +62,8 @@
       <div>
         <table class="table">
           <tr>
-            <td><b>Last Update</b></td><td>{{ lastTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss'}}</td>
-            <td><b>Uptime</b></td><td>{{ uptime / 1000 | hms }}</td>
+            <td><b>Last Update</b></td><td>{{ stats.lastTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss'}}</td>
+            <td><b>Uptime</b></td><td>{{ stats.uptime / 1000 | hms }}</td>
           </tr>
         </table>
       </div>

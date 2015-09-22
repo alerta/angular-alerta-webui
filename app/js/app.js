@@ -55,6 +55,11 @@ angular.module('alerta', [
       templateUrl: 'partials/about.html',
       controller: 'AboutController'
     })
+    .when('/stats', {
+      templateUrl: 'partials/stats.html',
+      controller: 'StatsController',
+      controllerAs: 'stats',
+    })
     .when('/login', {
       templateUrl: 'partials/login.html',
       controller: 'LoginController'
@@ -123,6 +128,7 @@ angular.module('alerta', [
     .icon("more_horiz"  , "img/icons/ic_more_horiz_24px.svg" , 24)
     .icon("help"        , "img/icons/ic_help_24px.svg" , 24)
     .icon("info"        , "img/icons/ic_info_24px.svg" , 24)
+    .icon("stats"       , "img/icons/ic_assessment_24px.svg" , 24)
     .icon("exit_to_app" , "img/icons/ic_exit_to_app_24px.svg" , 24)
     .icon("more_vert"   , "img/icons/ic_more_vert_24px.svg" , 24)
     .icon("undo"        , "img/icons/ic_undo_24px.svg" , 24)

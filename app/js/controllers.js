@@ -758,24 +758,31 @@ angular.module('alertaControllers', [])
     $scope.payload = $auth.getPayload();
   }])
 
-.controller('AboutController', ['$scope', '$timeout', 'Management', 'Heartbeat',
+.controller('AboutController', ['$scope',
+  function($scope) {
+
+  }])
+
+.controller('StatsController', ['$scope', '$timeout', 'Management', 'Heartbeat',
   function($scope, $timeout, Management, Heartbeat) {
 
+    var vm = this;
+
     Management.manifest(function(response) {
-      $scope.manifest = response;
+      vm.manifest = response;
     });
 
-    $scope.metrics = [];
-    $scope.heartbeats = [];
+    vm.metrics = [];
+    vm.heartbeats = [];
 
     var refresh = function() {
       Management.status(function(response) {
-        $scope.metrics = response.metrics;
-        $scope.lastTime = response.time;
-        $scope.uptime = response.uptime;
+        vm.metrics = response.metrics;
+        vm.lastTime = response.time;
+        vm.uptime = response.uptime;
       });
       Heartbeat.query(function(response) {
-        $scope.heartbeats = response.heartbeats;
+        vm.heartbeats = response.heartbeats;
       });
       timer = $timeout(refresh, 10000);
     };
