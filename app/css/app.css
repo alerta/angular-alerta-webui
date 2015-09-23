@@ -118,3 +118,7 @@ th {
    width:40%;
    margin: 0 auto;
 }
+
+.status-filter {
+    margin-left: 12px;
+}
