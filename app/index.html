@@ -30,8 +30,10 @@
         <md-button class="md-icon-button" aria-label="Menu">
           <md-icon md-svg-icon="menu" ng-click="nav.menu()"></md-icon>
         </md-button>
-        <span><h2>Alerta</h2></span>
-        <span class="status-filter">
+        <h2>
+          <span>Alerta</span>
+        </h2>
+        <span>
         <md-select ng-model="nav.status">
           <md-option ng-repeat="s in nav.showStatus" ng-value="s.status" ng-selected="s.name == 'All'">{{ s.name }}</md-option>
         </md-select>

@@ -119,6 +119,6 @@ th {
    margin: 0 auto;
 }
 
-.status-filter {
-    margin-left: 12px;
+h2 > span {
+    margin-right: 12px;
 }
