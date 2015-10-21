@@ -105,4 +105,11 @@ alertaApp.config(['config', '$authProvider',
       url: config.endpoint+'/auth/twitter',
       clientId: config.client_id
     });
+    $authProvider.oauth2({
+      name: 'gitlab',
+      url: config.endpoint+'/auth/gitlab',
+      redirectUri: window.location.origin,
+      clientId: config.client_id,
+      authorizationEndpoint: config.gitlab_url+'/oauth/authorize'
+    });
 }]);
