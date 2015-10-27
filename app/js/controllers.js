@@ -656,6 +656,7 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
     Users.query(function(response) {
       $scope.domains = response.domains;
       $scope.orgs = response.orgs;
+      $scope.groups = response.groups;
       $scope.users = response.users;
     });
 

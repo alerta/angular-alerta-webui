@@ -6,11 +6,14 @@
 
       <div>
         <table class="table">
-          <tr>
+          <tr ng-show="provider == 'google'">
             <td><b>Allowed E-mail Domains: </b>{{ domains.join(', ') }}</td>
           </tr>
-          <tr>
+          <tr ng-show="provider == 'github'">
             <td><b>Allowed GitHub Organisations: </b>{{ orgs.join(', ') }}</td>
+          </tr>
+          <tr ng-show="provider == 'gitlab'">
+            <td><b>Allowed GitLab Groups: </b>{{ groups.join(', ') }}</td>
           </tr>
         </table>
       </div>
