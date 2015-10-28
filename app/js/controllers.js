@@ -732,8 +732,8 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
 
   }]);
 
-alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$auth', 'config',
- function($scope, $rootScope, $auth, config) {
+alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$location', '$auth', 'config',
+ function($scope, $rootScope, $location, $auth, config) {
 
     $scope.provider = config.provider;
 
@@ -766,6 +766,11 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$auth'
           $scope.error = e.statusText;
         });
     };
+
+    if ($auth.isAuthenticated) {
+      $location.path('/');
+    };
+
   }]);
 
 alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$auth', 'config',
