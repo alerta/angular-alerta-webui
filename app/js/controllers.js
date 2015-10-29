@@ -760,18 +760,6 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$locat
           };
         });
     };
-
-    $scope.authenticate = function(provider) {
-      $auth.authenticate(provider)
-        .then(function() {
-          console.log('You have successfully logged in');
-          $location.path('/');
-        })
-        .catch(function(e) {
-          console.log(e);
-          $scope.error = e.statusText;
-        });
-    };
   }]);
 
 alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$location', '$auth', 'config',
@@ -798,8 +786,8 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
       };
   }]);
 
-  alertaControllers.controller('LogoutController', ['$auth',
-    function($auth) {
+  alertaControllers.controller('LogoutController', ['$auth', '$location',
+    function($auth, $location) {
     if (!$auth.isAuthenticated()) {
         return;
     }
