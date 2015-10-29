@@ -747,6 +747,7 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$locat
       })
         .then(function() {
           $rootScope.$broadcast('login:name', $auth.getPayload().name);
+          $location.path('/');
         })
         .catch(function(e) {
           console.log(e);
@@ -763,50 +764,37 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$locat
       $auth.authenticate(provider)
         .then(function() {
           console.log('You have successfully logged in');
+          $location.path('/');
         })
         .catch(function(e) {
           console.log(e);
           $scope.error = e.statusText;
         });
     };
-
-    if ($auth.isAuthenticated) {
-      $location.path('/');
-    };
-
   }]);
 
-alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$auth', 'config',
- function($scope, $rootScope, $auth, config) {
+alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$location', '$auth', 'config',
+ function($scope, $rootScope, $location, $auth, config) {
 
     $scope.provider = config.provider;
 
     $scope.signup = function(name, email, password, text) {
-        $auth.signup({
-          name: $scope.name,
-          email: $scope.email,
-          password: $scope.password,
-          text: $scope.text
-        })
-          .then(function() {
-            $rootScope.$broadcast('login:name', $auth.getPayload().name);
-          })
-          .catch(function(e) {
-            console.log(e);
-            $scope.error = e.statusText;
-          });
-      };
-
-    $scope.authenticate = function(provider) {
-      $auth.authenticate(provider)
-        .then(function() {
-          console.log('You have successfully logged in');
+      $auth.signup({
+        name: $scope.name,
+        email: $scope.email,
+        password: $scope.password,
+        text: $scope.text
+      })
+        .then(function(response) {
+          $auth.setToken(response);
+          $rootScope.$broadcast('login:name', $scope.name);
+          $location.path('/');
         })
         .catch(function(e) {
           console.log(e);
           $scope.error = e.statusText;
         });
-    };
+      };
   }]);
 
   alertaControllers.controller('LogoutController', ['$auth',
