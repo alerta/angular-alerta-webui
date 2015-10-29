@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class="form-group" ng-show="provider == 'basic'">
-          <input type="password" class="form-control" id="input-password" ng-model="password" placeholder="Password" required>
+          <input type="password" class="form-control" id="input-password" ng-model="password" placeholder="Password" ng-required="provider == 'basic'" />
         </div>
         <button type="button" class="btn btn-primary" ng-click="createUser(name,login, password)" ng-disabled="form.$invalid">Add new User</button>
       </form>
