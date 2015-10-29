@@ -30,6 +30,7 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
         $auth.authenticate(config.provider)
           .then(function() {
             $scope.name = $auth.getPayload().name;
+            $location.path('/');
           })
           .catch(function(e) {
             alert(JSON.stringify(e));
@@ -805,5 +806,6 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
     $auth.logout()
       .then(function() {
         console.log('You have been logged out');
+        $location.path('/');
       });
   }]);
