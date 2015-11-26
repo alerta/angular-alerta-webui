@@ -1,0 +1,34 @@
+
+<div class="container-fluid">
+
+  <div class="row-fluid">
+    <div class="span12">
+
+      <table class="table">
+        <tr>
+          <th>Customer</th>
+          <th>Group</th>
+          <th></th>
+        </tr>
+        <tr ng-repeat="customer in customers">
+          <td><tt>{{ customer.customer }}</tt></td>
+          <td><tt>{{ customer.group }}</tt></td>
+          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteCustomer(customer.customer);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
+        </tr>
+      </table>
+
+      <form name="form" class="form-inline css-form" novalidate>
+        <div class="row">
+        <div class="form-group col-md-4 col-sm-4 col-xs-4">
+              <input type="text" class="form-control" id="customer" placeholder="Customer name" ng-model="customer" name="customer" required />
+        </div>
+        <div class="form-group col-md-3 col-sm-3 col-xs-3">
+              <input type="text" class="form-control" id="group" placeholder="Email domain, GitHub or GitLab org" ng-model="group" name="group" required />
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="createCustomer(customer, group)" ng-disabled="form.$invalid">Create new customer lookup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

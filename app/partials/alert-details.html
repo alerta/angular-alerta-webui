@@ -33,6 +33,7 @@
   <tr><td><b>Create Time</b></td><td>{{ alert.createTime | date:'d/M/yyyy h:mm:ss.sss a' }} ({{ alert.createTime | relativeDate }})</td></tr>
   <tr><td><b>Receive Time</b></td><td>{{ alert.receiveTime | date:'d/M/yyyy h:mm:ss.sss a' }} ({{ alert.receiveTime | relativeDate }})</td></tr>
   <tr><td><b>Last Receive Time</b></td><td>{{ alert.lastReceiveTime | date:'d/M/yyyy h:mm:ss.sss a' }} ({{ alert.lastReceiveTime | relativeDate }})</td></tr>
+  <tr><td><b>Customer</b></td><td>{{ alert.customer }}</td></tr>
   <tr><td><b>Service</b></td><td>{{ alert.service.join(', ') }}</td></tr>
   <tr><td><b>Environment</b></td><td>{{ alert.environment }}</td></tr>
   <tr><td><b>Resource</b></td><td>{{ alert.resource }}</td></tr>
