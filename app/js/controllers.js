@@ -23,6 +23,10 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
       return $auth.isAuthenticated();
     };
 
+    $scope.isAdmin = function() {
+      return $auth.getPayload().role == 'admin';
+    };
+
     $scope.authenticate = function() {
       if (config.provider == 'basic') {
         $location.path('/login');
@@ -666,6 +670,30 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
 
   }]);
 
+alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeout', '$auth', 'Customers',
+  function($scope, $route, $timeout, $auth, Customers) {
+
+    $scope.customers = [];
+    $scope.customer = '';
+
+    $scope.createCustomer = function(customer, group) {
+      Customers.save({}, {customer: customer, group: group}, function(data) {
+        $route.reload();
+      });
+    };
+
+    $scope.deleteCustomer = function(customer) {
+      Customers.delete({customer: customer}, {}, function(data) {
+        $route.reload();
+      });
+    };
+
+    Customers.query({}, function(response) {
+      $scope.customers = response.customers;
+    });
+
+  }]);
+
 alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'Keys',
   function($scope, $route, $timeout, $auth, Keys) {
 
@@ -700,6 +728,8 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
     $scope.name = $auth.getPayload().name;
     $scope.login = $auth.getPayload().login;
     $scope.provider = $auth.getPayload().provider;
+    $scope.customer = $auth.getPayload().customer;
+    $scope.role = $auth.getPayload().role;
 
     $scope.token = $auth.getToken();
     $scope.payload = $auth.getPayload();
