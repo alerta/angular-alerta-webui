@@ -675,6 +675,7 @@ alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeou
 
     $scope.customers = [];
     $scope.customer = '';
+    $scope.group = '';
 
     $scope.createCustomer = function(customer, group) {
       Customers.save({}, {customer: customer, group: group}, function(data) {
