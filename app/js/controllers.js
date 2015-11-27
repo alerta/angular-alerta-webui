@@ -24,7 +24,19 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
     };
 
     $scope.isAdmin = function() {
-      return $auth.getPayload().role == 'admin';
+      if ($auth.isAuthenticated()) {
+        return $auth.getPayload().role == 'admin';
+      } else {
+        return false;
+      }
+    };
+
+    $scope.isCustomerViews = function() {
+      if ($auth.isAuthenticated()) {
+        return 'customer' in $auth.getPayload();
+      } else {
+        return false;
+      }
     };
 
     $scope.authenticate = function() {

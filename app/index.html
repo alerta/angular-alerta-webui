@@ -17,8 +17,8 @@
   </script>
 </head>
 
-<body>
-<nav class="navbar navbar-default" role="navigation" ng-controller="MenuController">
+<body ng-controller="MenuController">
+<nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -42,7 +42,7 @@
         <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" ng-show="isAuthenticated();">Configuration <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li ng-show="isAdmin();"><a href="#/users">Users</a></li>
-            <li ng-show="isAdmin();"><a href="#/customers">Customers</a></li>
+            <li ng-show="isAdmin() && isCustomerViews();"><a href="#/customers">Customers</a></li>
             <li><a href="#/keys">API Keys</a></li>
             <li ng-show="isAdmin();"><a href="#/blackouts">Blackouts</a></li>
           </ul>
