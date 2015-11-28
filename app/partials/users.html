@@ -22,7 +22,6 @@
         <tr>
           <th>Name</th>
           <th>Login</th>
-          <th>Customer</th>
           <th class="hidden-xs">Since</th>
           <th class="hidden-xs">Provider</th>
           <th class="hidden-xs">Comment</th>
@@ -31,7 +30,6 @@
         <tr ng-repeat="user in users">
           <td>{{ user.name }}</td>
           <td>{{ user.login }}</td>
-          <td>{{ customers[user] || "n/a" }}</td>
           <td class="hidden-xs">{{ user.createTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
           <td class="hidden-xs">{{ user.provider }}</td>
           <td class="hidden-xs">{{ user.text }}</td>
