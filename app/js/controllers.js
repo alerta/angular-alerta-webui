@@ -797,9 +797,11 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$locat
           console.log(e);
           if (e.status == 401) {
             $scope.error = "Incorrect username or password.";
+            $scope.message = e.data.message;
           };
           if (e.status == 403) {
             $scope.error = "Unauthorized access.";
+            $scope.message = e.data.message;
           };
         });
     };
@@ -824,7 +826,14 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
         })
         .catch(function(e) {
           console.log(e);
-          $scope.error = e.statusText;
+          if (e.status == 401) {
+            $scope.error = "Incorrect username or password.";
+            $scope.message = e.data.message;
+          };
+          if (e.status == 403) {
+            $scope.error = "Unauthorized access.";
+            $scope.message = e.data.message;
+          };
         });
       };
   }]);
