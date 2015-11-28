@@ -63,6 +63,7 @@ alertaServices.factory('Customers', ['$resource', 'config',
     return $resource(config.endpoint+'/customer', {}, {
       'query':  {method:'GET', url: config.endpoint+'/customers'},
       'save':   {method:'POST'},
+      'lookup': {method: 'GET', url: config.endpoint+'/customer/:user'},
       'delete': {method:'DELETE', url: config.endpoint+'/customer/:customer'}
     });
   }]);

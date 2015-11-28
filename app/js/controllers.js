@@ -636,13 +636,14 @@ alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$t
   }]);
 
 
-alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users',
-  function($scope, $route, $timeout, $auth, config, Users) {
+alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users', 'Customers',
+  function($scope, $route, $timeout, $auth, config, Users, Customers) {
 
     $scope.domains = [];
     $scope.users = [];
     $scope.login = '';
     $scope.provider = config.provider;
+    $scope.customers = {};
 
     switch (config.provider) {
       case "google":
@@ -678,6 +679,12 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
       $scope.orgs = response.orgs;
       $scope.groups = response.groups;
       $scope.users = response.users;
+      angular.forEach($scope.users, function(user) {
+        console.log(user);
+        Customers.lookup({user: user.login}, function(data) {
+          $scope.customers[user] = data.customer;
+        });
+      });
     });
 
   }]);
@@ -687,10 +694,10 @@ alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeou
 
     $scope.customers = [];
     $scope.customer = '';
-    $scope.reference = '';
+    $scope.match = '';
 
-    $scope.createCustomer = function(customer, reference) {
-      Customers.save({}, {customer: customer, reference: reference}, function(data) {
+    $scope.createCustomer = function(customer, match) {
+      Customers.save({}, {customer: customer, match: match}, function(data) {
         $route.reload();
       });
     };
