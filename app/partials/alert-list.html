@@ -40,7 +40,7 @@
           <th class="hidden-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th class="visible-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th class="visible-lg"><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs" ng-show="isCustomerViews();"><a href="" ng-click="predicate = 'customer'; reverse=!reverse">Customer&nbsp;<span ng-hide="predicate != 'customer'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="hidden-xs" ng-show="isCustomerViews() && isAdmin();"><a href="" ng-click="predicate = 'customer'; reverse=!reverse">Customer&nbsp;<span ng-hide="predicate != 'customer'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th class="hidden-xs"><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th class="hidden-xs"><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource&nbsp;<span ng-hide="predicate != 'resource'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
@@ -57,7 +57,7 @@
           <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
           <td class="visible-lg">{{ alert.lastReceiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
           <td class="visible-lg">{{ alert.duplicateCount }}</td>
-          <td class="hidden-xs" ng-show="isCustomerViews();">{{ alert.customer }}</td>
+          <td class="hidden-xs" ng-show="isCustomerViews() && isAdmin();">{{ alert.customer }}</td>
           <td class="hidden-xs">{{ alert.environment }}</td>
           <td class="hidden-xs">{{ alert.service.join(', ') }}</td>
           <td>{{ alert.resource }}</td>
