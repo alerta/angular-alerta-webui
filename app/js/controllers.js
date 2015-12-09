@@ -224,7 +224,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
     $scope.bulkAlerts = [];
 
     $scope.click = function($event,alert) {
-      if ($event.metaKey) {
+      if ($event.metaKey || $event.altKey) {
         var index = $scope.bulkAlerts.indexOf(alert.id);
         if (index > -1) {
           $scope.bulkAlerts.splice(index, 1);
@@ -520,7 +520,7 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
     $scope.bulkAlerts = [];
 
     $scope.click = function($event,alert) {
-      if ($event.metaKey) {
+      if ($event.metaKey || $event.altKey) {
         var index = $scope.bulkAlerts.indexOf(alert.id);
         if (index > -1) {
           $scope.bulkAlerts.splice(index, 1);
