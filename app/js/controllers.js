@@ -223,7 +223,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 
     $scope.audio = config.audio;
     $scope.$watch('alerts', function(current, old) {
-      if (current.length > old.length) {
+      if (current.length > old.length && $scope.status.indexOf('open') > -1) {
         $scope.play = true;
       } else {
         $scope.play = false;
