@@ -11,8 +11,7 @@ app.get('/config.js', function(request, response) {
         'provider'    : '" + process.env.PROVIDER + "', \
         'client_id'   : '" + process.env.CLIENT_ID + "', \
         'gitlab_url'  : '" + process.env.GITLAB_URL + "' \
-      }) \
-      .constant('colors', {});";
+      }); \
 
   response.send(config);
 });

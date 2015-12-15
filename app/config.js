@@ -5,6 +5,7 @@ angular.module('config', [])
     'endpoint'    : "http://"+window.location.hostname+":8080",
     'provider'    : "basic", // google, github, gitlab, twitter or basic
     'client_id'   : "INSERT-CLIENT-ID-HERE",
-    'gitlab_url'  : "INSERT-GITLAB-URL-HERE"  // for gitlab provider only
-  })
-  .constant('colors', {}); // use default colors
+    'gitlab_url'  : "https://gitlab.com",  // replace with your gitlab server
+    'colors'      : {}, // use default colors
+    'audio'       : {}  // no audio
+  });

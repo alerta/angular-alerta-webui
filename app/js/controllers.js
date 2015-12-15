@@ -56,8 +56,8 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
 
   }]);
 
-alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', 'colors', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, $route, $location, $timeout, $auth, colors, Count, Environment, Service, Alert){
+alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', 'config', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $route, $location, $timeout, $auth, config, Count, Environment, Service, Alert){
 
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
@@ -88,7 +88,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       highlight: 'skyblue '
     };
 
-    $scope.colors = angular.merge(defaults, colors);
+    $scope.colors = angular.merge(defaults, config.colors);
 
     $scope.autoRefresh = true;
     $scope.refreshText = 'Auto Update';
@@ -220,6 +220,15 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
     $scope.severityCode = function(alert) {
       return SEVERITY_MAP[alert.severity];
     };
+
+    $scope.audio = config.audio;
+    $scope.$watch('alerts', function(current, old) {
+      if (current.length > old.length && $scope.status.indexOf('open') > -1) {
+        $scope.play = true;
+      } else {
+        $scope.play = false;
+      }
+    });
 
     $scope.bulkAlerts = [];
 
@@ -463,8 +472,8 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
 
   }]);
 
-alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'colors', 'Alert',
-  function($scope, $route, $location, $timeout, $auth,  colors, Alert){
+alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'config', 'Alert',
+  function($scope, $route, $location, $timeout, $auth,  config, Alert){
 
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
@@ -495,7 +504,7 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
       highlight: 'skyblue '
     };
 
-    $scope.colors = angular.merge(defaults, colors);
+    $scope.colors = angular.merge(defaults, config.colors);
 
     $scope.watches = [];
 
