@@ -59,8 +59,10 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
 alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', 'config', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $route, $location, $timeout, $auth, config, Count, Environment, Service, Alert){
 
+    var byUser = '';
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
+      byUser = ' by ' + $scope.user;
      } else {
        $scope.user = undefined;
      };
@@ -247,7 +249,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 
     $scope.bulkOpenAlert = function(ids) {
       angular.forEach(ids, function(id) {
-        Alert.status({id: id}, {status: 'open', text: 'bulk status change via console'}, function(data) {
+        Alert.status({id: id}, {status: 'open', text: 'bulk status change via console' + byUser}, function(data) {
           // $route.reload();
         });
       });
@@ -280,7 +282,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 
     $scope.bulkAckAlert = function(ids) {
       angular.forEach(ids, function(id) {
-        Alert.status({id: id}, {status: 'ack', text: 'bulk status change via console'}, function(data) {
+        Alert.status({id: id}, {status: 'ack', text: 'bulk status change via console' + byUser}, function(data) {
           // $route.reload();
         });
       });
@@ -289,7 +291,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 
     $scope.bulkCloseAlert = function(ids) {
       angular.forEach(ids, function(id) {
-        Alert.status({id: id}, {status: 'closed', text: 'bulk status change via console'}, function(data) {
+        Alert.status({id: id}, {status: 'closed', text: 'bulk status change via console' + byUser}, function(data) {
           // $route.reload();
         });
       });
@@ -309,8 +311,10 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
   function($scope, $route, $routeParams, $location, $auth, Alert){
 
+    var byUser = '';
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
+      byUser = ' by ' + $scope.user;
      } else {
        $scope.user = undefined;
      };
@@ -324,7 +328,7 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     });
 
     $scope.openAlert = function(id) {
-      Alert.status({id: id}, {status: 'open', text: 'status change via console'}, function(data) {
+      Alert.status({id: id}, {status: 'open', text: 'status change via console' + byUser}, function(data) {
         $route.reload();
       });
     };
@@ -348,13 +352,13 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     };
 
     $scope.ackAlert = function(id) {
-      Alert.status({id: id}, {status: 'ack', text: 'status change via console'}, function(data) {
+      Alert.status({id: id}, {status: 'ack', text: 'status change via console' + byUser}, function(data) {
         $route.reload();
       });
     };
 
     $scope.closeAlert = function(id) {
-      Alert.status({id: id}, {status: 'closed', text: 'status change via console'}, function(data) {
+      Alert.status({id: id}, {status: 'closed', text: 'status change via console' + byUser}, function(data) {
         $route.reload();
       });
     };
@@ -475,8 +479,10 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
 alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'config', 'Alert',
   function($scope, $route, $location, $timeout, $auth,  config, Alert){
 
+    var byUser = '';
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
+      byUser = ' by ' + $scope.user;
      } else {
        $scope.user = undefined;
      };
@@ -543,7 +549,7 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
 
     $scope.bulkOpenAlert = function(ids) {
       angular.forEach(ids, function(id) {
-        Alert.status({id: id}, {status: 'open', text: 'bulk status change via console'}, function(data) {
+        Alert.status({id: id}, {status: 'open', text: 'bulk status change via console' + byUser}, function(data) {
           // $route.reload();
         });
       });
@@ -576,7 +582,7 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
 
     $scope.bulkAckAlert = function(ids) {
       angular.forEach(ids, function(id) {
-        Alert.status({id: id}, {status: 'ack', text: 'bulk status change via console'}, function(data) {
+        Alert.status({id: id}, {status: 'ack', text: 'bulk status change via console' + byUser}, function(data) {
           // $route.reload();
         });
       });
@@ -585,7 +591,7 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
 
     $scope.bulkCloseAlert = function(ids) {
       angular.forEach(ids, function(id) {
-        Alert.status({id: id}, {status: 'closed', text: 'bulk status change via console'}, function(data) {
+        Alert.status({id: id}, {status: 'closed', text: 'bulk status change via console' + byUser}, function(data) {
           // $route.reload();
         });
       });
