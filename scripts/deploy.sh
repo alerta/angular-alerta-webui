@@ -41,8 +41,7 @@ angular.module('config', [])
     'endpoint'    : "http://api.alerta.io",
     'provider'    : "google",
     'client_id'   : "${OAUTH2_CLIENT_ID}"
-  })
-  .constant('colors', {});
+  });
 EOF
 
 aws s3 cp ${TMP_CONFIG_JS} s3://${DOMAIN}/config.js --acl public-read --content-type application/javascript
