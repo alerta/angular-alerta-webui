@@ -53,8 +53,8 @@ Dependencies
 All dependencies are included, however, for reference they are:
 
   * [jQuery](http://jquery.com/)
-  * [AngularJS](http://angularjs.org/)
-  * [Bootstrap 3.0](http://getbootstrap.com/2.3.2/)
+  * [AngularJS 1.x](http://angularjs.org/)
+  * [Bootstrap 3](http://getbootstrap.com/)
   * [Satellizer OAuth library](https://github.com/sahat/satellizer)
   * [Sintony Font](http://www.google.com/fonts/specimen/Sintony)
 
