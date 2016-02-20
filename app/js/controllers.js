@@ -808,11 +808,11 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$locat
         .catch(function(e) {
           console.log(e);
           if (e.status == 401) {
-            $scope.error = "Incorrect username or password.";
+            $scope.error = "Login failed.";
             $scope.message = e.data.message;
           };
           if (e.status == 403) {
-            $scope.error = "Unauthorized access.";
+            $scope.error = "User not authorized.";
             $scope.message = e.data.message;
           };
         });
@@ -839,11 +839,11 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
         .catch(function(e) {
           console.log(e);
           if (e.status == 401) {
-            $scope.error = "Incorrect username or password.";
+            $scope.error = "Login failed.";
             $scope.message = e.data.message;
           };
           if (e.status == 403) {
-            $scope.error = "Unauthorized access.";
+            $scope.error = "User not authorized.";
             $scope.message = e.data.message;
           };
         });
