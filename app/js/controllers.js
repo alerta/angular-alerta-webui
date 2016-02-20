@@ -838,12 +838,8 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
         })
         .catch(function(e) {
           console.log(e);
-          if (e.status == 401) {
-            $scope.error = "Login failed.";
-            $scope.message = e.data.message;
-          };
-          if (e.status == 403) {
-            $scope.error = "User not authorized.";
+          if (e.status != 200) {
+            $scope.error = "Sign up failed.";
             $scope.message = e.data.message;
           };
         });
