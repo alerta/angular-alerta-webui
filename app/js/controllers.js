@@ -71,7 +71,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       return $auth.isAuthenticated();
     };
 
-    var defaults = {
+    var colorDefaults = {
       severity: {
         critical: 'red',
         major: 'orange',
@@ -90,7 +90,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       highlight: 'skyblue '
     };
 
-    $scope.colors = angular.merge(defaults, config.colors);
+    $scope.colors = angular.merge(colorDefaults, config.colors);
 
     $scope.autoRefresh = true;
     $scope.refreshText = 'Auto Update';
@@ -200,27 +200,29 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       }
     });
 
-    var SEVERITY_MAP = {
-        'critical': 1,
-        'major': 2,
-        'minor': 3,
-        'warning': 4,
-        'indeterminate': 5,
-        'cleared': 5,
-        'normal': 5,
-        'ok': 5,
-        'informational': 6,
-        'debug': 7,
-        'security': 8,
-        'unknown': 9
+    var severityCodeDefaults = {
+      critical: 1,
+      major: 2,
+      minor: 3,
+      warning: 4,
+      indeterminate: 5,
+      cleared: 5,
+      normal: 5,
+      ok: 5,
+      informational: 6,
+      debug: 7,
+      security: 8,
+      unknown: 9
     };
 
+    var severityCodes = angular.merge(severityCodeDefaults, config.severity);
+
     $scope.reverseSeverityCode = function(alert) {
-      return -SEVERITY_MAP[alert.severity];
+      return -severityCodes[alert.severity];
     };
 
     $scope.severityCode = function(alert) {
-      return SEVERITY_MAP[alert.severity];
+      return severityCodes[alert.severity];
     };
 
     $scope.audio = config.audio;
