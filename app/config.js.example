@@ -9,6 +9,7 @@ angular.module('config', [])
 
     'colors'      : {
       'severity': {
+        'fatal'        : '#000000',  // black
         'critical'     : '#D8122A',
         'major'        : '#EA680F',
         'minor'        : '#FFBE1E',
@@ -25,7 +26,9 @@ angular.module('config', [])
       'text': 'white',
       'highlight': 'lightgray'
     },
-
+    'severity'    : {
+      'fatal': 0
+    },
     'audio'       : {
       'new'  : '/audio/Bike Horn.mp3'
     }

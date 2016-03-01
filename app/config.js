@@ -7,5 +7,6 @@ angular.module('config', [])
     'client_id'   : "INSERT-CLIENT-ID-HERE",
     'gitlab_url'  : "https://gitlab.com",  // replace with your gitlab server
     'colors'      : {}, // use default colors
+    'severity'    : {}, // use default severity codes
     'audio'       : {}  // no audio
   });
