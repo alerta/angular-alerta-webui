@@ -30,6 +30,12 @@ alertaFilters.filter('capitalize', function() {
   };
 });
 
+alertaFilters.filter('splitcaps', function() {
+  return function(text) {
+    return String(text).replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
+  };
+});
+
 alertaFilters.filter('showing', function() {
   return function(input, limit) {
     if (!input) {

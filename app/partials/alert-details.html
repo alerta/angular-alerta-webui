@@ -58,7 +58,7 @@
   <tr><td><b>Tags</b></td>
     <td><span ng-repeat="tag in alert.tags"><span class="label label-primary">{{ tag }}</span> </span></td>
   </tr>
-  <tr ng-repeat="(key, value) in alert.attributes"><td><b>{{ key | capitalize }}</b></td><td><span ng-bind-html="value"></span></td></tr>
+  <tr ng-repeat="(key, value) in alert.attributes"><td><b>{{ key | splitcaps }}</b></td><td><span ng-bind-html="value"></span></td></tr>
 </table>
 
 <label><input type="checkbox" ng-model="raw"> Raw Data</label>
