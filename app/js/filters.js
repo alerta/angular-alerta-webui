@@ -26,7 +26,7 @@ alertaFilters.filter('arrow', function() {
 
 alertaFilters.filter('capitalize', function() {
   return function(text) {
-    return String(text).replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
+    return String(text).replace(/^([A-Z])/, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
   };
 });
 
