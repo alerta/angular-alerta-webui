@@ -13,9 +13,7 @@
       <input class="form-control input" ng-model="search" size="8" placeholder="Search">
     </div>
     <div class="col-md-2 col-sm-2 col-xs-12">
-      <select class="form-control input-sm" ng-model="status" ng-change="setStatus(status)"
-      ng-options="s.status as s.name for s in show">
-      </select>
+      <select class="form-control input-sm" ng-options="item as item.name for item in show track by item.name" ng-model="status" ng-change="update()"></select>
     </div>
     <div class="col-md-2 col-sm-2 col-xs-12">
       <button type="button" class="btn btn-primary btn-block" ng-click="refresh()" ng-disabled="autoRefresh">{{ refreshText }}</button>

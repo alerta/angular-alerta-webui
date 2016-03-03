@@ -102,17 +102,13 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
     if (search.service) {
       $scope.service = search.service;
     }
-    if (search.status) {
-      $scope.status = search.status;
-    } else {
-      $scope.status = 'open';
-    }
 
     $scope.show = [
-      {name: 'Open', status: ['open', 'unknown']},
-      {name: 'Active', status: ['open', 'ack', 'assign']},
-      {name: 'Closed', status: ['closed', 'expired']}
-    ]
+      {name: 'Open', value: ['open', 'unknown']},
+      {name: 'Active', value: ['open', 'ack', 'assign']},
+      {name: 'Closed', value: ['closed', 'expired']}
+    ];
+    $scope.status = $scope.show[0];
 
     $scope.alerts = [];
     $scope.alertLimit = 20;
@@ -131,8 +127,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       refresh();
     };
 
-    $scope.setStatus = function(status) {
-      $scope.status = status;
+    $scope.update = function() {
       updateQuery();
       refresh();
     };
@@ -153,7 +148,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
         delete $scope.query['environment'];
       }
       if ($scope.status) {
-        $scope.query['status'] = $scope.status;
+        $scope.query['status'] = $scope.status.value;
       } else {
         delete $scope.query['status'];
       }
@@ -162,14 +157,14 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 
     var refresh = function() {
       $scope.refreshText = 'Refreshing...';
-      Count.query({status: $scope.status}, function(response) {
+      Count.query({status: $scope.status.value}, function(response) {
         $scope.total = response.total;
         $scope.statusCounts = response.statusCounts;
       });
-      Service.all({status: $scope.status}, function(response) {
+      Service.all({status: $scope.status.value}, function(response) {
         $scope.services = response.services;
       });
-      Environment.all({status: $scope.status}, function(response) {
+      Environment.all({status: $scope.status.value}, function(response) {
         $scope.environments = response.environments;
       });
       updateQuery();
@@ -227,7 +222,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 
     $scope.audio = config.audio;
     $scope.$watch('alerts', function(current, old) {
-      if (current.length > old.length && $scope.status.indexOf('open') > -1) {
+      if (current.length > old.length && $scope.status.value.indexOf('open') > -1) {
         $scope.play = true;
       } else {
         $scope.play = false;
@@ -385,6 +380,9 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $location, $timeout, Count, Environment, Service, Alert){
 
+    $scope.autoRefresh = true;
+    $scope.refreshText = 'Auto Update';
+
     var search = $location.search();
     if (search.environment) {
       $scope.environment = search.environment;
@@ -392,17 +390,13 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
     if (search.service) {
       $scope.service = search.service;
     }
-    if (search.status) {
-      $scope.status = search.status;
-    } else {
-      $scope.status = 'open';
-    }
 
     $scope.show = [
-      {name: 'Open', status: 'open'},
-      {name: 'Active', status: ['open', 'ack', 'assign']},
-      {name: 'Closed', status: 'closed'}
-    ]
+      {name: 'Open', value: ['open', 'unknown']},
+      {name: 'Active', value: ['open', 'ack', 'assign']},
+      {name: 'Closed', value: ['closed', 'expired']}
+    ];
+    $scope.status = $scope.show[0];
 
     $scope.top10 = [];
     $scope.query = {};
@@ -419,8 +413,7 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
       refresh();
     };
 
-    $scope.setStatus = function(status) {
-      $scope.status = status;
+    $scope.update = function() {
       updateQuery();
       refresh();
     };
@@ -441,7 +434,7 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
         delete $scope.query['environment'];
       }
       if ($scope.status) {
-        $scope.query['status'] = $scope.status;
+        $scope.query['status'] = $scope.status.value;
       } else {
         delete $scope.query['status'];
       }
@@ -449,14 +442,15 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
     };
 
     var refresh = function() {
-      Count.query({status: $scope.status}, function(response) {
+      $scope.refreshText = 'Refreshing...';
+      Count.query({status: $scope.status.value}, function(response) {
         $scope.total = response.total;
         $scope.statusCounts = response.statusCounts;
       });
-      Service.all({status: $scope.status}, function(response) {
+      Service.all({status: $scope.status.value}, function(response) {
         $scope.services = response.services;
       });
-      Environment.all({status: $scope.status}, function(response) {
+      Environment.all({status: $scope.status.value}, function(response) {
         $scope.environments = response.environments;
       });
       updateQuery();
@@ -465,8 +459,19 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
           $scope.top10 = response.top10;
         }
         $scope.message = response.status + ' - ' + response.message;
+        $scope.autoRefresh = response.autoRefresh;
+        if ($scope.autoRefresh) {
+          $scope.refreshText = 'Auto Update';
+        } else {
+          $scope.refreshText = 'Refresh';
+        }
       });
-      timer = $timeout(refresh, 5000);
+    };
+    var refreshWithTimeout = function() {
+      if ($scope.autoRefresh) {
+        refresh();
+      }
+      timer = $timeout(refreshWithTimeout, 5000);
     };
     var timer = $timeout(refresh, 200);
 
@@ -621,10 +626,10 @@ alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$t
     $scope.end = new Date(now);
     $scope.end.setMinutes(now.getMinutes() + 60);
 
-    Service.all({status: $scope.status}, function(response) {
+    Service.all({}, function(response) {
       $scope.services = response.services;
     });
-    Environment.all({status: $scope.status}, function(response) {
+    Environment.all({}, function(response) {
       $scope.environments = response.environments;
     });
 
