@@ -6,6 +6,7 @@
 
       <table class="table">
         <tr>
+          <th ng-show="isCustomerViews();">Customer</th>
           <th>Environment</th>
           <th>Service</th>
           <th>Resource</th>
@@ -19,6 +20,7 @@
           <th></th>
         </tr>
         <tr ng-repeat="blackout in blackouts | orderBy:'startTime'">
+          <td ng-show="isCustomerViews();">{{ blackout.customer }}</td>
           <td>{{ blackout.environment }}</td>
           <td>{{ blackout.service.join(', ') }}</td>
           <td>{{ blackout.resource }}</td>
@@ -44,6 +46,12 @@
       to
       <div class="form-group">
         <input type="datetime-local" class="form-control" id="input-end" ng-model="end" name="end" ng-min="start"/>
+      </div>
+
+      <div class="form-group" ng-show="isCustomerViews();">
+        <select class="form-control" ng-model="customer" ng-options="c.customer as c.customer for c in customers">
+          <option value disabled selected>Customer</option>
+        </select>
       </div>
       <div class="form-group">
         <select class="form-control" ng-model="environment" ng-options="e.environment as e.environment for e in environments" required>
@@ -93,7 +101,8 @@
         <input class="form-control" id="input-tags" placeholder="Tags" ng-model="tags" name="tags"/>
       </div>
 
-      <button type="button" class="btn btn-primary" ng-click="createBlackout(environment,service,resource,event,group,tags,start,end)" ng-disabled="form.$invalid">Blackout</button>
+      <button type="button" class="btn btn-primary" ng-click="createBlackout(environment,service,resource,event,group,tags,customer,start,end)" ng-disabled="form.$invalid">Blackout</button>
+        </div>
     </form>
   </div>
 
