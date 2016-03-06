@@ -61,7 +61,7 @@ alertaServices.factory('Users', ['$resource', 'config',
 alertaServices.factory('Customers', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/customer', {}, {
-      'query':  {method:'GET', url: config.endpoint+'/customers'},
+      'all':  {method:'GET', url: config.endpoint+'/customers'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/customer/:customer'}
     });

@@ -615,8 +615,8 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
     };
   }]);
 
-alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service',
-  function($scope, $route, $timeout, $auth, Blackouts, Environment, Service) {
+alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service', 'Customers',
+  function($scope, $route, $timeout, $auth, Blackouts, Environment, Service, Customers) {
 
     $scope.blackouts = [];
 
@@ -632,15 +632,18 @@ alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$t
     Environment.all({}, function(response) {
       $scope.environments = response.environments;
     });
+    Customers.all({}, function(response) {
+      $scope.customers = response.customers;
+    });
 
-    $scope.createBlackout = function(environment,service,resource,event,group,tags,start,end) {
+    $scope.createBlackout = function(environment,service,resource,event,group,tags,customer,start,end) {
       if (service) {
         service = service.split(",");
       }
       if (tags) {
         tags = tags.split(",");
       }
-      Blackouts.save({}, {environment: environment, service: service, resource: resource, event: event, group: group, tags: tags, startTime: start, endTime: end}, function(data) {
+      Blackouts.save({}, {environment: environment, service: service, resource: resource, event: event, group: group, tags: tags, customer: customer, startTime: start, endTime: end}, function(data) {
         $route.reload();
       });
     };
@@ -720,7 +723,7 @@ alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeou
       });
     };
 
-    Customers.query({}, function(response) {
+    Customers.all({}, function(response) {
       $scope.customers = response.customers;
     });
 
