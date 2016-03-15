@@ -732,6 +732,14 @@ alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeou
 alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'Keys',
   function($scope, $route, $timeout, $auth, Keys) {
 
+    $scope.isAdmin = function() {
+      if ($auth.isAuthenticated()) {
+        return $auth.getPayload().role == 'admin';
+      } else {
+        return false;
+      }
+    };
+
     $scope.keys = [];
     $scope.type = 'read-only';
     $scope.text = '';
@@ -750,9 +758,15 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
       });
     };
 
-    Keys.query({user: $auth.getPayload().login}, function(response) {
-      $scope.keys = response.keys;
-    });
+    if ($scope.isAdmin()) {
+      Keys.query({}, function(response) {
+        $scope.keys = response.keys;
+      });
+    } else {
+      Keys.query({user: $auth.getPayload().login}, function(response) {
+        $scope.keys = response.keys;
+      });
+    }
 
   }]);
 
