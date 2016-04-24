@@ -763,7 +763,7 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
         $scope.keys = response.keys;
       });
     } else {
-      Keys.query({user: $auth.getPayload().login}, function(response) {
+      Keys.user({user: $auth.getPayload().sub}, function(response) {
         $scope.keys = response.keys;
       });
     }
