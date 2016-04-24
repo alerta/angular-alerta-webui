@@ -71,7 +71,6 @@ alertaServices.factory('Keys', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/key', {}, {
       'query':  {method:'GET', url: config.endpoint+'/keys'},
-      'user':   {method:'GET', url: config.endpoint+'/keys/:user'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/key/:key'}
     });

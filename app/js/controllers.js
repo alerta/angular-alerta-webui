@@ -758,16 +758,9 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
       });
     };
 
-    if ($scope.isAdmin()) {
-      Keys.query({}, function(response) {
-        $scope.keys = response.keys;
-      });
-    } else {
-      Keys.user({user: $auth.getPayload().sub}, function(response) {
-        $scope.keys = response.keys;
-      });
-    }
-
+    Keys.query({}, function(response) {
+      $scope.keys = response.keys;
+    });
   }]);
 
 alertaControllers.controller('ProfileController', ['$scope', '$auth',
