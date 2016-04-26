@@ -30,7 +30,7 @@
         <tr ng-repeat="user in users">
           <td>{{ user.name }}</td>
           <td>{{ user.login }}</td>
-          <td class="hidden-xs">{{ user.createTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm:ss&nbsp;yyyy' }}</td>
+          <td class="hidden-xs">{{ user.createTime | date:longDate }}</td>
           <td class="hidden-xs">{{ user.provider }}</td>
           <td class="hidden-xs">{{ user.text }}</td>
           <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.id);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
