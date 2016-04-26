@@ -22,8 +22,8 @@
             ng-click="click($event,alert);">
           <td class="hidden-xs"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
           <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
-          <td class="hidden-lg">{{ alert.lastReceiveTime | date:'HH:mm' }}</td>
-          <td class="visible-lg">{{ alert.lastReceiveTime | date:'EEE&nbsp;d&nbsp;MMM&nbsp;HH:mm' }}</td>
+          <td class="hidden-lg">{{ alert.lastReceiveTime | date:shortTime }}</td>
+          <td class="visible-lg">{{ alert.lastReceiveTime | date:mediumDate }}</td>
           <td class="visible-lg">{{ alert.duplicateCount }}</td>
           <td class="hidden-xs">{{ alert.environment }}</td>
           <td class="hidden-xs">{{ alert.service.join(', ') }}</td>

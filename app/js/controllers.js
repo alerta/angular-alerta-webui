@@ -303,10 +303,13 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       });
       $route.reload();
     };
+
+    $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
+    $scope.mediumDate = config.dates && config.dates.mediumDate || 'EEE d MMM HH:mm';
   }]);
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'Alert',
-  function($scope, $route, $routeParams, $location, $auth, Alert){
+alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'config', 'Alert',
+  function($scope, $route, $routeParams, $location, $auth, config, Alert){
 
     var byUser = '';
     if ($auth.isAuthenticated()) {
@@ -375,6 +378,8 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       });
     };
 
+    $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
+    $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
   }]);
 
 alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
@@ -613,10 +618,13 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
       });
       $route.reload();
     };
+
+    $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
+    $scope.mediumDate = config.dates && config.dates.mediumDate || 'EEE d MMM HH:mm';
   }]);
 
-alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'Blackouts', 'Environment', 'Service', 'Customers',
-  function($scope, $route, $timeout, $auth, Blackouts, Environment, Service, Customers) {
+alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Blackouts', 'Environment', 'Service', 'Customers',
+  function($scope, $route, $timeout, $auth, config, Blackouts, Environment, Service, Customers) {
 
     $scope.blackouts = [];
 
@@ -658,6 +666,7 @@ alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$t
       $scope.blackouts = response.blackouts;
     });
 
+    $scope.mediumDate = config.dates && config.dates.mediumDate || 'EEE d MMM HH:mm';
   }]);
 
 
@@ -702,6 +711,7 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
       $scope.users = response.users;
     });
 
+    $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
   }]);
 
 alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeout', '$auth', 'Customers',
@@ -729,8 +739,8 @@ alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeou
 
   }]);
 
-alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'Keys',
-  function($scope, $route, $timeout, $auth, Keys) {
+alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Keys',
+  function($scope, $route, $timeout, $auth, config, Keys) {
 
     $scope.isAdmin = function() {
       if ($auth.isAuthenticated()) {
@@ -761,6 +771,8 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
     Keys.query({}, function(response) {
       $scope.keys = response.keys;
     });
+
+    $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
   }]);
 
 alertaControllers.controller('ProfileController', ['$scope', '$auth',
@@ -777,8 +789,8 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
     $scope.payload = $auth.getPayload();
   }]);
 
-alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Management', 'Heartbeat',
-  function($scope, $timeout, Management, Heartbeat) {
+alertaControllers.controller('AboutController', ['$scope', '$timeout', 'config', 'Management', 'Heartbeat',
+  function($scope, $timeout, config, Management, Heartbeat) {
 
     Management.manifest(function(response) {
       $scope.manifest = response;
@@ -806,6 +818,7 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'Manageme
       }
     });
 
+    $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
   }]);
 
 alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$location', '$auth', 'config',

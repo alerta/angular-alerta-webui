@@ -30,9 +30,9 @@
   <tr class="visible-xs"><td><b>Last Receive Alert ID</b></td><td>{{ alert.lastReceiveId | shortid }}</td></tr>
   <tr class="hidden-xs"><td><b>Alert ID</b></td><td>{{ alert.id }}</td></tr>
   <tr class="hidden-xs"><td><b>Last Receive Alert ID</b></td><td>{{ alert.lastReceiveId }}</td></tr>
-  <tr><td><b>Create Time</b></td><td>{{ alert.createTime | date:'d/M/yyyy h:mm:ss.sss a' }} ({{ alert.createTime | relativeDate }})</td></tr>
-  <tr><td><b>Receive Time</b></td><td>{{ alert.receiveTime | date:'d/M/yyyy h:mm:ss.sss a' }} ({{ alert.receiveTime | relativeDate }})</td></tr>
-  <tr><td><b>Last Receive Time</b></td><td>{{ alert.lastReceiveTime | date:'d/M/yyyy h:mm:ss.sss a' }} ({{ alert.lastReceiveTime | relativeDate }})</td></tr>
+  <tr><td><b>Create Time</b></td><td>{{ alert.createTime | date:longDate }} ({{ alert.createTime | relativeDate }})</td></tr>
+  <tr><td><b>Receive Time</b></td><td>{{ alert.receiveTime | date:longDate }} ({{ alert.receiveTime | relativeDate }})</td></tr>
+  <tr><td><b>Last Receive Time</b></td><td>{{ alert.lastReceiveTime | date:longDate }} ({{ alert.lastReceiveTime | relativeDate }})</td></tr>
   <tr ng-show="isCustomerViews();"><td><b>Customer</b></td><td>{{ alert.customer }}</td></tr>
   <tr><td><b>Service</b></td><td>{{ alert.service.join(', ') }}</td></tr>
   <tr><td><b>Environment</b></td><td>{{ alert.environment }}</td></tr>
@@ -85,8 +85,8 @@
   <tr ng-repeat="history in alert.history | orderBy:'updateTime':true">
     <td class="hidden-lg">{{ history.id | shortid }}</td>
     <td class="visible-lg">{{ history.id }}</td>
-    <td class="visible-xs">{{ history.updateTime | date:'HH:mm' }}</td>
-    <td class="hidden-xs">{{ history.updateTime | date:'d/M/yyyy h:mm:ss.sss a' }}</td>
+    <td class="visible-xs">{{ history.updateTime | date:shortTime }}</td>
+    <td class="hidden-xs">{{ history.updateTime | date:longDate }}</td>
     <td><span class="label label-{{ history.status || history.severity }}">{{ history.status || history.severity | capitalize }}</span></td>
     <td>{{ history.event }}</td>
     <td class="hidden-xs">{{ history.value }}</td>
