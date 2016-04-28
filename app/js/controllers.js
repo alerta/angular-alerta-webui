@@ -56,8 +56,8 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
 
   }]);
 
-alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', 'config', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, $route, $location, $timeout, $auth, config, Count, Environment, Service, Alert){
+alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', 'config', 'hotkeys', 'Count', 'Environment', 'Service', 'Alert',
+  function($scope, $route, $location, $timeout, $auth, config, hotkeys, Count, Environment, Service, Alert){
 
     var byUser = '';
     if ($auth.isAuthenticated()) {
@@ -114,6 +114,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
     $scope.alertLimit = 20;
     $scope.reverse = true;
     $scope.query = {};
+    $scope.id = null;
 
     $scope.setService = function(service) {
       $scope.service = service;
@@ -303,13 +304,56 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       });
       $route.reload();
     };
-
-    $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
-    $scope.mediumDate = config.dates && config.dates.mediumDate || 'EEE d MMM HH:mm';
+ 
+    $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm'; 
+    $scope.mediumDate = config.dates && config.dates.mediumDate || 'EEE d MMM HH:mm'; 
+    
+    $scope.hover = function(id, enter) {
+      if (enter) {
+        $scope.id = id;
+      } else {
+        $scope.id = null;
+      }
+    };
+    
+    hotkeys.bindTo($scope).add({
+      combo: 'o',
+      description: "Open an alert",
+      callback: function() { 
+        if ($scope.id) {
+          $scope.bulkOpenAlert([$scope.id]);
+        }
+      }
+    }).add({
+      combo: 'a',
+      description: "Acknowledge an alert",
+      callback: function() { 
+        if ($scope.id) {
+          $scope.bulkAckAlert([$scope.id]);
+        }
+      }
+    }).add({
+      combo: 'c',
+      description: "Close an alert",
+      callback: function() { 
+        if ($scope.id) {
+          $scope.bulkCloseAlert([$scope.id]);
+        }
+      }
+    }).add({
+      combo: 'd',
+      description: "Delete an alert",
+      callback: function() { 
+        if ($scope.id) {
+          $scope.bulkDeleteAlert([$scope.id]);
+        }
+      }
+    });
+    
   }]);
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'config', 'Alert',
-  function($scope, $route, $routeParams, $location, $auth, config, Alert){
+alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'config', 'hotkeys', 'Alert',
+  function($scope, $route, $routeParams, $location, $auth, config, hotkeys, Alert){
 
     var byUser = '';
     if ($auth.isAuthenticated()) {
@@ -380,6 +424,49 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 
     $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
+    
+    hotkeys.bindTo($scope).add({
+      combo: 'o',
+      description: "Open an alert",
+      callback: function() { 
+        if ($scope.alert.status != 'open')
+          $scope.openAlert($scope.alert.id);
+      }
+    }).add({
+      combo: 'w',
+      description: "Watch or UnWatch an alert",
+      callback: function() {
+        if (!$scope.isAuthenticated()) {
+          return;
+        }
+        if ($scope.alert.tags.indexOf('watch:' + $scope.user) >  -1) {
+          $scope.unwatchAlert($scope.alert.id, $scope.user);
+        } else {
+          $scope.watchAlert($scope.alert.id, $scope.user);
+        }
+      }
+    }).add({
+      combo: 'a',
+      description: "Acknowledge an alert",
+      callback: function() { 
+        if ($scope.alert.status != 'ack')
+          $scope.ackAlert($scope.alert.id);
+      }
+    }).add({
+      combo: 'c',
+      description: "Close an alert",
+      callback: function() { 
+        if ($scope.alert.status != 'closed')
+          $scope.closeAlert($scope.alert.id);
+      }
+    }).add({
+      combo: 'd',
+      description: "Delete an alert",
+      callback: function() {
+        $scope.deleteAlert($scope.alert.id);
+      }
+    });
+    
   }]);
 
 alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
