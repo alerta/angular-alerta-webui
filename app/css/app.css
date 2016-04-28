@@ -39,6 +39,10 @@ table {
     border: 1px solid #000;
 }
 
+.alist:hover {
+    border: 2px dashed #000;
+}
+
 .label {
     font-size: 10.998px;
     font-weight: bold;

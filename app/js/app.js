@@ -9,7 +9,8 @@ var alertaApp = angular.module('alertaApp', [
   'alertaServices',
   'alertaDirectives',
   'alertaControllers',
-  'satellizer'
+  'satellizer',
+  'cfp.hotkeys'
 ])
 
 alertaApp.config(['$routeProvider',
