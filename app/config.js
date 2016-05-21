@@ -8,5 +8,6 @@ angular.module('config', [])
     'gitlab_url'  : "https://gitlab.com",  // replace with your gitlab server
     'colors'      : {}, // use default colors
     'severity'    : {}, // use default severity codes
-    'audio'       : {}  // no audio
+    'audio'       : {}, // no audio
+    'tracking_id' : ""  // Google Analytics tracking ID eg. UA-NNNNNN-N
   });

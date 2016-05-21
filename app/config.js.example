@@ -36,5 +36,6 @@ angular.module('config', [])
     },
     'audio'       : {
       'new'  : '/audio/Bike Horn.mp3'
-    }
+    },
+    'tracking_id': 'UA-NNNNNN-N'
   });
