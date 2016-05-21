@@ -21,7 +21,8 @@ app.get('/config.js', function(request, response) {
         'endpoint'    : '" + process.env.ALERTA_ENDPOINT + "', \
         'provider'    : '" + process.env.PROVIDER + "', \
         'client_id'   : '" + process.env.CLIENT_ID + "', \
-        'gitlab_url'  : '" + process.env.GITLAB_URL + "' \
+        'gitlab_url'  : '" + process.env.GITLAB_URL + "', \
+        'tracking_id' : '" + process.env.TRACKING_ID + "' \
       });";
 
   response.send(config);
@@ -31,4 +32,3 @@ app.use(express.static(__dirname + '/app'));
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
-
