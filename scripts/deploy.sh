@@ -40,16 +40,13 @@ angular.module('config', [])
   .constant('config', {
     'endpoint'    : "http://api.alerta.io",
     'provider'    : "google",
-    'client_id'   : "${OAUTH2_CLIENT_ID}"
+    'client_id'   : "${OAUTH2_CLIENT_ID}",
+    'tracking_id' : "${GOOGLE_TRACKING_ID}"
   });
 EOF
 
 aws s3 cp ${TMP_CONFIG_JS} s3://${DOMAIN}/config.js --acl public-read --content-type application/javascript
 rm ${TMP_CONFIG_JS}
-
-sed s/@@TRACKING_ID/${GOOGLE_TRACKING_ID}/ index.html >${TMP_INDEX_HTML}
-aws s3 cp ${TMP_INDEX_HTML} s3://${DOMAIN}/index.html --acl public-read --content-type text/html
-rm ${TMP_INDEX_HTML}
 
 ##### Route53 #####
 
