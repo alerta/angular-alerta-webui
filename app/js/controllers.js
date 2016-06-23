@@ -115,8 +115,14 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
     $scope.reverse = true;
     $scope.query = {};
 
-    $scope.setService = function(service) {
-      $scope.service = service;
+    $scope.setService = function(s) {
+      if (s) {
+        $scope.environment = s.environment;
+        $scope.service = s.service;
+      } else {
+        $scope.environment = null;
+        $scope.service = null;
+      }
       updateQuery();
       refresh();
     };
@@ -155,15 +161,19 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       $location.search($scope.query);
     };
 
+    Service.all({status: $scope.status.value}, function(response) {
+      $scope.services = response.services;
+    });
+
     var refresh = function() {
       $scope.refreshText = 'Refreshing...';
       Count.query({status: $scope.status.value}, function(response) {
         $scope.total = response.total;
         $scope.statusCounts = response.statusCounts;
       });
-      Service.all({status: $scope.status.value}, function(response) {
-        $scope.services = response.services;
-      });
+      // Service.all({status: $scope.status.value}, function(response) {
+      //   $scope.services = response.services;
+      // });
       Environment.all({status: $scope.status.value}, function(response) {
         $scope.environments = response.environments;
       });
@@ -406,8 +416,14 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
     $scope.top10 = [];
     $scope.query = {};
 
-    $scope.setService = function(service) {
-      $scope.service = service;
+    $scope.setService = function(s) {
+      if (s) {
+        $scope.environment = s.environment;
+        $scope.service = s.service;
+      } else {
+        $scope.environment = null;
+        $scope.service = null;
+      }
       updateQuery();
       refresh();
     };
@@ -446,15 +462,19 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
       $location.search($scope.query);
     };
 
+    Service.all({status: $scope.status.value}, function(response) {
+      $scope.services = response.services;
+    });
+
     var refresh = function() {
       $scope.refreshText = 'Refreshing...';
       Count.query({status: $scope.status.value}, function(response) {
         $scope.total = response.total;
         $scope.statusCounts = response.statusCounts;
       });
-      Service.all({status: $scope.status.value}, function(response) {
-        $scope.services = response.services;
-      });
+      // Service.all({status: $scope.status.value}, function(response) {
+      //   $scope.services = response.services;
+      // });
       Environment.all({status: $scope.status.value}, function(response) {
         $scope.environments = response.environments;
       });
