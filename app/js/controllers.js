@@ -392,8 +392,8 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
   }]);
 
-alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert',
-  function($scope, $location, $timeout, Count, Environment, Service, Alert){
+alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert', 'Top10',
+  function($scope, $location, $timeout, Count, Environment, Service, Alert, Top10){
 
     $scope.autoRefresh = true;
     $scope.refreshText = 'Auto Update';
@@ -414,6 +414,7 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
     $scope.status = $scope.show[0];
 
     $scope.top10 = [];
+    $scope.flapping = [];
     $scope.query = {};
 
     $scope.setService = function(s) {
@@ -479,9 +480,9 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
         $scope.environments = response.environments;
       });
       updateQuery();
-      Alert.top10($scope.query, function(response) {
+      Top10.offenders($scope.query, function(response) {
         if (response.status == 'ok') {
-          $scope.top10 = response.top10;
+          $scope.offenders = response.top10;
         }
         $scope.message = response.status + ' - ' + response.message;
         $scope.autoRefresh = response.autoRefresh;
@@ -489,6 +490,11 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
           $scope.refreshText = 'Auto Update';
         } else {
           $scope.refreshText = 'Refresh';
+        }
+      });
+      Top10.flapping($scope.query, function(response) {
+        if (response.status == 'ok') {
+          $scope.flapping = response.top10;
         }
       });
     };
