@@ -21,8 +21,15 @@ alertaServices.factory('Alert', ['$resource', 'config',
       'remove': {method:'DELETE'},
       'delete': {method:'DELETE'},
       'tag':    {method:'POST', url: config.endpoint+'/alert/:id/tag'},
-      'untag':  {method:'POST', url: config.endpoint+'/alert/:id/untag'},
-      'top10':  {method:'GET', url: config.endpoint+'/alerts/top10'}
+      'untag':  {method:'POST', url: config.endpoint+'/alert/:id/untag'}
+    });
+  }]);
+
+alertaServices.factory('Top10', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint, {}, {
+      'offenders': {method:'GET', url: config.endpoint+'/alerts/top10/count'},
+      'flapping':  {method:'GET', url: config.endpoint+'/alerts/top10/flapping'}
     });
   }]);
 
