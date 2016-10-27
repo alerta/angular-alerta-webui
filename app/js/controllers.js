@@ -71,26 +71,39 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       return $auth.isAuthenticated();
     };
 
-    var colorDefaults = {
-      severity: {
-        critical: 'red',
-        major: 'orange',
-        minor: 'yellow',
-        warning: '#1E90FF',
-        indeterminate: 'silver',
-        cleared: '#00CC00',
-        normal: '#00CC00',
-        ok: '#00CC00',
-        informational: '#00CC00',
-        debug: '#7554BF',
-        security: 'black',
-        unknown: 'silver'
-      },
-      text: 'black',
-      highlight: 'skyblue '
-    };
+    if (config.colors_css) {
+      $scope.color_css = config.colors_css;
+    } else {
+      var colorDefaults = {
+        severity: {
+          critical: 'red',
+          major: 'orange',
+          minor: 'yellow',
+          warning: '#1E90FF',
+          indeterminate: 'silver',
+          cleared: '#00CC00',
+          normal: '#00CC00',
+          ok: '#00CC00',
+          informational: '#00CC00',
+          debug: '#7554BF',
+          security: 'black',
+          unknown: 'silver'
+        },
+        text: 'black',
+        highlight: 'skyblue'
+      };
 
-    $scope.colors = angular.merge(colorDefaults, config.colors);
+      var colors = angular.merge(colorDefaults, config.colors);
+      var css_lines = [];
+      Object.keys(colors.severity).forEach(function (severity) {
+        css_lines.push('.alert-row-'+severity+' {\n' +
+          'background-color: '+colors.severity[severity] +';\n' +
+          'color: '+(colors.severity[severity] == 'black' ? 'white' : colors.text)+';\n' +
+        '}')
+      });
+      css_lines.push('.alert-row-highlighted {background-color: '+colors.highlight+'; }');
+      $scope.color_css = css_lines.join('\n');
+    }
 
     $scope.autoRefresh = true;
     $scope.refreshText = 'Auto Update';

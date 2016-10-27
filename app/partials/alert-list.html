@@ -1,6 +1,7 @@
 
 
 <div class="container-fluid">
+  <style type="text/css">{{color_css}}</style>
 
   <div class="row">
     <div class="col-md-3 col-sm-3 col-xs-12">
@@ -49,8 +50,8 @@
           <th class="hidden-xs"><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
         </tr>
 
-        <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
-            ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? colors.highlight : colors.severity[alert.severity] || 'silver' }"
+        <tr class="{{'alert-row alert-row-' + alert.severity + ((bulkAlerts.indexOf(alert.id) > -1) ? ' alert-row-highlighted' : '')}}"
+            ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
             ng-click="click($event,alert);">
           <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
           <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
