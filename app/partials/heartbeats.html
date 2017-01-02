@@ -1,0 +1,33 @@
+
+<div class="container-fluid">
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--Body content-->
+
+      <table class="table">
+        <tr>
+          <th>Heartbeat</th>
+          <th class="hidden-xs">Tags</th>
+          <th class="hidden-xs">Create Time</th>
+          <th class="hidden-xs">Receive Time</th>
+          <th>Latency</th>
+          <th class="hidden-xs">Timeout</th>
+          <th>Since</th>
+        </tr>
+        <tr ng-repeat="heartbeat in heartbeats | orderBy:'-receiveTime'"
+            class="heartbeat heartbeat-stale">
+          <td>{{ heartbeat.origin }}</td>
+          <td class="hidden-xs"><span ng-repeat="tag in heartbeat.tags"><span class="label label-primary">{{ tag }}</span> </span></td>
+          <td class="hidden-xs">{{ heartbeat.createTime | date:longDate }}</td>
+          <td class="hidden-xs">{{ heartbeat.receiveTime | date:longDate }}</td>
+          <td>{{ heartbeat.receiveTime | diff:heartbeat.createTime }} ms</td>
+          <td class="hidden-xs">{{ heartbeat.timeout }} seconds</td>
+          <td>{{ heartbeat.receiveTime | since }}</td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+</div>
