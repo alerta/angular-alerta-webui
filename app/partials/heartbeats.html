@@ -14,6 +14,7 @@
           <th>Latency</th>
           <th class="hidden-xs">Timeout</th>
           <th>Since</th>
+          <th>Action</th>
         </tr>
         <tr ng-repeat="heartbeat in heartbeats | orderBy:'-receiveTime'"
             class="heartbeat heartbeat-stale">
@@ -24,6 +25,7 @@
           <td>{{ heartbeat.receiveTime | diff:heartbeat.createTime }} ms</td>
           <td class="hidden-xs">{{ heartbeat.timeout }} seconds</td>
           <td>{{ heartbeat.receiveTime | since }}</td>
+          <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteHeartbeat(heartbeat.id)">Delete</button></td>
         </tr>
       </table>
 

@@ -85,8 +85,10 @@ alertaServices.factory('Keys', ['$resource', 'config',
 
 alertaServices.factory('Heartbeat', ['$resource', 'config',
   function($resource, config) {
-    return $resource(config.endpoint+'/heartbeats', {}, {
-      'query':  {method:'GET'}
+    return $resource(config.endpoint+'/heartbeat/:id', {}, {
+      'query':  {method:'GET', url: config.endpoint+'/heartbeats'},
+      'get':    {method:'GET'},
+      'delete': {method:'DELETE'},
     });
   }]);
 
