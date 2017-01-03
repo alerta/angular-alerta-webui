@@ -13,7 +13,7 @@
         <tr ng-repeat="customer in customers">
           <td><tt>{{ customer.match }}</tt></td>
           <td><tt>{{ customer.customer }}</tt></td>
-          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteCustomer(customer.customer);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
+          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteCustomer(customer.id);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
         </tr>
       </table>
 

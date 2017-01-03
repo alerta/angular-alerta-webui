@@ -70,7 +70,7 @@ alertaServices.factory('Customers', ['$resource', 'config',
     return $resource(config.endpoint+'/customer', {}, {
       'all':  {method:'GET', url: config.endpoint+'/customers'},
       'save':   {method:'POST'},
-      'delete': {method:'DELETE', url: config.endpoint+'/customer/:customer'}
+      'delete': {method:'DELETE', url: config.endpoint+'/customer/:id'}
     });
   }]);
 
