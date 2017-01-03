@@ -755,8 +755,8 @@ alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeou
       });
     };
 
-    $scope.deleteCustomer = function(customer) {
-      Customers.delete({customer: customer}, {}, function(data) {
+    $scope.deleteCustomer = function(id) {
+      Customers.delete({id: id}, {}, function(data) {
         $route.reload();
       });
     };
