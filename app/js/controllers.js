@@ -815,8 +815,34 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
     $scope.payload = $auth.getPayload();
   }]);
 
-alertaControllers.controller('AboutController', ['$scope', '$timeout', 'config', 'Management', 'Heartbeat',
-  function($scope, $timeout, config, Management, Heartbeat) {
+alertaControllers.controller('HeartbeatsController', ['$scope', '$timeout', 'config', 'Heartbeat',
+  function($scope, $timeout, config, Heartbeat) {
+
+    $scope.heartbeats = [];
+
+    var refresh = function() {
+      Heartbeat.query(function(response) {
+        $scope.heartbeats = response.heartbeats;
+      });
+      timer = $timeout(refresh, 10000);
+    };
+    var timer = $timeout(refresh, 200);
+
+    $scope.$on('$destroy', function() {
+      if (timer) {
+        $timeout.cancel(timer);
+      }
+    });
+
+    $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
+
+    $scope.deleteHeartbeat = function(id) {
+      Heartbeat.delete({id: id}, {}, refresh);
+    };
+  }]);
+
+alertaControllers.controller('AboutController', ['$scope', '$timeout', 'config', 'Management',
+  function($scope, $timeout, config, Management) {
 
     Management.manifest(function(response) {
       $scope.manifest = response;
@@ -830,9 +856,6 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'config',
         $scope.metrics = response.metrics;
         $scope.lastTime = response.time;
         $scope.uptime = response.uptime;
-      });
-      Heartbeat.query(function(response) {
-        $scope.heartbeats = response.heartbeats;
       });
       timer = $timeout(refresh, 10000);
     };
