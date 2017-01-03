@@ -73,17 +73,18 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 
     var colorDefaults = {
       severity: {
+        security: 'blue',
         critical: 'red',
         major: 'orange',
         minor: 'yellow',
         warning: '#1E90FF',
-        indeterminate: 'silver',
+        indeterminate: 'lightblue',
         cleared: '#00CC00',
         normal: '#00CC00',
         ok: '#00CC00',
         informational: '#00CC00',
         debug: '#7554BF',
-        security: 'black',
+        trace: '#7554BF',
         unknown: 'silver'
       },
       text: 'black',
@@ -206,6 +207,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
     });
 
     var severityCodeDefaults = {
+      security: 0,
       critical: 1,
       major: 2,
       minor: 3,
@@ -216,7 +218,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       ok: 5,
       informational: 6,
       debug: 7,
-      security: 8,
+      trace: 8,
       unknown: 9
     };
 
