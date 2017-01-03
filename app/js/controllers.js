@@ -837,9 +837,7 @@ alertaControllers.controller('HeartbeatsController', ['$scope', '$timeout', 'con
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
 
     $scope.deleteHeartbeat = function(id) {
-      Heartbeat.delete({id: id}, {}, function(data) {
-        $location.path('/');
-      });
+      Heartbeat.delete({id: id}, {}, refresh);
     };
   }]);
 
