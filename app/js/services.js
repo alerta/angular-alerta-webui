@@ -17,11 +17,11 @@ alertaServices.factory('Alert', ['$resource', 'config',
       'query':  {method:'GET', url: config.endpoint+'/alerts'},
       'save':   {method:'POST'},
       'get':    {method:'GET'},
-      'status': {method:'POST', url: config.endpoint+'/alert/:id/status'},
+      'status': {method:'PUT', url: config.endpoint+'/alert/:id/status'},
       'remove': {method:'DELETE'},
       'delete': {method:'DELETE'},
-      'tag':    {method:'POST', url: config.endpoint+'/alert/:id/tag'},
-      'untag':  {method:'POST', url: config.endpoint+'/alert/:id/untag'}
+      'tag':    {method:'PUT', url: config.endpoint+'/alert/:id/tag'},
+      'untag':  {method:'PUT', url: config.endpoint+'/alert/:id/untag'}
     });
   }]);
 
@@ -100,5 +100,3 @@ alertaServices.factory('Management', ['$resource', 'config',
       'status':      {method:'GET', url: config.endpoint+'/management/status'}
     });
   }]);
-
-
