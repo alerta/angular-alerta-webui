@@ -109,6 +109,7 @@ alertaApp.config(['config', '$authProvider',
       url: config.endpoint+'/auth/github',
       clientId: config.client_id,
       scope: ['user:email', 'read:org'],
+      authorizationEndpoint: (config.github_url || 'https://github.com')+'/login/oauth/authorize'
     });
     $authProvider.oauth2({
       name: 'gitlab',
