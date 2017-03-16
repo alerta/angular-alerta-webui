@@ -118,4 +118,11 @@ alertaApp.config(['config', '$authProvider',
       clientId: config.client_id,
       authorizationEndpoint: config.gitlab_url+'/oauth/authorize'
     });
+    $authProvider.oauth2({
+      name: 'keycloak',
+      url: config.endpoint+'/auth/keycloak',
+      redirectUri: window.location.origin,
+      clientId: config.client_id,
+      authorizationEndpoint: config.keycloak_url+'/auth/realms/'+config.keycloak_realm+'/protocol/openid-connect/auth'
+    });
 }]);

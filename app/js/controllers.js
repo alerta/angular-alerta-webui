@@ -716,6 +716,9 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
       case "gitlab":
         $scope.placeholder = "GitLab username";
         break;
+      case "keycloak":
+        $scope.placeholder = "Keycloak username";
+        break;
       default:
         $scope.placeholder = "Email";
     }
