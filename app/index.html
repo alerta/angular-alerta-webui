@@ -31,12 +31,12 @@
         <li ng-class="{active: isActive('/watch')}" ng-show="isAuthenticated();"><a href="#/watch">Watch</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" ng-show="isAuthenticated();">Configuration <span class="caret"></span></a>
+        <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">Configuration <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li ng-show="isAdmin();"><a href="#/users">Users</a></li>
             <li ng-show="isAdmin() && isCustomerViews();"><a href="#/customers">Customers</a></li>
-            <li><a href="#/keys">API Keys</a></li>
-            <li ng-show="isAdmin();"><a href="#/blackouts">Blackouts</a></li>
+            <li ng-show="isAuthenticated();"><a href="#/keys">API Keys</a></li>
+            <li><a href="#/blackouts">Blackouts</a></li>
           </ul>
         </li>
         <li ng-hide="isAuthenticated();" ng-click="authenticate()"><a href="#/login">Login</a></li>
