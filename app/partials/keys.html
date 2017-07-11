@@ -28,10 +28,11 @@
           <td><i class="glyphicon glyphicon-warning-sign" ng-show="key.expireTime | isExpired" title="Expired"></i><i class="glyphicon glyphicon-ok" ng-hide="key.expireTime | isExpired" title="Active"></i></td>
           <td class="hidden-xs">{{ key.lastUsedTime | date:longDate }}</td>
           <td class="hidden-xs">{{ key.count }}</td>
-          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteKey(key.key);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
+          <td><button has-permission="admin:keys" type="button" class="btn btn-default btn-sm" ng-click="deleteKey(key.key);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
       </table>
 
+      <div>
       <form name="form" class="form-inline css-form" novalidate>
         <div class="row">
         <div class="form-group col-md-4 col-sm-4 col-xs-4">
@@ -44,10 +45,10 @@
           <select class="form-control input-medium" ng-model="type" ng-options="type for type in types">
           </select>
         </div>
-        <button type="button" class="btn btn-primary" ng-click="createKey(type, customer, text)" ng-disabled="form.$invalid">Create new API Key</button>
+        <button has-permission="write:keys" type="button" class="btn btn-primary" ng-click="createKey(type, customer, text)">Create new API Key</button>
         </div>
       </form>
-
+      </div>
 
     </div>
   </div>

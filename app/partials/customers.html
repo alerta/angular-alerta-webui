@@ -13,10 +13,11 @@
         <tr ng-repeat="customer in customers">
           <td><tt>{{ customer.match }}</tt></td>
           <td><tt>{{ customer.customer }}</tt></td>
-          <td><button type="button" class="btn btn-default btn-sm" ng-click="deleteCustomer(customer.id);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
+          <td><button has-permission="admin:customers" type="button" class="btn btn-default btn-sm" ng-click="deleteCustomer(customer.id);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
         </tr>
       </table>
 
+      <div>
       <form name="form" class="form-inline css-form" novalidate>
         <div class="row">
         <div class="form-group col-md-3 col-sm-3 col-xs-3">
@@ -25,9 +26,10 @@
         <div class="form-group col-md-4 col-sm-4 col-xs-4">
               <input type="text" class="form-control" id="customer" placeholder="Customer name" ng-model="customer" name="customer" required />
         </div>
-        <button type="button" class="btn btn-primary" ng-click="createCustomer(customer, match)" ng-disabled="form.$invalid">Create new customer lookup</button>
+        <button has-permission="admin:customers" type="button" class="btn btn-primary" ng-click="createCustomer(customer, match)">Create new customer lookup</button>
         </div>
       </form>
+    </div>
     </div>
   </div>
 
