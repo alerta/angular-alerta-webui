@@ -3,7 +3,7 @@
 angular.module('config', [])
   .constant('config', {
     'endpoint'    : "http://"+window.location.hostname+":8080",
-    'provider'    : "basic", // google, github, gitlab or basic
+    'provider'    : "basic", // google, github, gitlab, saml2 or basic
     'client_id'   : "INSERT-CLIENT-ID-HERE",
     'github_url'  : null,  // for github enterprise provider only
     'gitlab_url'  : "https://gitlab.com",  // for gitlab provider only
