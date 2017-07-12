@@ -26,28 +26,28 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-collapse">
       <ul class="nav navbar-nav">
-        <li ng-class="{active: isActive('/alerts')}"><a href="#/">Recent</a></li>
-        <li ng-class="{active: isActive('/top10')}"><a href="#/top10">Top 10</a></li>
-        <li ng-class="{active: isActive('/watch')}" ng-show="isAuthenticated();"><a href="#/watch">Watch</a></li>
+        <li has-permission="read:alerts" ng-class="{active: isActive('/alerts')}"><a href="#/">Recent</a></li>
+        <li has-permission="read:alerts" ng-class="{active: isActive('/top10')}"><a href="#/top10">Top 10</a></li>
+        <li has-permission="read:alerts" ng-class="{active: isActive('/watch')}" ng-show="isAuthenticated();"><a href="#/watch">Watch</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">Configuration <span class="caret"></span></a>
+        <li has-permission="read:blackouts" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">Configuration <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li ng-show="isAdmin();"><a href="#/users">Users</a></li>
-            <li ng-show="isAdmin() && isCustomerViews();"><a href="#/customers">Customers</a></li>
-            <li ng-show="isAuthenticated();"><a href="#/keys">API Keys</a></li>
-            <li><a href="#/blackouts">Blackouts</a></li>
+            <li has-permission="admin:users" ng-show="isAdmin();"><a href="#/users">Users</a></li>
+            <li has-permission="admin:customers" ng-show="isAdmin() && isCustomerViews();"><a href="#/customers">Customers</a></li>
+            <li has-permission="read:keys" ng-show="isAuthenticated();"><a href="#/keys">API Keys</a></li>
+            <li has-permission="read:blackouts"><a href="#/blackouts">Blackouts</a></li>
           </ul>
         </li>
         <li ng-hide="isAuthenticated();" ng-click="authenticate()"><a href="#/login">Login</a></li>
         <li ng-show="isAuthenticated();" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">{{ name }} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#/profile">Profile</a></li>
+            <li has-permission="read:userinfo"><a href="#/profile">Profile</a></li>
             <li><a href="#/logout">Log Out</a></li>
           </ul>
         </li>
-        <li ng-class="{active: isActive('/heartbeats')}"><a href="#/heartbeats">Heartbeats</a></li>
-        <li ng-class="{active: isActive('/about')}"><a href="#/about">About</a></li>
+        <li has-permission="read:heartbeats" ng-class="{active: isActive('/heartbeats')}"><a href="#/heartbeats">Heartbeats</a></li>
+        <li has-permission="read:management" ng-class="{active: isActive('/about')}"><a href="#/about">About</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

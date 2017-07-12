@@ -815,6 +815,7 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
     $scope.provider = $auth.getPayload().provider;
     $scope.customer = $auth.getPayload().customer;
     $scope.role = $auth.getPayload().role;
+    $scope.scopes = ($auth.getPayload().scope || '').split(' ');
 
     $scope.token = $auth.getToken();
     $scope.payload = $auth.getPayload();

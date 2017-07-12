@@ -88,24 +88,24 @@
 
   <div class="row" ng-show="bulkAlerts.length > 0">
     <div class="col-md-12">
-    <button type="button" class="btn btn-success"
+    <button has-permission="write:alerts" type="button" class="btn btn-success"
             ng-click="bulkOpenAlert(bulkAlerts)"
             ng-disabled="status.indexOf('open') > -1"><i class="glyphicon glyphicon-arrow-up"></i> Open</button>
     <!-- button type="button" class="btn btn-default"
             ng-click="bulkTagAlert(alert.id, ['foo'])">Tag</button -->
-    <button type="button" class="btn btn-default"
+    <button has-permission="write:alerts" type="button" class="btn btn-default"
             ng-click="bulkWatchAlert(bulkAlerts, user)"
             ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-open"></i> Watch</button>
-    <button type="button" class="btn btn-default"
+    <button has-permission="write:alerts" type="button" class="btn btn-default"
             ng-click="bulkUnwatchAlert(bulkAlerts, user)"
             ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-close"></i> Unwatch</button>
-    <button type="button" class="btn btn-primary"
+    <button has-permission="write:alerts" type="button" class="btn btn-primary"
             ng-click="bulkAckAlert(bulkAlerts)"
             ng-disabled="status.indexOf('ack') > -1"><i class="glyphicon glyphicon-ok-circle"></i> Ack</button>
-    <button type="button" class="btn btn-warning"
+    <button has-permission="write:alerts" type="button" class="btn btn-warning"
             ng-click="bulkCloseAlert(bulkAlerts)"
             ng-disabled="status.indexOf('closed') > -1"><i class="glyphicon glyphicon-remove-circle"></i> Close</button>
-    <button type="button" class="btn btn-danger"
+    <button has-permission="admin:alerts" type="button" class="btn btn-danger"
             ng-click="bulkDeleteAlert(bulkAlerts)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
     </div>
   </div>
