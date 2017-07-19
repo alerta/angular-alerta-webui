@@ -42,6 +42,24 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
     $scope.authenticate = function() {
       if (config.provider == 'basic') {
         $location.path('/login');
+      } else if (config.provider == 'saml2') {
+        let auth_win;
+        window.addEventListener('message', event => {
+          if (event.source === auth_win) {
+            if (event.data && event.data.status && event.data.status === 'ok' && event.data.token) {
+              $scope.$apply(() => {
+                $auth.setToken(event.data.token);
+                $scope.name = $auth.getPayload().name;
+                $location.path('/');
+              });
+            } else if (event.data && event.data.status && event.data.status === 'error' && event.data.message) {
+              alert('Error while getting token: ' + event.data.message);
+            } else {
+              alert('Error while getting token: ' + JSON.stringify(event));
+            }
+          }
+        }, { once: true });
+        auth_win = window.open(config.endpoint + '/auth/saml?usePostMessage', 'Authenticating...');
       } else {
         $auth.authenticate(config.provider)
           .then(function() {
