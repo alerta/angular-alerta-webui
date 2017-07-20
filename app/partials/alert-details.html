@@ -20,8 +20,7 @@
           ng-click="closeAlert(alert.id)"
           ng-disabled="alert.status == 'closed'"><i class="glyphicon glyphicon-remove-circle"></i> Close</button>
   <button has-permission="admin:alerts" type="button" class="btn btn-danger"
-          ng-click="deleteAlert(alert.id)"
-          ng-disabled="isAuthenticated() && !isAdmin();"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+          ng-click="deleteAlert(alert.id)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
 </div>
 
 <hr>

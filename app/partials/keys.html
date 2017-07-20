@@ -8,7 +8,7 @@
       <table class="table">
         <tr>
           <th>API Key</th>
-          <th ng-show="isAdmin();">User</th>
+          <th has-permission="admin:keys">User</th>
           <th class="hidden-xs">Description</th>
           <th class="hidden-xs" ng-show="isCustomerViews();">Customer</th>
           <th class="hidden-xs">Access</th>
@@ -20,7 +20,7 @@
         </tr>
         <tr ng-repeat="key in keys">
           <td><tt>{{ key.key }}</tt></td>
-          <td ng-show="isAdmin();">{{ key.user }}</td>
+          <td has-permission="admin:keys">{{ key.user }}</td>
           <td class="hidden-xs">{{ key.text }}</td>
           <td class="hidden-xs" ng-show="isCustomerViews();">{{ key.customer }}</td>
           <td class="hidden-xs">{{ key.type }}</td>

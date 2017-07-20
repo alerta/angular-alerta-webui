@@ -811,14 +811,6 @@ alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeou
 alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Keys',
   function($scope, $route, $timeout, $auth, config, Keys) {
 
-    $scope.isAdmin = function() {
-      if ($auth.isAuthenticated()) {
-        return $auth.getPayload().role == 'admin';
-      } else {
-        return false;
-      }
-    };
-
     $scope.keys = [];
     $scope.type = 'read-only';
     $scope.text = '';
