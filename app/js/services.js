@@ -61,14 +61,24 @@ alertaServices.factory('Users', ['$resource', 'config',
     return $resource(config.endpoint+'/user', {}, {
       'query':  {method:'GET', url: config.endpoint+'/users'},
       'save':   {method:'POST'},
+      'update': {method:'PUT', url: config.endpoint+'/user/:user'},
       'delete': {method:'DELETE', url: config.endpoint+'/user/:user'}
+    });
+  }]);
+
+alertaServices.factory('Perms', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint+'/perm', {}, {
+      'all':    {method:'GET', url: config.endpoint+'/perms'},
+      'save':   {method:'POST'},
+      'delete': {method:'DELETE', url: config.endpoint+'/perm/:id'}
     });
   }]);
 
 alertaServices.factory('Customers', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/customer', {}, {
-      'all':  {method:'GET', url: config.endpoint+'/customers'},
+      'all':    {method:'GET', url: config.endpoint+'/customers'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/customer/:id'}
     });

@@ -41,6 +41,10 @@ alertaApp.config(['$routeProvider',
       templateUrl: 'partials/users.html',
       controller: 'UserController'
     })
+    .when('/perms', {
+      templateUrl: 'partials/perms.html',
+      controller: 'PermissionsController'
+    })
     .when('/customers', {
       templateUrl: 'partials/customers.html',
       controller: 'CustomerController'

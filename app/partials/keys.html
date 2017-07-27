@@ -8,7 +8,7 @@
       <table class="table">
         <tr>
           <th>API Key</th>
-          <th ng-show="isAdmin();">User</th>
+          <th has-permission="admin:keys">User</th>
           <th class="hidden-xs">Description</th>
           <th class="hidden-xs" ng-show="isCustomerViews();">Customer</th>
           <th class="hidden-xs">Access</th>
@@ -20,7 +20,7 @@
         </tr>
         <tr ng-repeat="key in keys">
           <td><tt>{{ key.key }}</tt></td>
-          <td ng-show="isAdmin();">{{ key.user }}</td>
+          <td has-permission="admin:keys">{{ key.user }}</td>
           <td class="hidden-xs">{{ key.text }}</td>
           <td class="hidden-xs" ng-show="isCustomerViews();">{{ key.customer }}</td>
           <td class="hidden-xs">{{ key.type }}</td>
@@ -35,13 +35,13 @@
       <div>
       <form name="form" class="form-inline css-form" novalidate>
         <div class="row">
-        <div class="form-group col-md-4 col-sm-4 col-xs-4">
+        <div class="form-group col-md-5 col-sm-4 col-xs-4">
               <input type="text" class="form-control" id="text" placeholder="Application requiring API Key" ng-model="text" name="text" required />
         </div>
-        <div class="form-group col-md-3 col-sm-3 col-xs-3">
+        <div class="form-group col-md-2 col-sm-2 col-xs-2">
               <input type="text" class="form-control" id="customer" placeholder="Customer (optional)" ng-model="customer" name="customer" />
         </div>
-        <div class="col-md-3 col-sm-3 col-xs-3">
+        <div class="col-md-1 col-sm-1 col-xs-1">
           <select class="form-control input-medium" ng-model="type" ng-options="type for type in types">
           </select>
         </div>

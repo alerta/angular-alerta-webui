@@ -25,7 +25,7 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
 
     $scope.isAdmin = function() {
       if ($auth.isAuthenticated()) {
-        return $auth.getPayload().role == 'admin';
+        return $auth.getPayload().scope.includes('admin');
       } else {
         return false;
       }
@@ -716,13 +716,23 @@ alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$t
   }]);
 
 
-alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users',
-  function($scope, $route, $timeout, $auth, config, Users) {
+alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users', 'Perms',
+  function($scope, $route, $timeout, $auth, config, Users, Perms) {
 
     $scope.domains = [];
     $scope.users = [];
     $scope.login = '';
     $scope.provider = config.provider;
+
+    Perms.all(function(response) {
+      $scope.roles = response.permissions.map(p => p.match);
+    });
+
+    $scope.updateRole = function(user, role) {
+      Users.update({user: user}, {role: role}, function(data) {
+        $route.reload();
+      });
+    };
 
     switch (config.provider) {
       case "google":
@@ -763,6 +773,34 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
   }]);
 
+alertaControllers.controller('PermissionsController', ['$scope', '$route', '$timeout', '$auth', 'Perms',
+  function($scope, $route, $timeout, $auth, Perms) {
+
+    $scope.perms = [];
+    $scope.perm = '';
+    $scope.match = '';
+
+    $scope.createPerm = function(scope, match) {
+      Perms.save({}, {scopes: scope.split(' '), match: match}, function(data) {
+        $route.reload();
+      }, function(e) {
+        $scope.status = e.data.status;
+        $scope.message = e.data.message;
+      });
+    };
+
+    $scope.deletePerm = function(id) {
+      Perms.delete({id: id}, {}, function(response) {
+        $route.reload();
+      });
+    };
+
+    Perms.all({}, function(response) {
+      $scope.perms = response.permissions;
+    });
+
+  }]);
+
 alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeout', '$auth', 'Customers',
   function($scope, $route, $timeout, $auth, Customers) {
 
@@ -790,14 +828,6 @@ alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeou
 
 alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Keys',
   function($scope, $route, $timeout, $auth, config, Keys) {
-
-    $scope.isAdmin = function() {
-      if ($auth.isAuthenticated()) {
-        return $auth.getPayload().role == 'admin';
-      } else {
-        return false;
-      }
-    };
 
     $scope.keys = [];
     $scope.type = 'read-only';

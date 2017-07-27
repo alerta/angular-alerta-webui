@@ -31,7 +31,17 @@
         <tr ng-repeat="user in users">
           <td>{{ user.name }}</td>
           <td>{{ user.login }}</td>
-          <td>{{ user.role || "n/a" }}</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {{ user.role }}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li ng-repeat="role in roles"><a href="#/users" ng-click="updateRole(user.id, role);">{{ role }}</a></li>
+              </ul>
+            </div>
+          </td>
           <td class="hidden-xs">{{ user.createTime | date:longDate }}</td>
           <td class="hidden-xs">{{ user.provider }}</td>
           <td class="hidden-xs">{{ user.text }}</td>
