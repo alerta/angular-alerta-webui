@@ -812,13 +812,17 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
   function($scope, $route, $timeout, $auth, config, Keys) {
 
     $scope.keys = [];
-    $scope.type = 'read-only';
+    $scope.type = {name: 'read-only', scopes: ['read']};
     $scope.text = '';
 
-    $scope.types = ['read-only', 'read-write'];
+    $scope.types = [
+      {name: 'admin', scopes: ['read', 'write', 'admin']},
+      {name: 'read-write', scopes: ['read', 'write']},
+      {name: 'read-only', scopes: ['read']}
+    ];
 
     $scope.createKey = function(type, customer, text) {
-      Keys.save({}, {user: $auth.getPayload().login, type: type, customer: customer, text: text}, function(data) {
+      Keys.save({}, {user: $auth.getPayload().login, scopes: type.scopes, customer: customer, text: text}, function(data) {
         $route.reload();
       });
     };

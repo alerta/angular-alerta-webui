@@ -11,7 +11,7 @@
           <th has-permission="admin:keys">User</th>
           <th class="hidden-xs">Description</th>
           <th class="hidden-xs" ng-show="isCustomerViews();">Customer</th>
-          <th class="hidden-xs">Access</th>
+          <th class="hidden-xs">Scope</th>
           <th class="hidden-xs">Expires</th>
           <th>Valid</th>
           <th class="hidden-xs">Last Used</th>
@@ -23,7 +23,7 @@
           <td has-permission="admin:keys">{{ key.user }}</td>
           <td class="hidden-xs">{{ key.text }}</td>
           <td class="hidden-xs" ng-show="isCustomerViews();">{{ key.customer }}</td>
-          <td class="hidden-xs">{{ key.type }}</td>
+          <td><span ng-repeat="scope in key.scopes"><span class="label label-primary">{{ scope }}</span> </span></td>
           <td class="hidden-xs">{{ key.expireTime | date:longDate }}</td>
           <td><i class="glyphicon glyphicon-warning-sign" ng-show="key.expireTime | isExpired" title="Expired"></i><i class="glyphicon glyphicon-ok" ng-hide="key.expireTime | isExpired" title="Active"></i></td>
           <td class="hidden-xs">{{ key.lastUsedTime | date:longDate }}</td>
@@ -42,7 +42,7 @@
               <input type="text" class="form-control" id="customer" placeholder="Customer (optional)" ng-model="customer" name="customer" />
         </div>
         <div class="col-md-1 col-sm-1 col-xs-1">
-          <select class="form-control input-medium" ng-model="type" ng-options="type for type in types">
+          <select class="form-control input-md" ng-options="key as key.name for key in types track by key.name" ng-model="type"></select>
           </select>
         </div>
         <button has-permission="write:keys" type="button" class="btn btn-primary" ng-click="createKey(type, customer, text)">Create new API Key</button>
