@@ -12,6 +12,10 @@ var alertaApp = angular.module('alertaApp', [
   'satellizer'
 ])
 
+alertaApp.config(['$locationProvider', function($locationProvider) {
+  $locationProvider.hashPrefix('');
+}]);
+
 alertaApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider
