@@ -23,29 +23,3 @@ alertaDirectives.directive('googleAnalytics', ['config', function(config) {
     }
   };
 }]);
-
-alertaDirectives.directive('hasPermission', ['$auth', function($auth) {
-  return {
-    restrict: 'A',
-    link: function(scope, elem, attrs, ctrl) {
-      function isInScope(s) {
-        var scopes = $auth.isAuthenticated() ? ($auth.getPayload().scope || '').split(' ') : [];
-        if (scopes.includes(s) || scopes.includes(s.split(':')[0])) {
-          return true;
-        } else if (s.startsWith('read')) {
-          return isInScope(s.replace('read', 'write'));
-        } else if (s.startsWith('write')) {
-          return isInScope(s.replace('write', 'admin'))
-        }
-      }
-
-      scope.$watch('hasPermission', function(perm) {
-        if (isInScope(attrs.hasPermission)) {
-          elem.removeClass('ng-hide');
-        } else {
-          elem.addClass('ng-hide');
-        }
-      });
-    }
-  }
-}]);
