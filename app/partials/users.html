@@ -45,7 +45,7 @@
           <td class="hidden-xs">{{ user.createTime | date:longDate }}</td>
           <td class="hidden-xs">{{ user.provider }}</td>
           <td class="hidden-xs">{{ user.text }}</td>
-          <td><button has-permission="admin:users" type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.id);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
+          <td><button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.id);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
       </table>
 
@@ -64,7 +64,7 @@
         <div class="form-group" ng-show="provider == 'basic'">
           <input type="password" class="form-control" id="input-password" ng-model="password" placeholder="Password" ng-required="provider == 'basic'" />
         </div>
-        <button has-permission="admin:users" type="button" class="btn btn-primary" ng-click="createUser(name,login, password)">Add new User</button>
+        <button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-primary" ng-click="createUser(name,login, password)">Add new User</button>
       </form>
       </div> -->
     </div>

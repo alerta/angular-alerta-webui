@@ -28,34 +28,24 @@ alertaDirectives.directive('hasPermission', ['$auth', function($auth) {
   return {
     restrict: 'A',
     link: function(scope, elem, attrs, ctrl) {
-
-      function isInScope(scope) {
-        var scopes = ($auth.getPayload().scope || '').split(' ');
-        if (scopes.includes(scope) || scopes.includes(scope.split(':')[0])) {
+      function isInScope(s) {
+        var scopes = $auth.isAuthenticated() ? ($auth.getPayload().scope || '').split(' ') : [];
+        if (scopes.includes(s) || scopes.includes(s.split(':')[0])) {
           return true;
-        } else if (scope.startsWith('read')) {
-          return isInScope(scope.replace('read', 'write'));
-        } else if (scope.startsWith('write')) {
-          return isInScope(scope.replace('write', 'admin'))
+        } else if (s.startsWith('read')) {
+          return isInScope(s.replace('read', 'write'));
+        } else if (s.startsWith('write')) {
+          return isInScope(s.replace('write', 'admin'))
         }
       }
 
-      if ($auth.isAuthenticated() && isInScope(attrs.hasPermission)) {
-        if (elem[0].tagName == 'LI') {
-          elem.show();
+      scope.$watch('hasPermission', function(perm) {
+        if (isInScope(attrs.hasPermission)) {
+          elem.removeClass('ng-hide');
+        } else {
+          elem.addClass('ng-hide');
         }
-        if (elem[0].tagName == 'BUTTON') {
-          elem.removeAttr('disabled');
-        }
-      } else {
-        if (elem[0].tagName == 'LI') {
-          // elem.css('display', 'none');
-          elem.hide();
-        }
-        if (elem[0].tagName == 'BUTTON') {
-          elem.attr('disabled', 'true');
-        }
-      }
+      });
     }
   }
 }]);

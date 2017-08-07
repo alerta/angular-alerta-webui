@@ -13,7 +13,7 @@
         <tr ng-repeat="perm in perms">
           <td><tt>{{ perm.match }}</tt></td>
           <td><span ng-repeat="scope in perm.scopes"><span class="label label-primary">{{ scope }}</span> </span></td>
-          <td><button has-permission="admin:perms" type="button" class="btn btn-default btn-sm" ng-click="deletePerm(perm.id);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
+          <td><button ng-disabled="!hasPermission('admin:perms')" type="button" class="btn btn-default btn-sm" ng-click="deletePerm(perm.id);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
         </tr>
       </table>
 
@@ -24,7 +24,7 @@
         <div class="col-xs-4">
           <input class="form-control" id="input-scopes" placeholder="Scopes eg. read write admin:alerts admin:keys" ng-model="scope" name="scope" required />
         </div>
-        <button has-permission="admin:perms" type="submit" class="btn btn-primary" ng-click="createPerm(scope, match)">Create permission</button>
+        <button ng-disabled="!hasPermission('admin:perms')" type="submit" class="btn btn-primary" ng-click="createPerm(scope, match)">Create permission</button>
       </div>
 
       <div ng-show="message">
