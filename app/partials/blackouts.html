@@ -31,7 +31,7 @@
           <td class="hidden-xs">{{ blackout.startTime | date:mediumDate }}</td>
           <td class="hidden-xs">{{ blackout.endTime | date:mediumDate }}</td>
           <td>{{ blackout.remaining | hms }}</td>
-          <td><button has-permission="write:blackouts" type="button" class="btn btn-default btn-sm" ng-click="deleteBlackout(blackout.id);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
+          <td><button ng-disabled="!hasPermission('write:blackouts')" type="button" class="btn btn-default btn-sm" ng-click="deleteBlackout(blackout.id);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
         </tr>
       </table>
 
@@ -101,7 +101,7 @@
         <input class="form-control" id="input-tags" placeholder="Tags" ng-model="tags" name="tags"/>
       </div>
 
-      <button has-permission="write:blackouts" type="button" class="btn btn-primary" ng-click="createBlackout(environment,service,resource,event,group,tags,customer,start,end)">Blackout</button>
+      <button ng-disabled="!hasPermission('write:blackouts')" type="button" class="btn btn-primary" ng-click="createBlackout(environment,service,resource,event,group,tags,customer,start,end)">Blackout</button>
         </div>
     </form>
   </div>

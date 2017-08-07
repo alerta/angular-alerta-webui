@@ -31,6 +31,32 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
       }
     };
 
+    $scope.hasPermission = function(perm) {
+      function isInScope(scope) {
+        var scopes = $auth.isAuthenticated() ? ($auth.getPayload().scope || '').split(' ') : [];
+        if (scopes.includes(scope) || scopes.includes(scope.split(':')[0])) {
+          return true;
+        } else if (scope.startsWith('read')) {
+          return isInScope(scope.replace('read', 'write'));
+        } else if (scope.startsWith('write')) {
+          return isInScope(scope.replace('write', 'admin'))
+        }
+      }
+
+      if ($auth.isAuthenticated()) {
+        var scopes = ($auth.getPayload().scope || '').split(' ');
+        if (scopes.includes(perm) || scopes.includes(perm.split(':')[0])) {
+          return true;
+        } else if (perm.startsWith('read')) {
+          return isInScope(perm.replace('read', 'write'));
+        } else if (perm.startsWith('write')) {
+          return isInScope(perm.replace('write', 'admin'))
+        }
+      } else {
+        return false;
+      }
+    };
+
     $scope.isCustomerViews = function() {
       if ($auth.isAuthenticated()) {
         return 'customer' in $auth.getPayload();

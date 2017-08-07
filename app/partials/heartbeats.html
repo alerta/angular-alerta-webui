@@ -26,7 +26,7 @@
           <td>{{ heartbeat.receiveTime | diff:heartbeat.createTime }} ms</td>
           <td class="hidden-xs">{{ heartbeat.timeout }} seconds</td>
           <td>{{ heartbeat.receiveTime | since }}</td>
-          <td><button has-permission="admin:heartbeats" type="button" class="btn btn-default btn-sm" ng-click="deleteHeartbeat(heartbeat.id)"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
+          <td><button ng-disabled="!hasPermission('admin:heartbeats')" type="button" class="btn btn-default btn-sm" ng-click="deleteHeartbeat(heartbeat.id)"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
         </tr>
       </table>
 

@@ -1,25 +1,25 @@
 
 <div>
-  <button has-permission="write:alerts" type="button" class="btn btn-success"
+  <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-success"
           ng-click="openAlert(alert.id)"
           ng-disabled="alert.status == 'open'"><i class="glyphicon glyphicon-arrow-up"></i> Open</button>
-  <!-- button type="button" class="btn btn-default"
+  <!-- button ng-disabled"!hasPermission('write:alerts')" type="button" class="btn btn-default"
           ng-click="tagAlert(alert.id, ['foo'])">Tag</button -->
-  <button has-permission="write:alerts" type="button" class="btn btn-default"
+  <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-default"
           ng-click="watchAlert(alert.id, user)"
           ng-show="alert.tags.indexOf('watch:'+user) == -1"
           ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-open"></i> Watch</button>
-  <button has-permission="write:alerts" type="button" class="btn btn-default"
+  <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-default"
           ng-click="unwatchAlert(alert.id, user)"
           ng-show="alert.tags.indexOf('watch:'+user) > -1"
           ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-close"></i> Unwatch</button>
-  <button has-permission="write:alerts" type="button" class="btn btn-primary"
+  <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-primary"
           ng-click="ackAlert(alert.id)"
           ng-disabled="alert.status == 'ack'"><i class="glyphicon glyphicon-ok-circle"></i> Ack</button>
-  <button has-permission="write:alerts" type="button" class="btn btn-warning"
+  <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-warning"
           ng-click="closeAlert(alert.id)"
           ng-disabled="alert.status == 'closed'"><i class="glyphicon glyphicon-remove-circle"></i> Close</button>
-  <button has-permission="admin:alerts" type="button" class="btn btn-danger"
+  <button ng-disabled="!hasPermission('admin:alerts')" type="button" class="btn btn-danger"
           ng-click="deleteAlert(alert.id)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
 </div>
 
