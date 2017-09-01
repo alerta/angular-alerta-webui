@@ -65,6 +65,10 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
       }
     };
 
+    $scope.isBasicAuth = function() {
+      return config.provider == 'basic';
+    };
+
     $scope.authenticate = function() {
       if (config.provider == 'basic') {
         $location.path('/login');
@@ -748,7 +752,7 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
     $scope.domains = [];
     $scope.users = [];
     $scope.login = '';
-    $scope.provider = config.provider;
+    $scope.provider = $auth.getPayload().provider || config.provider;
 
     Perms.all(function(response) {
       $scope.roles = response.permissions.map(p => p.match);
@@ -756,6 +760,12 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
 
     $scope.updateRole = function(user, role) {
       Users.update({user: user}, {role: role}, function(data) {
+        $route.reload();
+      });
+    };
+
+    $scope.setEmailVerified = function(user) {
+      Users.update({user: user}, {email_verified: true}, function(data) {
         $route.reload();
       });
     };
@@ -793,6 +803,7 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
       $scope.domains = response.domains;
       $scope.orgs = response.orgs;
       $scope.groups = response.groups;
+      $scope.roles = response.roles;
       $scope.users = response.users;
     });
 
@@ -892,7 +903,11 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
     $scope.login = $auth.getPayload().login;
     $scope.provider = $auth.getPayload().provider;
     $scope.customer = $auth.getPayload().customer;
-    $scope.role = $auth.getPayload().role;
+    $scope.role = $auth.getPayload().role;  // legacy role
+
+    $scope.orgs = $auth.getPayload().orgs;
+    $scope.groups = $auth.getPayload().groups;
+    $scope.roles = $auth.getPayload().roles;
     $scope.scopes = ($auth.getPayload().scope || '').split(' ');
 
     $scope.token = $auth.getToken();

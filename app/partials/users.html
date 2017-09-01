@@ -6,34 +6,40 @@
 
       <div>
         <table class="table">
-          <tr ng-show="provider == 'google'">
+          <tr ng-show="provider=='basic' || provider=='google'">
             <td><b>Allowed E-mail Domains: </b>{{ domains.join(', ') }}</td>
           </tr>
-          <tr ng-show="provider == 'github'">
-            <td><b>Allowed GitHub Organisations: </b>{{ orgs.join(', ') }}</td>
+          <tr ng-show="provider=='github'">
+            <td><b>Allowed Organisations: </b>{{ orgs.join(', ') }}</td>
           </tr>
-          <tr ng-show="provider == 'gitlab'">
-            <td><b>Allowed GitLab Groups: </b>{{ groups.join(', ') }}</td>
+          <tr ng-show="provider=='gitlab'">
+            <td><b>Allowed Groups: </b>{{ groups.join(', ') }}</td>
           </tr>
+          <tr ng-show="provider=='keycloak'">
+              <td><b>Allowed Roles: </b>{{ roles.join(', ') }}</td>
+            </tr>
         </table>
       </div>
 
       <table class="table">
         <tr>
           <th>Name</th>
-          <th>Login</th>
+          <th>E-mail</th>
+          <th>Verification</th>
           <th>Role</th>
           <th class="hidden-xs">Since</th>
-          <th class="hidden-xs">Provider</th>
+          <th class="hidden-xs">Last Login</th>
           <th class="hidden-xs">Comment</th>
           <th>Access</th>
         </tr>
         <tr ng-repeat="user in users">
           <td>{{ user.name }}</td>
-          <td>{{ user.login }}</td>
+          <td>{{ user.email }}</td>
+          <td ng-show="user.email_verified"><i class="glyphicon glyphicon-envelope"></i> <i class="glyphicon glyphicon-ok"></i></td>
+          <td ng-hide="user.email_verified"><button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-default btn-sm" ng-click="setEmailVerified(user.id);"><i class="glyphicon glyphicon-envelope"></i> Verify E-mail</button></td>
           <td>
             <div class="dropdown">
-              <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="role-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 {{ user.role }}
                 <span class="caret"></span>
               </button>
@@ -43,7 +49,7 @@
             </div>
           </td>
           <td class="hidden-xs">{{ user.createTime | date:longDate }}</td>
-          <td class="hidden-xs">{{ user.provider }}</td>
+          <td class="hidden-xs">{{ user.lastLogin | date:longDate }}</td>
           <td class="hidden-xs">{{ user.text }}</td>
           <td><button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.id);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
