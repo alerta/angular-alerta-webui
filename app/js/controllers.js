@@ -31,8 +31,7 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
       }
     };
 
-    $scope.hasPermission = function(perms) {
-
+    $scope.hasPermission = function(perm) {
       function isInScope(scope) {
         var scopes = $auth.isAuthenticated() ? ($auth.getPayload().scope || '').split(' ') : [];
         if (scopes.includes(scope) || scopes.includes(scope.split(':')[0])) {
@@ -46,13 +45,12 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
 
       if ($auth.isAuthenticated()) {
         var scopes = ($auth.getPayload().scope || '').split(' ');
-        perms = perms.split(' ') || [];
-        if (perms.some(function (perm) { return (scopes.includes(perm) || scopes.includes(perm.split(':')[0])) })) {
+        if (scopes.includes(perm) || scopes.includes(perm.split(':')[0])) {
           return true;
-        } else if (perms.some(function (perm) { return perm.startsWith('read') })) {
-          return isInScope(perms.replace('read', 'write'));
-        } else if (perms.some(function (perm) { return perm.startsWith('write') })) {
-          return isInScope(perms.replace('write', 'admin'))
+        } else if (perm.startsWith('read')) {
+          return isInScope(perm.replace('read', 'write'));
+        } else if (perm.startsWith('write')) {
+          return isInScope(perm.replace('write', 'admin'))
         }
       } else {
         return false;
