@@ -31,7 +31,8 @@
         <li ng-show="hasPermission('read:alerts')" ng-class="{active: isActive('/watch')}" ng-show="isAuthenticated();"><a href="#/watch">Watch</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li ng-show="hasPermission('read:blackouts')" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">Configuration <span class="caret"></span></a>
+        <li ng-show="hasPermission('admin:users') || hasPermission('admin:perms') || hasPermission('admin:customers') || hasPermission('read:keys') || hasPermission('read:blackouts')"
+        class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">Configuration <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li ng-show="hasPermission('admin:users')"><a href="#/users">Users</a></li>
             <li ng-show="hasPermission('admin:perms')"><a href="#/perms">Permissions</a></li>
@@ -43,7 +44,7 @@
         <li ng-hide="isAuthenticated();" ng-click="authenticate()"><a href="#/login">Login</a></li>
         <li ng-show="isAuthenticated();" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">{{ name }} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li ng-show="hasPermission('read:userinfo')"><a href="#/profile">Profile</a></li>
+            <li><a href="#/profile">Profile</a></li>
             <li><a href="#/logout">Log Out</a></li>
           </ul>
         </li>
