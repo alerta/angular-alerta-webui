@@ -55,6 +55,7 @@
   <tr><td><b>Duplicate Count</b></td><td>{{ alert.duplicateCount }}</td></tr>
   <tr><td><b>Repeat</b></td><td><span class="label">{{ alert.repeat | capitalize }}</span></td></tr>
   <tr><td><b>Origin</b></td><td>{{ alert.origin }}</td></tr>
+  <tr ng-show="alert.external_url"><td><b>External URL:</b></td><td><a href="{{ alert.external_url }}" target="_blank">{{ alert.external_url }}</a></td></tr>
   <tr><td><b>Tags</b></td>
     <td><span ng-repeat="tag in alert.tags"><span class="label label-primary">{{ tag }}</span> </span></td>
   </tr>
