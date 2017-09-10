@@ -54,9 +54,15 @@
         </select>
       </div>
       <div class="form-group">
-        <select class="form-control" ng-model="environment" ng-options="e.environment as e.environment for e in environments" required>
+        <select class="form-control" ng-model="environment" required>
           <option value disabled selected>Environment</option>
+          <option ng-repeat="e in environments" value="{{e.environment}}">{{e.environment}}</option>
+          <option value="other">--other--</option>
         </select>
+      </div>
+
+      <div class="form-group" ng-show="environment == 'other'">
+        <input type="text" class="form-control" id="input-environment" placeholder="Environment" ng-model="env" name="env"/>
       </div>
 
       <div class="form-group">
@@ -101,7 +107,7 @@
         <input class="form-control" id="input-tags" placeholder="Tags" ng-model="tags" name="tags"/>
       </div>
 
-      <button ng-disabled="!hasPermission('write:blackouts')" type="button" class="btn btn-primary" ng-click="createBlackout(environment,service,resource,event,group,tags,customer,start,end)">Blackout</button>
+      <button ng-disabled="!hasPermission('write:blackouts')" type="button" class="btn btn-primary" ng-click="createBlackout(env || environment,service,resource,event,group,tags,customer,start,end)">Blackout</button>
         </div>
     </form>
   </div>
