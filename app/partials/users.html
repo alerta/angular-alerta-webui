@@ -34,7 +34,7 @@
         </tr>
         <tr ng-repeat="user in users">
           <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
+          <td>{{ user.email || user.login }}</td>
           <td ng-show="user.email_verified"><i class="glyphicon glyphicon-envelope"></i> <i class="glyphicon glyphicon-ok"></i></td>
           <td ng-hide="user.email_verified"><button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-default btn-sm" ng-click="setEmailVerified(user.id);"><i class="glyphicon glyphicon-envelope"></i> Verify E-mail</button></td>
           <td>
@@ -49,7 +49,7 @@
             </div>
           </td>
           <td class="hidden-xs">{{ user.createTime | date:longDate }}</td>
-          <td class="hidden-xs">{{ user.lastLogin | date:longDate }}</td>
+          <td class="hidden-xs">{{ (user.lastLogin | date:longDate) || "n/a"}}</td>
           <td class="hidden-xs">{{ user.text }}</td>
           <td><button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.id);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
