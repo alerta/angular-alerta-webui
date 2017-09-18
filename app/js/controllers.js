@@ -751,7 +751,12 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
 
     $scope.domains = [];
     $scope.users = [];
-    $scope.provider = $auth.getPayload().provider || config.provider;
+    $scope.roles = [];
+
+    Users.query(function(response) {
+      $scope.domains = response.domains;
+      $scope.users = response.users;
+    });
 
     Perms.all(function(response) {
       $scope.roles = response.permissions.map(p => p.match);
@@ -769,36 +774,11 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
       });
     };
 
-    switch (config.provider) {
-      case "google":
-        $scope.placeholder = "Google Email";
-        break;
-      case "github":
-        $scope.placeholder = "GitHub login";
-        break;
-      case "gitlab":
-        $scope.placeholder = "GitLab username";
-        break;
-      case "keycloak":
-        $scope.placeholder = "Keycloak username";
-        break;
-      default:
-        $scope.placeholder = "Email";
-    }
-
     $scope.deleteUser = function(user) {
       Users.delete({user: user}, {}, function(data) {
         $route.reload();
       });
     };
-
-    Users.query(function(response) {
-      $scope.domains = response.domains;
-      $scope.orgs = response.orgs;
-      $scope.groups = response.groups;
-      $scope.roles = response.roles;
-      $scope.users = response.users;
-    });
 
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
   }]);
