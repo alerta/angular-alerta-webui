@@ -54,25 +54,6 @@
           <td><button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.id);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
       </table>
-
-      <!-- <div>
-      <form name="form" class="form-inline css-form" novalidate>
-         <div class="form-group">
-          <input class="form-control" id="input-name" placeholder="Name" ng-model="name" name="name" required />
-        </div>
-        <div class="form-group">
-          <div class="input-group ">
-              <span class="input-group-addon">@</span>
-              <label class="sr-only" for="login">Login</label>
-              <input class="form-control" id="input-login" placeholder="{{ placeholder }}" ng-model="login" name="login" required />
-          </div>
-        </div>
-        <div class="form-group" ng-show="provider == 'basic'">
-          <input type="password" class="form-control" id="input-password" ng-model="password" placeholder="Password" ng-required="provider == 'basic'" />
-        </div>
-        <button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-primary" ng-click="createUser(name,login, password)">Add new User</button>
-      </form>
-      </div> -->
     </div>
   </div>
 

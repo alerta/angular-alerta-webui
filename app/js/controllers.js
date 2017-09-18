@@ -751,7 +751,6 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
 
     $scope.domains = [];
     $scope.users = [];
-    $scope.login = '';
     $scope.provider = $auth.getPayload().provider || config.provider;
 
     Perms.all(function(response) {
@@ -775,7 +774,7 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
         $scope.placeholder = "Google Email";
         break;
       case "github":
-        $scope.placeholder = "GitHub username";
+        $scope.placeholder = "GitHub login";
         break;
       case "gitlab":
         $scope.placeholder = "GitLab username";
@@ -786,12 +785,6 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
       default:
         $scope.placeholder = "Email";
     }
-
-    $scope.createUser = function(name, login, password) {
-      Users.save({}, {name: name, login: login, password: password, provider: config.provider, text: 'Added by '+$auth.getPayload().name}, function(data) {
-        $route.reload();
-      });
-    };
 
     $scope.deleteUser = function(user) {
       Users.delete({user: user}, {}, function(data) {
@@ -877,7 +870,8 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
     ];
 
     $scope.createKey = function(type, customer, text) {
-      Keys.save({}, {user: $auth.getPayload().login, scopes: type.scopes, customer: customer, text: text}, function(data) {
+      var login = $auth.getPayload().preferred_username || $auth.getPayload().login;
+      Keys.save({}, {user: login, scopes: type.scopes, customer: customer, text: text}, function(data) {
         $route.reload();
       });
     };
@@ -900,7 +894,7 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
 
     $scope.user_id = $auth.getPayload().sub;
     $scope.name = $auth.getPayload().name;
-    $scope.login = $auth.getPayload().login;
+    $scope.login = $auth.getPayload().preferred_username || $auth.getPayload().login;
     $scope.provider = $auth.getPayload().provider;
     $scope.customer = $auth.getPayload().customer;
     $scope.role = $auth.getPayload().role;  // legacy role
