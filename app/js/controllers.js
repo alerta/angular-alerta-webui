@@ -751,8 +751,12 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
 
     $scope.domains = [];
     $scope.users = [];
-    $scope.login = '';
-    $scope.provider = $auth.getPayload().provider || config.provider;
+    $scope.roles = [];
+
+    Users.query(function(response) {
+      $scope.domains = response.domains;
+      $scope.users = response.users;
+    });
 
     Perms.all(function(response) {
       $scope.roles = response.permissions.map(p => p.match);
@@ -770,42 +774,11 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
       });
     };
 
-    switch (config.provider) {
-      case "google":
-        $scope.placeholder = "Google Email";
-        break;
-      case "github":
-        $scope.placeholder = "GitHub username";
-        break;
-      case "gitlab":
-        $scope.placeholder = "GitLab username";
-        break;
-      case "keycloak":
-        $scope.placeholder = "Keycloak username";
-        break;
-      default:
-        $scope.placeholder = "Email";
-    }
-
-    $scope.createUser = function(name, login, password) {
-      Users.save({}, {name: name, login: login, password: password, provider: config.provider, text: 'Added by '+$auth.getPayload().name}, function(data) {
-        $route.reload();
-      });
-    };
-
     $scope.deleteUser = function(user) {
       Users.delete({user: user}, {}, function(data) {
         $route.reload();
       });
     };
-
-    Users.query(function(response) {
-      $scope.domains = response.domains;
-      $scope.orgs = response.orgs;
-      $scope.groups = response.groups;
-      $scope.roles = response.roles;
-      $scope.users = response.users;
-    });
 
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
   }]);
@@ -877,7 +850,8 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
     ];
 
     $scope.createKey = function(type, customer, text) {
-      Keys.save({}, {user: $auth.getPayload().login, scopes: type.scopes, customer: customer, text: text}, function(data) {
+      var login = $auth.getPayload().preferred_username || $auth.getPayload().login;
+      Keys.save({}, {user: login, scopes: type.scopes, customer: customer, text: text}, function(data) {
         $route.reload();
       });
     };
@@ -900,7 +874,7 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
 
     $scope.user_id = $auth.getPayload().sub;
     $scope.name = $auth.getPayload().name;
-    $scope.login = $auth.getPayload().login;
+    $scope.login = $auth.getPayload().preferred_username || $auth.getPayload().login;
     $scope.provider = $auth.getPayload().provider;
     $scope.customer = $auth.getPayload().customer;
     $scope.role = $auth.getPayload().role;  // legacy role

@@ -6,26 +6,17 @@
 
       <div>
         <table class="table">
-          <tr ng-show="provider=='basic' || provider=='google'">
-            <td><b>Allowed E-mail Domains: </b>{{ domains.join(', ') }}</td>
+          <tr>
+            <td><b>Allowed E-mail Domains: </b>{{domains.join(', ') }}</td>
           </tr>
-          <tr ng-show="provider=='github'">
-            <td><b>Allowed Organisations: </b>{{ orgs.join(', ') }}</td>
-          </tr>
-          <tr ng-show="provider=='gitlab'">
-            <td><b>Allowed Groups: </b>{{ groups.join(', ') }}</td>
-          </tr>
-          <tr ng-show="provider=='keycloak'">
-              <td><b>Allowed Roles: </b>{{ roles.join(', ') }}</td>
-            </tr>
         </table>
       </div>
 
       <table class="table">
         <tr>
           <th>Name</th>
-          <th>E-mail</th>
-          <th>Verification</th>
+          <th>Login</th>
+          <th>E-mail verified</th>
           <th>Role</th>
           <th class="hidden-xs">Since</th>
           <th class="hidden-xs">Last Login</th>
@@ -34,7 +25,7 @@
         </tr>
         <tr ng-repeat="user in users">
           <td>{{ user.name }}</td>
-          <td>{{ user.email || user.login }}</td>
+          <td>{{ user.login || user.email }}</td>
           <td ng-show="user.email_verified"><i class="glyphicon glyphicon-envelope"></i> <i class="glyphicon glyphicon-ok"></i></td>
           <td ng-hide="user.email_verified"><button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-default btn-sm" ng-click="setEmailVerified(user.id);"><i class="glyphicon glyphicon-envelope"></i> Verify E-mail</button></td>
           <td>
@@ -54,25 +45,6 @@
           <td><button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.id);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
       </table>
-
-      <!-- <div>
-      <form name="form" class="form-inline css-form" novalidate>
-         <div class="form-group">
-          <input class="form-control" id="input-name" placeholder="Name" ng-model="name" name="name" required />
-        </div>
-        <div class="form-group">
-          <div class="input-group ">
-              <span class="input-group-addon">@</span>
-              <label class="sr-only" for="login">Login</label>
-              <input class="form-control" id="input-login" placeholder="{{ placeholder }}" ng-model="login" name="login" required />
-          </div>
-        </div>
-        <div class="form-group" ng-show="provider == 'basic'">
-          <input type="password" class="form-control" id="input-password" ng-model="password" placeholder="Password" ng-required="provider == 'basic'" />
-        </div>
-        <button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-primary" ng-click="createUser(name,login, password)">Add new User</button>
-      </form>
-      </div> -->
     </div>
   </div>
 
