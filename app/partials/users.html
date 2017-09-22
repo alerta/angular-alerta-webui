@@ -31,7 +31,7 @@
           <td>
             <div class="dropdown">
               <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="role-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                {{ user.role }}
+                {{ user.role || user.roles[0] }}
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
