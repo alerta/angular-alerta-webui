@@ -918,7 +918,11 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'config',
   function($scope, $timeout, config, Management) {
 
     Management.manifest(function(response) {
-      $scope.manifest = response;
+      $scope.label = response.alerta ? response.alerta.label : 'Alerta API';
+      $scope.release = response.alerta? response.alerta.release : response.release;
+      $scope.build = response.alerta ? response.alerta.build : response.build;
+      $scope.date = response.alerta ? response.alerta.date : response.date;
+      $scope.revision = response.alerta? response.alerta.revision : response.revision;
     });
 
     $scope.metrics = [];
