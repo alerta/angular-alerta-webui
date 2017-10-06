@@ -954,7 +954,7 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$locat
 
     $scope.login = function(email, password) {
       $auth.login({
-        email: $scope.email,
+        username: $scope.email,
         password: $scope.password
       })
         .then(function() {
