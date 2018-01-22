@@ -1,24 +1,25 @@
-Alerta Web UI 3.0
-=================
+# Alerta Web UI 3.0
 
 Version 3.0 of the alerta dashboard is an [AngularJS](http://angularjs.org/) web app that uses client-side templating.
 
 It replaces alerta dashboard [version 2.0](https://github.com/alerta/alerta-dashboard) which still works, but is no longer under active development.
 
-Example
--------
+## Developer notes (Protacon)
+Forked and customized for internal usage.
+
+?? 
+
+## Example
 
 ![dashboard](/docs/images/alerta-webui-v3.png?raw=true&v=1)
 
 
-Installation
-------------
+## Installation
 
 In production, copy the files under the `app/` directory to a web server.
 
 
-Configuration
--------------
+## Configuration
 
 By default, the dashboard will assume the alerta API endpoint is located at port 8080 on the same domain that the dashboard is served from. If the API endpoint is at a non-default location modify the `config.js` file:
 
@@ -33,8 +34,7 @@ By default, the dashboard will assume the alerta API endpoint is located at port
 
 Also, if the Alerta API has set `AUTH_REQUIRED` to `True` then set the `provider` and `client_id` accordingly.
 
-Server Configuration
---------------------
+## Server Configuration
 
 Ensure the Alerta API server configuration is updated to include the web UI address in the `CORS_ORIGINS` setting:
 
@@ -42,25 +42,6 @@ Ensure the Alerta API server configuration is updated to include the web UI addr
         'http://web.example.com'
     ]
 
-Deploy to the Cloud
--------------------
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-Dependencies
-------------
-
-All dependencies are included, however, for reference they are:
-
-  * [jQuery](http://jquery.com/)
-  * [AngularJS 1.x](http://angularjs.org/)
-  * [Bootstrap 3](http://getbootstrap.com/)
-  * [Satellizer OAuth library](https://github.com/sahat/satellizer)
-  * [Sintony Font](http://www.google.com/fonts/specimen/Sintony)
-
-
-License
--------
-
+# License
 Copyright (c) 2015 Nick Satterly. Available under the MIT License.
 
