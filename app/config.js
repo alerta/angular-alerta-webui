@@ -9,7 +9,7 @@ angular.module('config', [])
     'gitlab_url'  : "https://gitlab.com",  // replace with your gitlab server
     'keycloak_url': "https://keycloak.example.org",  // replace with your keycloak server
     'keycloak_realm': "master",  // replace with your keycloak realm
-    'pf_oauth_url' : "https://pingfederate.example.org" // replace with your pingfederate server
+    'pingfederate_url' : "https://pingfederate.example.org" // replace with your pingfederate server
     'redirectUri'  : "http://alerta.example.com/" // replace with your redirect url registered in pingfederate
     'colors'      : {}, // use default colors
     'severity'    : {}, // use default severity codes

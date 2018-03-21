@@ -138,7 +138,7 @@ alertaApp.config(['config', '$authProvider',
       url: config.endpoint+'/auth/pingfederate',
       redirectUri: config.redirectUri,
       clientId: config.client_id,
-      authorizationEndpoint: config.pf_oauth_url,
+      authorizationEndpoint: config.pingfederate_url,
       pfidpadapterid: 'kerberos',
       scope: 'openid+profile+email',
       response_type: 'code'
