@@ -133,4 +133,14 @@ alertaApp.config(['config', '$authProvider',
       clientId: config.client_id,
       authorizationEndpoint: config.keycloak_url+'/auth/realms/'+config.keycloak_realm+'/protocol/openid-connect/auth'
     });
+    $authProvider.oauth2({
+      name: 'pingfederate',
+      url: config.endpoint+'/auth/pingfederate',
+      redirectUri: config.redirectUri,
+      clientId: config.client_id,
+      authorizationEndpoint: config.pf_oauth_url,
+      pfidpadapterid: 'kerberos',
+      scope: 'openid+profile+email',
+      response_type: 'code'
+    });
 }]);
