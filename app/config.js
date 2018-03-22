@@ -10,7 +10,6 @@ angular.module('config', [])
     'keycloak_url': "https://keycloak.example.org",  // replace with your keycloak server
     'keycloak_realm': "master",  // replace with your keycloak realm
     'pingfederate_url' : "https://pingfederate.example.org" // replace with your pingfederate server
-    'redirectUri'  : "http://alerta.example.com/" // replace with your redirect url registered in pingfederate
     'colors'      : {}, // use default colors
     'severity'    : {}, // use default severity codes
     'audio'       : {}, // no audio
