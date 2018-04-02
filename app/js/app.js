@@ -139,7 +139,8 @@ alertaApp.config(['config', '$authProvider',
       redirectUri: window.location.origin+'/',
       clientId: config.client_id,
       authorizationEndpoint: config.pingfederate_url,
-      pfidpadapterid: 'kerberos',
-      scope: 'openid+profile+email'
+      requiredUrlParams: ['pfidpadapterid', 'scope'],
+      scope: 'openid+profile+email',
+      pfidpadapterid: 'kerberos'
     });
 }]);
