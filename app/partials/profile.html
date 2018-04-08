@@ -9,13 +9,17 @@
       <tr><td><b>Name</b></td><td>{{ name }}</td></tr>
       <tr><td><b>Login</b></td><td>{{ login }}</td></tr>
       <tr><td><b>Provider</b></td><td>{{ provider }}</td></tr>
-      <tr ng-show="isCustomerViews();"><td><b>Customer</b></td><td>{{ customer }}</td></tr>
+      <tr ng-show="isCustomerViews();"><td><b>Customers</b></td><td>{{ customers.join(', ') }}</td></tr>
       <tr ng-show="orgs"><td><b>Organizations</b></td><td><span ng-repeat="org in orgs"><span class="label label-primary">{{ org }}</span> </span></td></tr>
       <tr ng-show="groups"><td><b>Groups</b></td><td><span ng-repeat="group in groups"><span class="label label-primary">{{ group }}</span> </span></td></tr>
       <tr ng-show="roles"><td><b>Roles</b></td><td><span ng-repeat="role in roles"><span class="label label-primary">{{ role }}</span> </span></td></tr>
       <tr><td><b>Scope</b></td><td><span ng-repeat="scope in scopes"><span class="label label-primary">{{ scope }}</span> </span></td></tr>
-      <tr><td><b>JWT</b></td><td><pre>{{ payload | json }}</pre></td></tr>
     </table>
+
+    <label><input type="checkbox" ng-model="jwt"> JWT Payload</label>
+    <div class="animate-show" ng-show="jwt">
+      <pre>{{ payload | json }}</pre>
+    </div>
 
     </div>
   </div>

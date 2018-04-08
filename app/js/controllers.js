@@ -59,7 +59,7 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
 
     $scope.isCustomerViews = function() {
       if ($auth.isAuthenticated()) {
-        return 'customer' in $auth.getPayload();
+        return 'customers' in $auth.getPayload() || 'customer' in $auth.getPayload();
       } else {
         return false;
       }
@@ -890,7 +890,7 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
     $scope.name = $auth.getPayload().name;
     $scope.login = $auth.getPayload().preferred_username || $auth.getPayload().login;
     $scope.provider = $auth.getPayload().provider;
-    $scope.customer = $auth.getPayload().customer;
+    $scope.customers = $auth.getPayload().customers || $auth.getPayload().customer;
     $scope.role = $auth.getPayload().role;  // legacy role
 
     $scope.orgs = $auth.getPayload().orgs;
