@@ -155,6 +155,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
     $scope.show = [
       {name: 'Open', value: ['open', 'unknown']},
       {name: 'Active', value: ['open', 'ack', 'assign']},
+      {name: 'Shelved', value: ['shelved']},
       {name: 'Closed', value: ['closed', 'expired']},
       {name: 'Blackout', value: ['blackout']}
     ];
@@ -414,6 +415,18 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 
     $scope.ackAlert = function(id) {
       Alert.status({id: id}, {status: 'ack', text: 'status change via console' + byUser}, function(data) {
+        $route.reload();
+      });
+    };
+
+    $scope.shelveAlert = function(id, user, timeout) {
+      Alert.status({id: id}, {status: 'shelved', text: 'shelved by ' + user, timeout: timeout}, function(data) {
+        $route.reload();
+      });
+    };
+
+    $scope.unshelveAlert = function(id, user) {
+      Alert.status({id: id}, {status: 'open', text: 'unshelved by ' + user}, function(data) {
         $route.reload();
       });
     };
