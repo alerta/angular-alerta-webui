@@ -71,7 +71,7 @@
       <h4><small>TOP 10 FLAPPING</small></h4>
     </div>
     <div class="col-xs-1">
-      <div class="pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="Top 10 alert sources that have generated the most number of alert status changes.">
+      <div class="pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="Top 10 alert sources that have generated the most number of alert severity changes.">
         <h4><small><i class="glyphicon glyphicon-question-sign"></i></small></h4>
       </div>
     </div>
@@ -106,8 +106,47 @@
   </div> <!-- row -->
 
   <div class="row">
+    <div class="col-xs-11">
+      <h4><small>TOP 10 STANDING</small></h4>
+    </div>
+    <div class="col-xs-1">
+      <div class="pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="Top 10 alert sources that have active alerts for a prolonged duration.">
+        <h4><small><i class="glyphicon glyphicon-question-sign"></i></small></h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-xs-12">
-      <div ng-show="offenders.length == 0 || flapping.length == 0">
+      <table class="table">
+        <tr>
+          <th>Event</th>
+          <th>Count</th>
+          <th>Duplicate Count</th>
+          <th>Environments</th>
+          <th>Services</th>
+          <th>Resources</th>
+        </tr>
+
+        <tr ng-repeat="event in standing | filter:search">
+          <td>{{ event.event }}</td>
+          <td>{{ event.count }}</td>
+          <td>{{ event.duplicateCount }}</td>
+          <td>{{ event.environments.join(', ') }}</td>
+          <td>{{ event.services.join(', ') }}</td>
+          <td><span ng-repeat="resource in event.resources"><a href="#/alert/{{ resource.id }}">{{ resource.resource }}</a> </span></td>
+        </tr>
+      </table>
+
+      <div ng-show="!standing">
+          <center><img src="img/loading.gif"/></center>
+      </div>
+    </div>
+  </div> <!-- row -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div ng-show="offenders.length == 0 || flapping.length == 0 || standing.length == 0">
           <center>{{ message }}</center>
       </div>
     </div>

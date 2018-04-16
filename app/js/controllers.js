@@ -479,6 +479,7 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
 
     $scope.top10 = [];
     $scope.flapping = [];
+    $scope.standing = [];
     $scope.query = {};
 
     $scope.setService = function(s) {
@@ -559,6 +560,11 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
       Top10.flapping($scope.query, function(response) {
         if (response.status == 'ok') {
           $scope.flapping = response.top10;
+        }
+      });
+      Top10.standing($scope.query, function(response) {
+        if (response.status == 'ok') {
+          $scope.standing = response.top10;
         }
       });
     };
