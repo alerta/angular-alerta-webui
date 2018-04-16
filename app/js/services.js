@@ -29,7 +29,8 @@ alertaServices.factory('Top10', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint, {}, {
       'offenders': {method:'GET', url: config.endpoint+'/alerts/top10/count'},
-      'flapping':  {method:'GET', url: config.endpoint+'/alerts/top10/flapping'}
+      'flapping':  {method:'GET', url: config.endpoint+'/alerts/top10/flapping'},
+      'standing':  {method:'GET', url: config.endpoint+'/alerts/top10/standing'}
     });
   }]);
 
