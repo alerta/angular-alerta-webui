@@ -389,8 +389,8 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
       $scope.alert = response.alert;
     });
 
-    $scope.openAlert = function(id) {
-      Alert.status({id: id}, {status: 'open', text: 'status change via console' + byUser}, function(data) {
+    $scope.unackAlert = function(id) {
+      Alert.action({id: id}, {action: 'unack', text: 'status change via console' + byUser}, function(data) {
         $route.reload();
       });
     };
@@ -414,25 +414,25 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     };
 
     $scope.ackAlert = function(id) {
-      Alert.status({id: id}, {status: 'ack', text: 'status change via console' + byUser}, function(data) {
+      Alert.action({id: id}, {action: 'ack', text: 'status change via console' + byUser}, function(data) {
         $route.reload();
       });
     };
 
     $scope.shelveAlert = function(id, user, timeout) {
-      Alert.status({id: id}, {status: 'shelved', text: 'shelved by ' + user, timeout: timeout}, function(data) {
+      Alert.action({id: id}, {action: 'shelve', text: 'status change via console' + byUser, timeout: timeout}, function(data) {
         $route.reload();
       });
     };
 
     $scope.unshelveAlert = function(id, user) {
-      Alert.status({id: id}, {status: 'open', text: 'unshelved by ' + user}, function(data) {
+      Alert.action({id: id}, {action: 'unshelve', text: 'status change via console' + byUser}, function(data) {
         $route.reload();
       });
     };
 
     $scope.closeAlert = function(id) {
-      Alert.status({id: id}, {status: 'closed', text: 'status change via console' + byUser}, function(data) {
+      Alert.action({id: id}, {action: 'close', text: 'status change via console' + byUser}, function(data) {
         $route.reload();
       });
     };
