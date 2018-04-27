@@ -780,6 +780,7 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
 
     Perms.all(function(response) {
       $scope.roles = response.permissions.map(p => p.match);
+      $scope.roles.push('user');  // add default 'user' role as option
     });
 
     $scope.updateRole = function(user, role) {
