@@ -159,7 +159,12 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       {name: 'Closed', value: ['closed', 'expired']},
       {name: 'Blackout', value: ['blackout']}
     ];
-    $scope.status = $scope.show[0];
+
+    if (search.status) {
+      $scope.status = {name: '', value: search.status};
+    } else {
+      $scope.status = $scope.show[0];
+    }
 
     $scope.alerts = [];
     $scope.alertLimit = 20;
