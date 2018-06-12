@@ -38,5 +38,6 @@ angular.module('config', [])
     'audio'       : {
       'new'  : '/audio/Bike Horn.mp3'
     },
-    'tracking_id': 'UA-NNNNNN-N'
+    'tracking_id': 'UA-NNNNNN-N',
+    'refresh_interval': 30000 // Auto-refresh interval set to 30 seconds 
   });
