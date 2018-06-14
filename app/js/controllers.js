@@ -306,8 +306,10 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
         } else {
           $scope.bulkAlerts.push(alert.id);
         }
-      } else {
+      } else if(!$event.ctrlKey){
         $location.url('/alert/' + alert.id);
+    } else ($event.ctrlKey) {
+        window.open('/#/alert' + alert.id, '_blank');
       }
     };
 
@@ -369,6 +371,12 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
         });
       });
       $route.reload();
+    };
+
+    $scope.bulkOpenTabAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        window.open('/#/alert/' + id, '_blank');
+      });
     };
 
     $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
@@ -718,6 +726,12 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
         });
       });
       $route.reload();
+    };
+
+    $scope.bulkOpenTabAlert = function(ids) {
+      angular.forEach(ids, function(id) {
+        window.open('/#/alert/' + id, '_blank');
+      });
     };
 
     $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
