@@ -371,6 +371,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       $route.reload();
     };
 
+    $scope.listRelative = config.dates.listRelative || false;
     $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
     $scope.mediumDate = config.dates && config.dates.mediumDate || 'EEE d MMM HH:mm';
   }]);

@@ -55,7 +55,7 @@
           <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
           <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
           <td class="hidden-lg">{{ alert.lastReceiveTime | date:shortTime }}</td>
-          <td class="visible-lg">{{ alert.lastReceiveTime | date:mediumDate }}</td>
+          <td class="visible-lg">{{ alert.lastReceiveTime | date:mediumDate }} <span ng-if="listRelative">({{ alert.lastReceiveTime | relativeDate }})</span></td>
           <td class="visible-lg">{{ alert.duplicateCount }}</td>
           <td class="hidden-xs" ng-show="isCustomerViews();">{{ alert.customer }}</td>
           <td class="hidden-xs">{{ alert.environment }}</td>
