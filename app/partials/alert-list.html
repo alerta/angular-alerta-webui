@@ -91,6 +91,9 @@
     <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-success"
             ng-click="bulkUnackAlert(bulkAlerts)"
             ng-disabled="status.indexOf('open') > -1"><i class="glyphicon glyphicon-arrow-up"></i> Open</button>
+    <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-default"
+            ng-click="bulkOpenTabAlert(bulkAlerts)"
+            ng-disabled="status.indexOf('open') > -1"><i class="glyphicon glyphicon-plus"></i> Open in new Tab</button>
     <!-- button ng-disabled"!hasPermission('write:alerts')" type="button" class="btn btn-default"
             ng-click="bulkTagAlert(alert.id, ['foo'])">Tag</button -->
     <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-default"
