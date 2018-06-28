@@ -308,7 +308,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
         }
       } else if(!$event.ctrlKey){
         $location.url('/alert/' + alert.id);
-    } else ($event.ctrlKey) {
+    } else if($event.ctrlKey) {
         window.open('/#/alert' + alert.id, '_blank');
       }
     };
