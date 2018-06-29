@@ -14,5 +14,5 @@ angular.module('config', [])
     'severity'        : {}, // use default severity codes
     'audio'           : {}, // no audio
     'tracking_id'     : "", // Google Analytics tracking ID eg. UA-NNNNNN-N
-    'refresh_interval': 5000 // Auto-refresh interval, defaults to 5 seconds. 
+    'refresh_interval': 5000 // Auto-refresh interval, defaults to 5 seconds
   });
