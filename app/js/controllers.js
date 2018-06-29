@@ -251,7 +251,7 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       if ($scope.autoRefresh) {
         refresh();
       }
-      timer = $timeout(refreshWithTimeout, config.refresh_interval);
+      timer = $timeout(refreshWithTimeout, config.refresh_interval || 5000);
     };
     var timer = $timeout(refreshWithTimeout, 200);
 
@@ -585,7 +585,7 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
       if ($scope.autoRefresh) {
         refresh();
       }
-      timer = $timeout(refreshWithTimeout, 5000);
+      timer = $timeout(refreshWithTimeout, config.refresh_interval || 5000);
     };
     var timer = $timeout(refresh, 200);
 
