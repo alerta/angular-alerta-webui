@@ -261,9 +261,6 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       var error = function(response) {
         $scope.APIError = true;
         $scope.message = "Oh no, the Alerta API has returned status code " + response.status + "! Please check the submitted query."
-        console.log("Error with request to Alerta API")
-        console.log("Status code: " + response.status)
-        console.log("Status text: " + response.statusText)
         $scope.alerts = [];
       }
       Alert.query($scope.query, success, error);

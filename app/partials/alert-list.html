@@ -76,14 +76,9 @@
           <center><img src="img/loading.gif"/></center>
       </div>
 
-      <div ng-show="alerts.length == 0 && !APIError">
+      <div ng-class="{'alert alert-danger': APIError}" ng-show="alerts.length == 0">
           <center>{{ message }}</center>
       </div>
-
-      <div class="alert alert-danger" role="alert" ng-show="alerts.length == 0 && APIError">
-          <center>{{ message }}</center>
-      </div>
-
     </div>
   </div> <!-- row -->
 
