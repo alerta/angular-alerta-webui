@@ -2,6 +2,11 @@
 
 <div class="container-fluid">
 
+  <div class="row" ng-show="showMongoQueryForm">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <input class="form-control input" ng-model="mongoQuery" ng-change="update()" size="8" placeholder="Mongo query">
+    </div>
+  </div> <!-- row -->
   <div class="row">
     <div class="col-md-3 col-sm-3 col-xs-12">
         <select class="form-control input-sm" ng-model="option" ng-change="setService(option)"
@@ -71,7 +76,11 @@
           <center><img src="img/loading.gif"/></center>
       </div>
 
-      <div ng-show="alerts.length == 0">
+      <div ng-show="alerts.length == 0 && !APIError">
+          <center>{{ message }}</center>
+      </div>
+
+      <div class="alert alert-danger" role="alert" ng-show="alerts.length == 0 && APIError">
           <center>{{ message }}</center>
       </div>
 

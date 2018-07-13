@@ -151,6 +151,9 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
     if (search.service) {
       $scope.service = search.service;
     }
+    if (search.q) {
+      $scope.mongoQuery = search.q;
+    }
 
     $scope.show = [
       {name: 'Open', value: ['open', 'unknown']},
@@ -166,10 +169,13 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       $scope.status = $scope.show[0];
     }
 
+    $scope.APIError = false;
+    $scope.APIErrorResponse = null;
     $scope.alerts = [];
     $scope.alertLimit = 20;
     $scope.reverse = true;
     $scope.query = {};
+    $scope.showMongoQueryForm = 'backend_db' in config && config.backend_db == "mongodb"
 
     $scope.setService = function(s) {
       if (s) {
@@ -214,6 +220,11 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
       } else {
         delete $scope.query['status'];
       }
+      if ($scope.mongoQuery) {
+        $scope.query['q'] = $scope.mongoQuery;
+      } else {
+        delete $scope.query['q'];
+      }
       $location.search($scope.query);
     };
 
@@ -234,7 +245,8 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
         $scope.environments = response.environments;
       });
       updateQuery();
-      Alert.query($scope.query, function(response) {
+      var success = function(response) {
+        $scope.APIError = false;
         if (response.status == 'ok') {
           $scope.alerts = response.alerts;
         }
@@ -245,7 +257,16 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
         } else {
           $scope.refreshText = 'Refresh';
         }
-      });
+      }
+      var error = function(response) {
+        $scope.APIError = true;
+        $scope.message = "Oh no, the Alerta API has returned status code " + response.status + "! Please check the submitted query."
+        console.log("Error with request to Alerta API")
+        console.log("Status code: " + response.status)
+        console.log("Status text: " + response.statusText)
+        $scope.alerts = [];
+      }
+      Alert.query($scope.query, success, error);
     };
     var refreshWithTimeout = function() {
       if ($scope.autoRefresh) {
