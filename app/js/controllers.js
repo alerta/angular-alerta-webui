@@ -386,6 +386,8 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'config', 'Alert',
   function($scope, $route, $routeParams, $location, $auth, config, Alert){
 
+    var ackComment = config.ack_comment || false;
+
     var byUser = '';
     if ($auth.isAuthenticated()) {
       $scope.user = $auth.getPayload().name;
@@ -427,7 +429,13 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
     };
 
     $scope.ackAlert = function(id) {
-      Alert.action({id: id}, {action: 'ack', text: 'status change via console' + byUser}, function(data) {
+      if (ackComment) {
+        var ack_message = prompt("Please enter ack message", "");
+      } else {
+        var ack_message = 'status change via console';
+      }
+  
+      Alert.action({id: id}, {action: 'ack', text: ack_message + byUser}, function(data) {
         $route.reload();
       });
     };
