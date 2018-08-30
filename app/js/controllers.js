@@ -759,14 +759,14 @@ alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$t
       $scope.customers = response.customers;
     });
 
-    $scope.createBlackout = function(environment,service,resource,event,group,tags,customer,start,end) {
+    $scope.createBlackout = function(environment,service,resource,event,group,tags,customer,start,end,text) {
       if (service) {
         service = service.split(",");
       }
       if (tags) {
         tags = tags.split(",");
       }
-      Blackouts.save({}, {environment: environment, service: service, resource: resource, event: event, group: group, tags: tags, customer: customer, startTime: start, endTime: end}, function(data) {
+      Blackouts.save({}, {environment: environment, service: service, resource: resource, event: event, group: group, tags: tags, customer: customer, startTime: start, endTime: end, text: text}, function(data) {
         $route.reload();
       });
     };

@@ -17,6 +17,9 @@
           <th>Start</th>
           <th>End</th>
           <th>Remaining</th>
+          <th class="hidden-xs">User</th>
+          <th class="hidden-xs">Create Time</th>
+          <th class="hidden-xs">Reason</th>
           <th></th>
         </tr>
         <tr ng-repeat="blackout in blackouts | orderBy:'startTime'">
@@ -31,6 +34,9 @@
           <td class="hidden-xs">{{ blackout.startTime | date:mediumDate }}</td>
           <td class="hidden-xs">{{ blackout.endTime | date:mediumDate }}</td>
           <td>{{ blackout.remaining | hms }}</td>
+          <td class="hidden-xs">{{ blackout.user }}</td>
+          <td class="hidden-xs">{{ blackout.createTime | date:mediumDate }}</td>
+          <td class="hidden-xs">{{ blackout.text }}</td>
           <td><button ng-disabled="!hasPermission('write:blackouts')" type="button" class="btn btn-default btn-sm" ng-click="deleteBlackout(blackout.id);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
         </tr>
       </table>
@@ -47,7 +53,6 @@
       <div class="form-group">
         <input type="datetime-local" class="form-control" id="input-end" ng-model="end" name="end" ng-min="start"/>
       </div>
-
       <div class="form-group" ng-show="isCustomerViews();">
         <select class="form-control" ng-model="customer" ng-options="c.customer as c.customer for c in customers">
           <option value disabled selected>Customer</option>
@@ -60,11 +65,9 @@
           <option value="other">--other--</option>
         </select>
       </div>
-
       <div class="form-group" ng-show="environment == 'other'">
         <input type="text" class="form-control" id="input-environment" placeholder="Environment" ng-model="env" name="env"/>
       </div>
-
       <div class="form-group">
         <select class="form-control" name="option" ng-model="option">
           <option value selected>--choose--</option>
@@ -76,38 +79,33 @@
           <option value="tags">Tags</option>
         </select>
       </div>
-
       <div class="form-group" ng-show="option == 'resource'">
         <input class="form-control" id="input-resource" placeholder="Resource" ng-model="resource" name="resource"/>
       </div>
-
       <div class="form-group" ng-show="option == 'service'">
         <select class="form-control" ng-model="service" ng-options="s.service as s.service group by s.environment for s in services | orderBy:['environment','service']">
         <!-- option value="" ng-model="service">Service</option -->
         </select>
       </div>
-
       <div class="form-group" ng-show="option == 'event'">
         <input class="form-control" id="input-event" placeholder="Event" ng-model="event" name="event"/>
       </div>
-
       <div class="form-group" ng-show="option == 'group'">
         <input type="text" class="form-control" id="input-group" placeholder="Group" ng-model="group" name="group"/>
       </div>
-
       <div class="form-group" ng-show="option == 'resource-event'">
         <input class="form-control" id="input-resource" placeholder="Resource" ng-model="resource" name="resource"/>
       </div>
-
       <div class="form-group" ng-show="option == 'resource-event'">
         <input class="form-control" id="input-event" placeholder="Event" ng-model="event" name="event"/>
       </div>
-
       <div class="form-group" ng-show="option == 'tags'">
         <input class="form-control" id="input-tags" placeholder="Tags" ng-model="tags" name="tags"/>
       </div>
-
-      <button ng-disabled="!hasPermission('write:blackouts')" type="button" class="btn btn-primary" ng-click="createBlackout(env || environment,service,resource,event,group,tags,customer,start,end)">Blackout</button>
+      <div class="form-group">
+        <input class="form-control" type="text" id="text" placeholder="Reason" ng-model="text" name="text" required />
+      </div>
+      <button ng-disabled="!hasPermission('write:blackouts')" type="button" class="btn btn-primary" ng-click="createBlackout(env || environment,service,resource,event,group,tags,customer,start,end,text)">Blackout</button>
         </div>
     </form>
   </div>
