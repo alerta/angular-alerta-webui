@@ -13,9 +13,9 @@
           ng-click="unwatchAlert(alert.id, user)"
           ng-show="alert.tags.indexOf('watch:'+user) > -1"
           ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-close"></i> Unwatch</button>
-  <div class="btn-group" ng-disabled="!hasPermission('write:alerts')" ng-show="alert.status != 'shelved'">
-    <button type="button" class="btn btn-info"><i class="glyphicon glyphicon-time"></i> Shelve</button>
-    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="btn-group" ng-show="alert.status != 'shelved'">
+    <button type="button" class="btn btn-info" ng-class="{disabled: !hasPermission('write:alerts')}"><i class="glyphicon glyphicon-time"></i> Shelve</button>
+    <button type="button" class="btn btn-info dropdown-toggle" ng-class="{disabled: !hasPermission('write:alerts')}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
