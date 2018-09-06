@@ -991,7 +991,7 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$locat
  function($scope, $rootScope, $location, $auth, config) {
 
     $scope.provider = config.provider;
-    $scope.signup_enabled = config.signup_enabled;
+    $scope.signup_enabled = config.signup_enabled || true;
 
     $scope.login = function(email, password) {
       $auth.login({
@@ -1020,7 +1020,7 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
  function($scope, $rootScope, $location, $auth, config) {
 
     $scope.provider = config.provider;
-    $scope.signup_enabled = config.signup_enabled;
+    $scope.signup_enabled = config.signup_enabled || true;
 
     $scope.signup = function(name, email, password, text) {
       $auth.signup({
