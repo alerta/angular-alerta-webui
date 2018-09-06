@@ -4,6 +4,7 @@ angular.module('config', [])
   .constant('config', {
     'endpoint'        : "http://"+window.location.hostname+":8080",
     'provider'        : "basic", // google, github, gitlab, keycloak, pingfederate, saml2 or basic
+    'signup_enabled'  : true,  // only valid for provider='basic'
     'client_id'       : "INSERT-CLIENT-ID-HERE",
     'github_url'      : null,  // replace with your enterprise github server
     'gitlab_url'      : "https://gitlab.com",  // replace with your gitlab server

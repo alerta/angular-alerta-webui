@@ -1,13 +1,16 @@
 <div class="container">
 
   <div class="container">
-    <div class="row">
+    <div ng-show="signup_enabled" class="row">
       <p class="text-center login-title">Please sign up to continue.</h1>
+    </div>
+    <div ng-hide="signup_enabled" class="row">
+      <p class="text-center login-title">Sign up is disabled. Already have an account? <a href="#/login">Log in now</a></p>
     </div>
   </div>
 
   <div class="container" ng-show="provider == 'basic'">
-    <div class="col-sm-6 col-md-4 col-md-offset-4">
+    <div class="col-sm-6 col-md-4 col-md-offset-4" ng-show="signup_enabled">
       <form>
         <div class="form-group">
           <input type="text" class="form-control" id="input-name" ng-model="name" placeholder="Name" required autofocus>
