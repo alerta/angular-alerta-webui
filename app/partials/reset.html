@@ -9,16 +9,13 @@
     <div class="container" ng-show="provider == 'basic'">
       <div class="col-sm-6 col-md-4 col-md-offset-4">
         <form>
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-addon">@</div>
-              <input type="email" class="form-control" id="input-email" ng-model="email" placeholder="Email" required autofocus>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block" ng-click="forgot(email)">Sign in</button>
+            <div class="form-group">
+                <input type="password" class="form-control" id="input-password" ng-model="password" placeholder="Password" required>
+              </div>
+          <button type="submit" class="btn btn-primary btn-block" ng-click="reset(password)">Sign in</button>
         </form>
         <p><a href="#/login" class="text-center">Login </a>
-        <p ng-show="signup_enabled"><a href="#/signup" class="text-center new-account">Reset password </a>
+        <p ng-show="signup_enabled"><a href="#/signup" class="text-center new-account">Create an account </a>
       </div>
     </div>
   
@@ -27,4 +24,3 @@
     </div>
   
   </div>
-  

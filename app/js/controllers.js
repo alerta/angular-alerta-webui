@@ -1066,7 +1066,7 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
  
      $scope.provider = config.provider;
  
-     $scope.reset = function(token, password) {
+     $scope.reset = function(password) {
        Token.reset({
         token: $routeParams.token,
         password: password
