@@ -68,6 +68,15 @@ alertaServices.factory('Users', ['$resource', 'config',
     });
   }]);
 
+  alertaServices.factory('Token', ['$resource', 'config',
+  function($resource, config) {
+    return $resource(config.endpoint, {}, {
+      'confirm': {method:'POST', url: config.endpoint+'/auth/confirm/:token'},
+      'forgot': {method:'POST', url: config.endpoint+'/auth/forgot'},
+      'reset': {method:'POST', url: config.endpoint+'/auth/reset/:token'}
+    });
+  }]);
+
 alertaServices.factory('Perms', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/perm', {}, {

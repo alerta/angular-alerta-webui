@@ -1044,6 +1044,36 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
       };
   }]);
 
+  alertaControllers.controller('ConfirmController', ['$scope', '$rootScope', '$location', 'config', 'Token',
+  function($scope, $rootScope, $location, config, Token) {
+ 
+   }]);
+
+   alertaControllers.controller('ForgotController', ['$scope', '$rootScope', '$location', 'config', 'Token',
+   function($scope, $rootScope, $location, config, Token) {
+  
+      $scope.provider = config.provider;
+  
+      $scope.forgot = function(email) {
+        Token.forgot({
+          email: email
+        })
+        };
+    }]);
+
+  alertaControllers.controller('ResetController', ['$scope', '$rootScope', 'routeParams', '$location', 'config', 'Token',
+  function($scope, $rootScope, $routeParams, $location, config, Token) {
+ 
+     $scope.provider = config.provider;
+ 
+     $scope.reset = function(token, password) {
+       Token.reset({
+        token: $routeParams.token,
+        password: password
+       })
+       };
+   }]);
+
   alertaControllers.controller('LogoutController', ['$auth', '$location',
     function($auth, $location) {
     if (!$auth.isAuthenticated()) {
