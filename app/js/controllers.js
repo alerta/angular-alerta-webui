@@ -1048,11 +1048,8 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
   function($scope, Token) {
  
     $scope.confirm = function() {
-      Token.confirm({
-        token: $routeParams.token
-      })
+      Token.confirm({token: $routeParams.token})
     };
-
   }]);
 
   alertaControllers.controller('ForgotController', ['$scope', 'config', 'Token',
@@ -1061,9 +1058,7 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
     $scope.provider = config.provider;
   
     $scope.forgot = function(email) {
-      Token.forgot({
-        email: email
-      })
+      Token.forgot({email: email})
     };
   }]);
 
