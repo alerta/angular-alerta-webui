@@ -16,7 +16,7 @@
               <input type="password" class="form-control" id="input-confirm-password" ng-model="password2"
               validation-error="password != password2 ? 'Passwords don\'t match' : ''" placeholder="Password (again)" required>
             </div>
-          <button type="submit" class="btn btn-primary btn-block" ng-click="reset(password)">Reset password</button>
+          <button type="submit" class="btn btn-primary btn-block" ng-click="reset(password)" ng-disabled="form.$invalid">Reset password</button>
         </form>
       </div>
     </div>
