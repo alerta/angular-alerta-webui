@@ -72,8 +72,8 @@ alertaServices.factory('Users', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint, {}, {
       'confirm': {method:'POST', url: config.endpoint+'/auth/confirm/:token'},
-      'forgot': {method:'POST', url: config.endpoint+'/auth/forgot'},
-      'reset': {method:'POST', url: config.endpoint+'/auth/reset/:token'}
+      'forgot':  {method:'POST', url: config.endpoint+'/auth/forgot'},
+      'reset':   {method:'POST', url: config.endpoint+'/auth/reset/:token'}
     });
   }]);
 

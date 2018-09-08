@@ -20,7 +20,10 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block" ng-click="login(email, password)">Sign in</button>
       </form>
-      <p ng-show="signup_enabled"><a href="#/signup" class="text-center new-account">Create an account </a>
+      <p>
+        <span ng-show="signup_enabled"><a href="#/signup" class="text-center new-account">Create an account </a></span>
+        <span class="pull-right"><a href="#/forgot">Forgot password?</a></span>
+      </p>
     </div>
   </div>
 

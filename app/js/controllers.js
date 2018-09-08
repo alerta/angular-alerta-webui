@@ -1044,35 +1044,41 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
       };
   }]);
 
-  alertaControllers.controller('ConfirmController', ['$scope', '$rootScope', '$location', 'config', 'Token',
-  function($scope, $rootScope, $location, config, Token) {
+  alertaControllers.controller('ConfirmController', ['$scope', 'Token',
+  function($scope, Token) {
  
-   }]);
+    $scope.confirm = function() {
+      Token.confirm({
+        token: $routeParams.token
+      })
+    };
 
-   alertaControllers.controller('ForgotController', ['$scope', '$rootScope', '$location', 'config', 'Token',
-   function($scope, $rootScope, $location, config, Token) {
-  
-      $scope.provider = config.provider;
-  
-      $scope.forgot = function(email) {
-        Token.forgot({
-          email: email
-        })
-        };
-    }]);
+  }]);
 
-  alertaControllers.controller('ResetController', ['$scope', '$rootScope', 'routeParams', '$location', 'config', 'Token',
-  function($scope, $rootScope, $routeParams, $location, config, Token) {
+  alertaControllers.controller('ForgotController', ['$scope', 'config', 'Token',
+  function($scope, config, Token) {
+  
+    $scope.provider = config.provider;
+  
+    $scope.forgot = function(email) {
+      Token.forgot({
+        email: email
+      })
+    };
+  }]);
+
+  alertaControllers.controller('ResetController', ['$scope', '$routeParams', 'config', 'Token',
+  function($scope, $routeParams, config, Token) {
  
-     $scope.provider = config.provider;
- 
-     $scope.reset = function(password) {
-       Token.reset({
+    $scope.provider = config.provider;
+
+    $scope.reset = function(password) {
+      Token.reset({
         token: $routeParams.token,
         password: password
-       })
-       };
-   }]);
+      })
+    };
+  }]);
 
   alertaControllers.controller('LogoutController', ['$auth', '$location',
     function($auth, $location) {
