@@ -23,7 +23,8 @@ app.get('/config.js', function(request, response) {
         'client_id'   : '" + process.env.CLIENT_ID + "', \
         'github_url'  : '" + (process.env.GITHUB_URL || 'https://github.com') + "', \
         'gitlab_url'  : '" + process.env.GITLAB_URL + "', \
-        'tracking_id' : '" + process.env.TRACKING_ID + "' \
+        'tracking_id' : '" + process.env.TRACKING_ID + "', \
+        'backend_db'  : '" + process.env.BACKEND_DB + "', \
       });";
 
   response.send(config);

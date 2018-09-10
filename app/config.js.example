@@ -39,5 +39,6 @@ angular.module('config', [])
       'new'  : '/audio/Bike Horn.mp3'
     },
     'tracking_id': 'UA-NNNNNN-N',
-    'refresh_interval': 30000 // Auto-refresh interval set to 30 seconds
+    'refresh_interval': 30000, // Auto-refresh interval set to 30 seconds
+    'backend_db'  : "postgresql" // Optional: backend alerta database. Either "postgresql" or "mongodb"
   });
