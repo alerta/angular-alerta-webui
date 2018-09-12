@@ -1048,7 +1048,7 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
   function($scope, Token) {
  
     $scope.confirm = function() {
-      Token.confirm({token: $routeParams.token})
+      Token.confirm({token: $routeParams.token}).
     };
   }]);
 
