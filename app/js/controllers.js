@@ -1044,12 +1044,16 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
       };
   }]);
 
-  alertaControllers.controller('ConfirmController', ['$scope', 'Token',
-  function($scope, Token) {
+  alertaControllers.controller('ConfirmController', ['$scope', '$routeParams', 'Token',
+  function($scope, $routeParams, Token) {
  
-    $scope.confirm = function() {
-      Token.confirm({token: $routeParams.token}).
-    };
+      Token.confirm({token: $routeParams.token}, {}).$promise
+      .then(function(r) {
+        console.log(r);
+      })
+      .catch(function(e) {
+        console.log(e);
+      });
   }]);
 
   alertaControllers.controller('ForgotController', ['$scope', 'config', 'Token',
