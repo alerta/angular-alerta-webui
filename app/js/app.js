@@ -104,7 +104,7 @@ alertaApp.config(['$httpProvider',
     });
 }]);
 
-alertaApp.config(['config', '$authProvider',
+alertaApp.config(['configProvider', '$authProvider',
   function (config, $authProvider) {
     $authProvider.loginUrl = config.endpoint+'/auth/login';
     $authProvider.signupUrl = config.endpoint+'/auth/signup';
@@ -124,7 +124,7 @@ alertaApp.config(['config', '$authProvider',
       url: config.endpoint+'/auth/gitlab',
       redirectUri: window.location.origin,
       clientId: config.client_id,
-      authorizationEndpoint: config.gitlab_url+'/oauth/authorize'
+      authorizationEndpoint: (config.gitlab_url || 'https://gitlab.com')+'/oauth/authorize'
     });
     $authProvider.oauth2({
       name: 'keycloak',
@@ -144,3 +144,17 @@ alertaApp.config(['config', '$authProvider',
       pfidpadapterid: 'kerberos'
     });
 }]);
+
+// Load config.json, get remote /config and then bootstrap Angularjs
+angular.element(document).ready(() => {
+  var localConfigUrl = window.location.protocol+"//"+window.location.hostname+"/config.json";
+  $.get(localConfigUrl, (localConfig) => {
+    var remoteConfigUrl = localConfig.endpoint || window.location.protocol+"//"+window.location.hostname+":8080/config";
+    $.get(remoteConfigUrl, (remoteConfig) => {
+      alertaApp.config((configProvider) => {
+        configProvider.initialize(localConfig, remoteConfig);
+      });
+      angular.bootstrap(document, ['alertaApp']);
+    });
+  });
+});
