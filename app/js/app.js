@@ -147,9 +147,10 @@ alertaApp.config(['configProvider', '$authProvider',
 
 // Load config.json, get remote /config and then bootstrap Angularjs
 angular.element(document).ready(() => {
-  $.get('config.json', (localConfig) => {
-    var endpoint = localConfig.endpoint || "http://"+window.location.hostname+":8080";
-    $.get(endpoint+'/config', (remoteConfig) => {
+  var localConfigUrl = window.location.protocol+"//"+window.location.hostname+"/config.json";
+  $.get(localConfigUrl, (localConfig) => {
+    var remoteConfigUrl = localConfig.endpoint || window.location.protocol+"//"+window.location.hostname+":8080/config";
+    $.get(remoteConfigUrl, (remoteConfig) => {
       alertaApp.config((configProvider) => {
         configProvider.initialize(localConfig, remoteConfig);
       });
