@@ -2,16 +2,16 @@
 
 /* Services */
 
-var alertaServices = angular.module('alertaServices', ['config', 'ngResource']);
+angular.module('alertaApp')
 
-alertaServices.factory('Count', ['$resource', 'config',
+.factory('Count', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/alerts/count', {}, {
       'query': {method:'GET'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Alert', ['$resource', 'config',
+.factory('Alert', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/alert/:id', {}, {
       'query':  {method:'GET', url: config.endpoint+'/alerts'},
@@ -24,41 +24,41 @@ alertaServices.factory('Alert', ['$resource', 'config',
       'tag':    {method:'PUT', url: config.endpoint+'/alert/:id/tag'},
       'untag':  {method:'PUT', url: config.endpoint+'/alert/:id/untag'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Top10', ['$resource', 'config',
+.factory('Top10', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint, {}, {
       'offenders': {method:'GET', url: config.endpoint+'/alerts/top10/count'},
       'flapping':  {method:'GET', url: config.endpoint+'/alerts/top10/flapping'},
       'standing':  {method:'GET', url: config.endpoint+'/alerts/top10/standing'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Environment', ['$resource', 'config',
+.factory('Environment', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/environments', {}, {
       'all':  {method: 'GET'},
     });
-  }]);
+  }])
 
-alertaServices.factory('Service', ['$resource', 'config',
+.factory('Service', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/services', {}, {
       'all':  {method: 'GET'},
     });
-  }]);
+  }])
 
-alertaServices.factory('Blackouts', ['$resource', 'config',
+.factory('Blackouts', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/blackout', {}, {
       'query':  {method:'GET', url: config.endpoint+'/blackouts'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/blackout/:id'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Users', ['$resource', 'config',
+.factory('Users', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/user', {}, {
       'query':  {method:'GET', url: config.endpoint+'/users'},
@@ -66,45 +66,45 @@ alertaServices.factory('Users', ['$resource', 'config',
       'update': {method:'PUT', url: config.endpoint+'/user/:user'},
       'delete': {method:'DELETE', url: config.endpoint+'/user/:user'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Perms', ['$resource', 'config',
+.factory('Perms', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/perm', {}, {
       'all':    {method:'GET', url: config.endpoint+'/perms'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/perm/:id'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Customers', ['$resource', 'config',
+.factory('Customers', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/customer', {}, {
       'all':    {method:'GET', url: config.endpoint+'/customers'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/customer/:id'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Keys', ['$resource', 'config',
+.factory('Keys', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/key', {}, {
       'query':  {method:'GET', url: config.endpoint+'/keys'},
       'save':   {method:'POST'},
       'delete': {method:'DELETE', url: config.endpoint+'/key/:key'}
     });
-  }]);
+  }])
 
-alertaServices.factory('Heartbeat', ['$resource', 'config',
+.factory('Heartbeat', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/heartbeat/:id', {}, {
       'query':  {method:'GET', url: config.endpoint+'/heartbeats'},
       'get':    {method:'GET'},
       'delete': {method:'DELETE'},
     });
-  }]);
+  }])
 
-alertaServices.factory('Management', ['$resource', 'config',
+.factory('Management', ['$resource', 'config',
   function($resource, config) {
     return $resource(config.endpoint+'/management/manifest', {}, {
       'manifest':    {method:'GET'},

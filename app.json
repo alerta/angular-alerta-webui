@@ -13,15 +13,6 @@
     "ALERTA_ENDPOINT": {
       "description": "Alerta API endpoint",
       "value": "http://api.alerta.io"
-    },
-    "PROVIDER": {
-      "description": "OAuth2 Provider",
-      "value": "google or github"
-    },
-    "CLIENT_ID": {
-      "description": "OAuth2 Client ID",
-      "required": false
     }
   }
 }
-
