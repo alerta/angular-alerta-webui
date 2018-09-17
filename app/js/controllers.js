@@ -2,9 +2,9 @@
 
 /* Controllers */
 
-var alertaControllers = angular.module('alertaControllers', []);
+angular.module('alerta')
 
-alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 'config',
+.controller('MenuController', ['$scope', '$location', '$auth', 'config',
   function($scope, $location, $auth, config) {
 
     if ($auth.isAuthenticated()) {
@@ -102,9 +102,9 @@ alertaControllers.controller('MenuController', ['$scope', '$location', '$auth', 
         }
     };
 
-  }]);
+  }])
 
-alertaControllers.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', 'config', 'Count', 'Environment', 'Service', 'Alert',
+.controller('AlertListController', ['$scope', '$route', '$location', '$timeout', '$auth', 'config', 'Count', 'Environment', 'Service', 'Alert',
   function($scope, $route, $location, $timeout, $auth, config, Count, Environment, Service, Alert){
 
     var byUser = '';
@@ -381,9 +381,9 @@ alertaControllers.controller('AlertListController', ['$scope', '$route', '$locat
 
     $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
     $scope.mediumDate = config.dates && config.dates.mediumDate || 'EEE d MMM HH:mm';
-  }]);
+  }])
 
-alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'config', 'Alert',
+.controller('AlertDetailController', ['$scope', '$route', '$routeParams', '$location', '$auth', 'config', 'Alert',
   function($scope, $route, $routeParams, $location, $auth, config, Alert){
 
     var byUser = '';
@@ -467,9 +467,9 @@ alertaControllers.controller('AlertDetailController', ['$scope', '$route', '$rou
 
     $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
-  }]);
+  }])
 
-alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert', 'Top10',
+.controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert', 'Top10',
   function($scope, $location, $timeout, Count, Environment, Service, Alert, Top10){
 
     $scope.autoRefresh = true;
@@ -595,9 +595,9 @@ alertaControllers.controller('AlertTop10Controller', ['$scope', '$location', '$t
       }
     });
 
-  }]);
+  }])
 
-alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'config', 'Alert',
+.controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth',  'config', 'Alert',
   function($scope, $route, $location, $timeout, $auth,  config, Alert){
 
     var byUser = '';
@@ -736,9 +736,9 @@ alertaControllers.controller('AlertWatchController', ['$scope', '$route', '$loca
 
     $scope.shortTime = config.dates && config.dates.shortTime || 'HH:mm';
     $scope.mediumDate = config.dates && config.dates.mediumDate || 'EEE d MMM HH:mm';
-  }]);
+  }])
 
-alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Blackouts', 'Environment', 'Service', 'Customers',
+.controller('AlertBlackoutController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Blackouts', 'Environment', 'Service', 'Customers',
   function($scope, $route, $timeout, $auth, config, Blackouts, Environment, Service, Customers) {
 
     $scope.blackouts = [];
@@ -782,10 +782,10 @@ alertaControllers.controller('AlertBlackoutController', ['$scope', '$route', '$t
     });
 
     $scope.mediumDate = config.dates && config.dates.mediumDate || 'EEE d MMM HH:mm';
-  }]);
+  }])
 
 
-alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users', 'Perms',
+.controller('UserController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Users', 'Perms',
   function($scope, $route, $timeout, $auth, config, Users, Perms) {
 
     $scope.domains = [];
@@ -821,9 +821,9 @@ alertaControllers.controller('UserController', ['$scope', '$route', '$timeout', 
     };
 
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
-  }]);
+  }])
 
-alertaControllers.controller('PermissionsController', ['$scope', '$route', '$timeout', '$auth', 'Perms',
+.controller('PermissionsController', ['$scope', '$route', '$timeout', '$auth', 'Perms',
   function($scope, $route, $timeout, $auth, Perms) {
 
     $scope.perms = [];
@@ -849,9 +849,9 @@ alertaControllers.controller('PermissionsController', ['$scope', '$route', '$tim
       $scope.perms = response.permissions;
     });
 
-  }]);
+  }])
 
-alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeout', '$auth', 'Customers',
+.controller('CustomerController', ['$scope', '$route', '$timeout', '$auth', 'Customers',
   function($scope, $route, $timeout, $auth, Customers) {
 
     $scope.customers = [];
@@ -874,9 +874,9 @@ alertaControllers.controller('CustomerController', ['$scope', '$route', '$timeou
       $scope.customers = response.customers;
     });
 
-  }]);
+  }])
 
-alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Keys',
+.controller('ApiKeyController', ['$scope', '$route', '$timeout', '$auth', 'config', 'Keys',
   function($scope, $route, $timeout, $auth, config, Keys) {
 
     $scope.keys = [];
@@ -907,9 +907,9 @@ alertaControllers.controller('ApiKeyController', ['$scope', '$route', '$timeout'
     });
 
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
-  }]);
+  }])
 
-alertaControllers.controller('ProfileController', ['$scope', '$auth',
+.controller('ProfileController', ['$scope', '$auth',
   function($scope, $auth) {
 
     $scope.user_id = $auth.getPayload().sub;
@@ -926,9 +926,9 @@ alertaControllers.controller('ProfileController', ['$scope', '$auth',
 
     $scope.token = $auth.getToken();
     $scope.payload = $auth.getPayload();
-  }]);
+  }])
 
-alertaControllers.controller('HeartbeatsController', ['$scope', '$timeout', 'config', 'Heartbeat',
+.controller('HeartbeatsController', ['$scope', '$timeout', 'config', 'Heartbeat',
   function($scope, $timeout, config, Heartbeat) {
 
     $scope.heartbeats = [];
@@ -952,9 +952,9 @@ alertaControllers.controller('HeartbeatsController', ['$scope', '$timeout', 'con
     $scope.deleteHeartbeat = function(id) {
       Heartbeat.delete({id: id}, {}, refresh);
     };
-  }]);
+  }])
 
-alertaControllers.controller('AboutController', ['$scope', '$timeout', 'config', 'Management',
+.controller('AboutController', ['$scope', '$timeout', 'config', 'Management',
   function($scope, $timeout, config, Management) {
 
     Management.manifest(function(response) {
@@ -985,9 +985,9 @@ alertaControllers.controller('AboutController', ['$scope', '$timeout', 'config',
     });
 
     $scope.longDate = config.dates && config.dates.longDate || 'd/M/yyyy h:mm:ss.sss a';
-  }]);
+  }])
 
-alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$location', '$auth', 'config',
+.controller('LoginController', ['$scope', '$rootScope', '$location', '$auth', 'config',
  function($scope, $rootScope, $location, $auth, config) {
 
     $scope.provider = config.provider;
@@ -1014,9 +1014,9 @@ alertaControllers.controller('LoginController', ['$scope', '$rootScope', '$locat
           };
         });
     };
-  }]);
+  }])
 
-alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$location', '$auth', 'config',
+.controller('SignupController', ['$scope', '$rootScope', '$location', '$auth', 'config',
  function($scope, $rootScope, $location, $auth, config) {
 
     $scope.provider = config.provider;
@@ -1042,9 +1042,9 @@ alertaControllers.controller('SignupController', ['$scope', '$rootScope', '$loca
           };
         });
       };
-  }]);
+  }])
 
-  alertaControllers.controller('LogoutController', ['$auth', '$location',
+  .controller('LogoutController', ['$auth', '$location',
     function($auth, $location) {
     if (!$auth.isAuthenticated()) {
         return;

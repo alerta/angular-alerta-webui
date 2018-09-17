@@ -2,15 +2,15 @@
 
 /* Filters */
 
-var alertaFilters = angular.module('alertaFilters', []);
+angular.module('alerta')
 
-alertaFilters.filter('interpolate', ['version', function(version) {
+.filter('interpolate', ['version', function(version) {
     return function(text) {
       return String(text).replace(/\%VERSION\%/mg, version);
     };
-  }]);
+  }])
 
-alertaFilters.filter('arrow', function() {
+.filter('arrow', function() {
   return function(trend) {
     if (trend == "noChange") {
         return 'minus'
@@ -22,21 +22,21 @@ alertaFilters.filter('arrow', function() {
         return 'random'
     }
   };
-});
+})
 
-alertaFilters.filter('capitalize', function() {
+.filter('capitalize', function() {
   return function(text) {
     return String(text).replace(/^./, function(str){ return str.toUpperCase(); });
   };
-});
+})
 
-alertaFilters.filter('splitcaps', function() {
+.filter('splitcaps', function() {
   return function(text) {
     return String(text).replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
   };
-});
+})
 
-alertaFilters.filter('showing', function() {
+.filter('showing', function() {
   return function(input, limit) {
     if (!input) {
       return 'Showing 0 out of 0 alerts';
@@ -47,9 +47,9 @@ alertaFilters.filter('showing', function() {
       return 'Showing ' + input + ' out of ' + input + ' alerts';
     };
   };
-});
+})
 
-alertaFilters.filter('since', function() {
+.filter('since', function() {
   return function(input) {
     var diff = (new Date().getTime() - new Date(input).getTime()) /1000;
     var mins = Math.floor(diff / 60);
@@ -60,9 +60,9 @@ alertaFilters.filter('since', function() {
         return secs + ' seconds';
     };
   };
-});
+})
 
-alertaFilters.filter('hms', function() {
+.filter('hms', function() {
   return function(delta) {
     function pad(n) {
       return (n < 10) ? ("0" + n) : n;
@@ -80,28 +80,28 @@ alertaFilters.filter('hms', function() {
       return hours + ':' + pad(minutes) + ':' + pad(seconds);
     }
   };
-});
+})
 
-alertaFilters.filter('diff', function() {
+.filter('diff', function() {
   return function(receive, create) {
     return new Date(receive).getTime() - new Date(create).getTime();
   };
-});
+})
 
-alertaFilters.filter('isExpired', function() {
+.filter('isExpired', function() {
   return function(expire) {
     return new Date().getTime() > new Date(expire).getTime();
   };
-});
+})
 
-alertaFilters.filter('shortid', function() {
+.filter('shortid', function() {
   return function(id) {
     return String(id).substring(0,8);
   };
-});
+})
 
 // https://github.com/wildlyinaccurate/angular-relative-date
-alertaFilters.filter('relativeDate', function() {
+.filter('relativeDate', function() {
       return function(date) {
         var now = new Date();
         var calculateDelta, day, delta, hour, minute, month, week, year;

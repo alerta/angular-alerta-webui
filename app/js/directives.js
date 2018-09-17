@@ -2,9 +2,9 @@
 
 /* Directives */
 
-var alertaDirectives = angular.module('alertaDirectives', []);
+angular.module('alerta')
 
-alertaDirectives.directive('googleAnalytics', ['config', function(config) {
+.directive('googleAnalytics', ['config', function(config) {
   return {
     restrict: 'E',
     scope: {
