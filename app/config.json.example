@@ -1,0 +1,39 @@
+{
+    "endpoint": "http://localhost:8080",
+    "provider": "basic",
+    "client_id": "INSERT-CLIENT-ID-HERE",
+    "github_url": null,
+    "gitlab_url": "https://gitlab.com",
+    "colors": {
+        "severity": {
+            "fatal": "#000000",
+            "critical": "#D8122A",
+            "major": "#EA680F",
+            "minor": "#FFBE1E",
+            "warning": "#BA2222",
+            "indeterminate": "#A6ACA8",
+            "cleared": "#00AA5A",
+            "normal": "#00AA5A",
+            "ok": "#00AA5A",
+            "informational": "#00A1BC",
+            "debug": "#9D006D",
+            "security": "#333333",
+            "unknown": "#A6ACA8"
+        },
+        "text": "white",
+        "highlight": "lightgray"
+    },
+    "severity": {
+        "fatal": 0
+    },
+    "dates": {
+        "shortTime": "shortTime",
+        "mediumDate": "medium",
+        "longDate": "EEEE, MMMM d, yyyy h:mm:ss.sss a (Z)"
+    },
+    "audio": {
+        "new": "/audio/Bike Horn.mp3"
+    },
+    "tracking_id": "UA-NNNNNN-N",
+    "refresh_interval": 30000
+}

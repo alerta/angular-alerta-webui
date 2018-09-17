@@ -12,21 +12,12 @@ var forceSsl = function (req, res, next) {
 app.set('port', (process.env.PORT || 5000));
 
 app.use(forceSsl);
-app.get('/config.js', function(request, response) {
+app.get('/config.json', function(request, response) {
 
-  var config = " \
-    'use strict'; \
-    angular.module('config', []) \
-      .constant('config', { \
-        'endpoint'    : '" + process.env.ALERTA_ENDPOINT + "', \
-        'provider'    : '" + process.env.PROVIDER + "', \
-        'client_id'   : '" + process.env.CLIENT_ID + "', \
-        'github_url'  : '" + (process.env.GITHUB_URL || 'https://github.com') + "', \
-        'gitlab_url'  : '" + process.env.GITLAB_URL + "', \
-        'tracking_id' : '" + process.env.TRACKING_ID + "' \
-      });";
-
-  response.send(config);
+  var config = {
+    endpoint: process.env.ALERTA_ENDPOINT
+  }
+  response.send(JSON.stringify(config));
 });
 app.use(express.static(__dirname + '/app'));
 
