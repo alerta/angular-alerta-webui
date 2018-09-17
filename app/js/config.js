@@ -1,13 +1,11 @@
 'use strict';
 
 angular.module('alerta')
-
-.provider('config', function configProvider() {
-
+  .provider('config', function configProvider() {
     var config = {};
 
     this.setConfig = function(data) {
-        angular.merge(config, data);
+      angular.merge(config, data);
     };
 
     this.getConfig = function() {
@@ -15,6 +13,6 @@ angular.module('alerta')
     };
 
     this.$get = function() {
-        return config;
+      return config;
     };
-});
+  });
