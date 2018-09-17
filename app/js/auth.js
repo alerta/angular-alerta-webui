@@ -46,6 +46,8 @@ angular.module('alerta')
       url: config.endpoint+'/auth/gitlab',
       redirectUri: window.location.origin,
       clientId: config.client_id,
+      requiredUrlParams: ['scope'],
+      scope: 'openid',
       authorizationEndpoint: config.gitlab_url+'/oauth/authorize'
     });
     $authProvider.oauth2({
