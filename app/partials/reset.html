@@ -1,0 +1,34 @@
+<div class="container">
+
+    <div class="container">
+      <div class="row">
+        <p class="text-center login-title">Change your password.</h1>
+      </div>
+    </div>
+
+    <div class="container" ng-show="provider == 'basic'"  ng-hide="success">
+      <div class="col-sm-6 col-md-4 col-md-offset-4">
+        <form name="changePassword">
+          <div class="form-group">
+            <input type="password" class="form-control" id="input-password" ng-model="password" placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="input-confirm-password" ng-model="password2"
+              validation-error="password != password2 ? 'Passwords don\'t match' : ''" placeholder="Password (again)" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" ng-click="reset(password)" ng-disabled="form.$invalid">Reset password</button>
+        </form>
+      </div>
+    </div>
+
+    <p></p>
+    <div class="container" ng-show="message">
+      <div class="alert alert-danger text-center" role="alert" ng-show="error">
+        <strong>{{ error }}</strong> {{ message }}
+      </div>
+      <div class="alert alert-success text-center" role="alert" ng-hide="error">
+        <strong>Well done!</strong> {{ message }}
+      </div>
+    </div>
+
+  </div>

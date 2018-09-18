@@ -1225,8 +1225,8 @@ angular.module('alerta')
             password: password,
             text: text
           })
-          .then(function(response) {
-            $auth.setToken(response);
+          .then(function(r) {
+            $auth.setToken(r);
             $rootScope.$broadcast('login:name', $scope.name);
             $location.path('/');
           })
@@ -1240,6 +1240,61 @@ angular.module('alerta')
       };
     }
   ])
+
+  .controller('ConfirmController', ['$scope', '$routeParams', 'Auth',
+  function($scope, $routeParams, Token) {
+
+      Auth.confirm({token: $routeParams.token}, {}).$promise
+      .then(function(r) {
+        $scope.error = null;
+        $scope.message = r.message;
+      })
+      .catch(function(e) {
+        console.log(e);
+        $scope.error = "Email verification failed.";
+        $scope.message = e.data.message;
+      });
+  }])
+
+  .controller('ForgotController', ['$scope', 'config', 'Auth',
+  function($scope, config, Auth) {
+
+    $scope.provider = config.provider;
+    $scope.message = null;
+
+    $scope.forgot = function(email) {
+      Auth.forgot({}, {email: email}).$promise
+      .then(function(r) {
+        $scope.error = null;
+        $scope.message = r.message;
+      })
+      .catch(function(e) {
+        console.log(e);
+        $scope.error = "Reset request failed.";
+        $scope.message = e.data.message;
+      });
+    };
+  }])
+
+  .controller('ResetController', ['$scope', '$routeParams', 'config', 'Auth',
+  function($scope, $routeParams, config, Auth) {
+
+    $scope.provider = config.provider;
+
+    $scope.reset = function(password) {
+      Auth.reset({token: $routeParams.token}, {password: password}).$promise
+      .then(function(r) {
+        $scope.error = null;
+        $scope.message = r.message;
+        $scope.success = true;
+      })
+      .catch(function(e) {
+        console.log(e);
+        $scope.error = "Password reset failed.";
+        $scope.message = e.data.message;
+      });
+    };
+  }])
 
   .controller('LogoutController', ['$auth', '$location',
     function($auth, $location) {
