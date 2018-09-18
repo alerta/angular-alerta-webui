@@ -1,0 +1,32 @@
+<div class="container">
+
+    <div class="container">
+      <div class="col-sm-6 col-md-4 col-md-offset-4">
+        <p class="text-center login-title">Reset your password</p>
+      </div>
+    </div>
+
+    <div class="container" ng-show="provider == 'basic'">
+      <div class="col-sm-6 col-md-4 col-md-offset-4">
+        <form>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">@</div>
+              <input type="email" class="form-control" id="input-email" ng-model="email" placeholder="Email" required autofocus>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" ng-click="forgot(email)">Send password reset email </button>
+        </form>
+      </div>
+    </div>
+
+    <p></p>
+    <div class="container" ng-show="message">
+      <div class="alert alert-danger text-center" role="alert" ng-show="error">
+        <strong>{{ error }}</strong> {{ message }}
+      </div>
+      <div class="alert alert-success text-center" role="alert" ng-hide="error">
+        <strong>Check your email!</strong> {{ message }}
+      </div>
+    </div>
+</div>

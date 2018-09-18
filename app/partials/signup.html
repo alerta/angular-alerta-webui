@@ -33,8 +33,14 @@
     </div>
   </div>
 
-  <div class="alert alert-danger text-center" role="alert" ng-show="error">
-    <span class="glyphicon glyphicon-alert"></span> <strong>Error!</strong> {{ error }} {{ message }}
+  <p></p>
+  <div class="container" ng-show="message">
+    <div class="alert alert-danger text-center" role="alert" ng-show="error">
+      <strong>{{ error }}</strong> {{ message }}
+    </div>
+    <div class="alert alert-success text-center" role="alert" ng-hide="error">
+      <strong>Welcome!</strong> {{ message }}
+    </div>
   </div>
 
 </div>

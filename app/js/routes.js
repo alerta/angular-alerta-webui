@@ -69,6 +69,18 @@ alerta.loadRoutes = function() {
           templateUrl: 'partials/signup.html',
           controller: 'SignupController'
         })
+        .when('/confirm/:token', {
+          templateUrl: 'partials/confirm.html',
+          controller: 'ConfirmController'
+        })
+        .when('/forgot', {
+          templateUrl: 'partials/forgot.html',
+          controller: 'ForgotController'
+        })
+        .when('/reset/:token', {
+          templateUrl: 'partials/reset.html',
+          controller: 'ResetController'
+        })
         .when('/logout', {
           templateUrl: 'partials/logout.html',
           controller: 'LogoutController'
