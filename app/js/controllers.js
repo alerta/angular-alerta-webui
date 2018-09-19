@@ -1242,7 +1242,7 @@ angular.module('alerta')
   ])
 
   .controller('ConfirmController', ['$scope', '$routeParams', 'Auth',
-  function($scope, $routeParams, Token) {
+  function($scope, $routeParams, Auth) {
 
       Auth.confirm({token: $routeParams.token}, {}).$promise
       .then(function(r) {
