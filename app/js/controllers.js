@@ -1186,7 +1186,7 @@ angular.module('alerta')
     function($scope, $rootScope, $location, $auth, config) {
 
       $scope.provider = config.provider;
-      $scope.signup_enabled = config.signup_enabled || true;
+      $scope.signup_enabled = config.signup_enabled;
 
       $scope.login = function(email, password) {
         $auth.login({
