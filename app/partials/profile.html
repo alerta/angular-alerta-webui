@@ -5,23 +5,26 @@
     <div class="span12">
 
     <table class="table table-condensed table-striped">
-      <tr><td><b>User ID</b></td><td>{{ user_id }}</td></tr>
-      <tr><td><b>Name</b></td><td>{{ name }}</td></tr>
-      <tr><td><b>Login</b></td><td>{{ login }}</td></tr>
-      <tr><td><b>Provider</b></td><td>{{ provider }}</td></tr>
+      <tr><td><b>User ID</b></td><td>{{ payload.sub }}</td></tr>
+      <tr><td><b>Name</b></td><td>{{ payload.name }}</td></tr>
+      <tr><td><b>Login</b></td><td>{{ payload.preferred_username || payload.login }}</td></tr>
+      <tr><td><b>Provider</b></td><td>{{ payload.provider }}</td></tr>
       <tr ng-show="isCustomerViews();"><td><b>Customers</b></td>
-        <td ng-show="customers!='*'">{{ customers.join(', ') }}</td>
-        <td ng-show="customers='*'">All customers ({{ customers }})</td>
+        <td>
+          <span>{{ payload.customers.join(', ') }}</span>
+          <span ng-if="!payload.customers">(All customers)<span>
+        </td>
       </tr>
-      <tr ng-show="orgs"><td><b>Organizations</b></td><td><span ng-repeat="org in orgs"><span class="label label-primary">{{ org }}</span> </span></td></tr>
-      <tr ng-show="groups"><td><b>Groups</b></td><td><span ng-repeat="group in groups"><span class="label label-primary">{{ group }}</span> </span></td></tr>
-      <tr ng-show="roles"><td><b>Roles</b></td><td><span ng-repeat="role in roles"><span class="label label-primary">{{ role }}</span> </span></td></tr>
-      <tr><td><b>Scope</b></td><td><span ng-repeat="scope in scopes"><span class="label label-primary">{{ scope }}</span> </span></td></tr>
+      <tr ng-show="payload.orgs"><td><b>Organizations</b></td><td><span ng-repeat="org in payload.orgs"><span class="label label-primary">{{ org }}</span> </span></td></tr>
+      <tr ng-show="payload.groups"><td><b>Groups</b></td><td><span ng-repeat="group in payload.groups"><span class="label label-primary">{{ group }}</span> </span></td></tr>
+      <tr ng-show="payload.roles"><td><b>Roles</b></td><td><span ng-repeat="role in payload.roles"><span class="label label-primary">{{ role }}</span> </span></td></tr>
+      <tr><td><b>Scope</b></td><td><span ng-repeat="scope in payload.scope.split(' ')"><span class="label label-primary">{{ scope }}</span> </span></td></tr>
     </table>
 
     <label><input type="checkbox" ng-model="jwt"> JWT Payload</label>
     <div class="animate-show" ng-show="jwt">
       <pre>{{ payload | json }}</pre>
+      <pre>{{ token | json }}</pre>
     </div>
 
     </div>

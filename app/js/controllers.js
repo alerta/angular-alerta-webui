@@ -1102,20 +1102,8 @@ angular.module('alerta')
   .controller('ProfileController', ['$scope', '$auth',
     function($scope, $auth) {
 
-      $scope.user_id = $auth.getPayload().sub;
-      $scope.name = $auth.getPayload().name;
-      $scope.login = $auth.getPayload().preferred_username || $auth.getPayload().login;
-      $scope.provider = $auth.getPayload().provider;
-      $scope.customers = $auth.getPayload().customers || $auth.getPayload().customer;
-      $scope.role = $auth.getPayload().role; // legacy role
-
-      $scope.orgs = $auth.getPayload().orgs;
-      $scope.groups = $auth.getPayload().groups;
-      $scope.roles = $auth.getPayload().roles;
-      $scope.scopes = ($auth.getPayload().scope || '').split(' ');
-
-      $scope.token = $auth.getToken();
       $scope.payload = $auth.getPayload();
+      $scope.token = $auth.getToken();
     }
   ])
 
