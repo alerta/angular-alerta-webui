@@ -34,11 +34,11 @@
   <div class="row">
     <div class="col-md-12">
       <table class="table">
-        <tr ng-init="predicate = [reverseSeverityCode,'lastReceiveTime']">
+        <tr ng-init="predicate = [reverseSeverityCode,sortByTime]">
           <th class="hidden-xs"><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
           <th class="hidden-xs"><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="visible-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="hidden-lg"><a href="" ng-click="predicate = sortByTime; reverse=!reverse">Time&nbsp;<span ng-hide="predicate != sortByTime"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+          <th class="visible-lg"><a href="" ng-click="predicate = sortByTime; reverse=!reverse">{{ sortByTimeField | splitcaps }}&nbsp;<span ng-hide="predicate != sortByTime"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th class="visible-lg"><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th class="hidden-xs" ng-show="isCustomerViews();"><a href="" ng-click="predicate = 'customer'; reverse=!reverse">Customer&nbsp;<span ng-hide="predicate != 'customer'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
           <th class="hidden-xs"><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
@@ -54,8 +54,8 @@
             ng-click="click($event,alert);">
           <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
           <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
-          <td class="hidden-lg">{{ alert.lastReceiveTime | date:shortTime }}</td>
-          <td class="visible-lg">{{ alert.lastReceiveTime | date:mediumDate }}</td>
+          <td class="hidden-lg">{{ alert[sortByTimeField] | date:shortTime }}</td>
+          <td class="visible-lg">{{ alert[sortByTimeField] | date:mediumDate }}</td>
           <td class="visible-lg">{{ alert.duplicateCount }}</td>
           <td class="hidden-xs" ng-show="isCustomerViews();">{{ alert.customer }}</td>
           <td class="hidden-xs">{{ alert.environment }}</td>
