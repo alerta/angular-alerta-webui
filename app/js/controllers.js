@@ -189,7 +189,20 @@ angular.module('alerta')
       $scope.alerts = [];
       $scope.alertLimit = 20;
       $scope.reverse = true;
-      $scope.query = {};
+
+      $scope.sortByTime = config.sort_by || 'lastReceiveTime';
+      $scope.sortByTimeField = $scope.sortByTime.replace(/^\-/,'');
+
+      if ($scope.sortByTime.startsWith('-')) {
+        $scope.query = {
+          'sort-by': $scope.sortByTimeField,
+          'reverse': 1
+        }
+      } else {
+        $scope.query = {
+          'sort-by': $scope.sortByTimeField
+        }
+      };
 
       $scope.setService = function(s) {
         if (s) {
