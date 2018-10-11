@@ -598,8 +598,16 @@ angular.module('alerta')
           value: ['open', 'ack', 'assign']
         },
         {
+          name: 'Shelved',
+          value: ['shelved']
+        },
+        {
           name: 'Closed',
           value: ['closed', 'expired']
+        },
+        {
+          name: 'Blackout',
+          value: ['blackout']
         }
       ];
       $scope.status = $scope.show[0];
