@@ -7,6 +7,8 @@ angular.module('alerta')
   .controller('MenuController', ['$scope', '$location', '$auth', 'config',
     function($scope, $location, $auth, config) {
 
+      $scope.siteLogoUrl = config.site_logo_url;
+
       if ($auth.isAuthenticated()) {
         $scope.name = $auth.getPayload().name;
       };
