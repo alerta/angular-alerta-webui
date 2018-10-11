@@ -35,6 +35,11 @@ table {
     font-size: 26pt;
 }
 
+.navbar-image-logo {
+    height: 50px;
+    padding-right: 15px;
+}
+
 .ng-table {
     border: 1px solid #000;
 }

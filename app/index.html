@@ -20,7 +20,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand logo" href="#/">alerta</a>
+      <a ng-show="siteLogoUrl" href="#/">
+        <img class="navbar-image-logo" ng-src="{{ siteLogoUrl }}" alt="Site Logo">
+      </a>
+      <a ng-hide="siteLogoUrl" class="navbar-brand logo" href="#/">alerta</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
