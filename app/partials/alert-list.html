@@ -34,36 +34,52 @@
   <div class="row">
     <div class="col-md-12">
       <table class="table">
-        <tr ng-init="predicate = [reverseSeverityCode,sortByTime]">
-          <th class="hidden-xs"><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-lg"><a href="" ng-click="predicate = sortByTime; reverse=!reverse">Time&nbsp;<span ng-hide="predicate != sortByTime"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="visible-lg"><a href="" ng-click="predicate = sortByTime; reverse=!reverse">{{ sortByTimeField | splitcaps }}&nbsp;<span ng-hide="predicate != sortByTime"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="visible-lg"><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs" ng-show="isCustomerViews();"><a href="" ng-click="predicate = 'customer'; reverse=!reverse">Customer&nbsp;<span ng-hide="predicate != 'customer'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource&nbsp;<span ng-hide="predicate != 'resource'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th><a href="" ng-click="predicate = 'event'; reverse=!reverse">Event&nbsp;<span ng-hide="predicate != 'event'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value&nbsp;<span ng-hide="predicate != 'value'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+        <tr>
+          <th ng-repeat="col in columns">
+            <a href="" ng-click="toggleSort(col)">
+              <span ng-show="col == 'duplicateCount'">Dupl. </span>
+              <span ng-show="col == 'customer' && isCustomerViews()">Customer </span>
+              <span ng-show="col != 'duplicateCount' && col != 'customer'">{{ col | splitcaps }} </span>
+              <span ng-hide="predicate != col"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span>
+            </a>
+          </th>
         </tr>
 
         <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
             ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? colors.highlight : colors.severity[alert.severity] || 'silver' }"
             ng-click="click($event,alert);">
-          <td class="hidden-xs no-wrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
-          <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
-          <td class="hidden-lg">{{ alert[sortByTimeField] | date:shortTime }}</td>
-          <td class="visible-lg">{{ alert[sortByTimeField] | date:mediumDate }}</td>
-          <td class="visible-lg">{{ alert.duplicateCount }}</td>
-          <td class="hidden-xs" ng-show="isCustomerViews();">{{ alert.customer }}</td>
-          <td class="hidden-xs">{{ alert.environment }}</td>
-          <td class="hidden-xs">{{ alert.service.join(', ') }}</td>
-          <td>{{ alert.resource }}</td>
-          <td>{{ alert.event }}</td>
-          <td class="hidden-xs">{{ alert.value }}</td>
-          <td class="hidden-xs"><span ng-bind-html="alert.text"></span></td>
+          <td ng-repeat="col in columns">
+            <span ng-if="col == 'id'">{{ alert.id | shortid }}</span>
+            <span ng-if="col == 'resource'">{{ alert.resource }}</span>
+            <span ng-if="col == 'event'">{{ alert.event }}</span>
+            <span ng-if="col == 'environment'">{{ alert.environment }}</span>
+            <span ng-if="col == 'severity'">
+              <span style="white-space: nowrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i> <span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></span>
+            </span>
+            <span ng-if="col == 'correlate'">{{ alert.correlate.join(', ') }}</span>
+            <span ng-if="col == 'status'"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></span>
+            <span ng-if="col == 'service'">{{ alert.service.join(', ') }}</span>
+            <span ng-if="col == 'group'">{{ alert.group }}</span>
+            <span ng-if="col == 'value'">{{ alert.value }}</span>
+            <span ng-if="col == 'text'"><span ng-bind-html="alert.text | linky:'_blank'"></span></span>
+            <span ng-if="col == 'tags'"><span ng-repeat="tag in alert.tags"><span class="label label-primary">{{ tag }}</span> </span></span>
+            <span ng-if="alert.attributes.hasOwnProperty(col)"><span ng-bind-html="alert.attributes[col]"></span></span>
+            <span ng-if="col == 'origin'">{{ alert.origin }}</span>
+            <span ng-if="col == 'type'"><span class="label">{{ alert.type | splitcaps }}</span></span>
+            <span ng-if="col == 'createTime'">{{ alert.createTime | date:mediumDate }}</span>
+            <span ng-if="col == 'timeout'">{{ alert.timeout }}</span>
+            <!-- rawData not supported -->
+            <span ng-if="col == 'customer' && isCustomerViews()">{{ alert.customer }}</span>
+
+            <span ng-if="col == 'duplicateCount'">{{ alert.duplicateCount }}</span>
+            <span ng-if="col == 'repeat'"><span class="label">{{ alert.repeat | capitalize }}</span></span>
+            <span ng-if="col == 'previousSeverity'"><span class="label label-{{ alert.previousSeverity }}">{{ alert.previousSeverity | capitalize }}</span></span>
+            <span ng-if="col == 'trendIndication'"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i></span>
+            <span ng-if="col == 'receiveTime'">{{ alert.receiveTime | date:mediumDate }}</span>
+            <span ng-if="col == 'lastReceiveId'">{{ alert.lastReceiveId | shortid }}</span>
+            <span ng-if="col == 'lastReceiveTime'">{{ alert.lastReceiveTime | date:mediumDate }}</span>
+            <!-- history not supported -->
+          </td>
         </tr>
       </table>
 
