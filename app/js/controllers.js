@@ -190,21 +190,6 @@ angular.module('alerta')
 
       $scope.alerts = [];
       $scope.alertLimit = 20;
-      $scope.reverse = true;
-
-      $scope.sortByTime = config.sort_by || 'lastReceiveTime';
-      $scope.sortByTimeField = $scope.sortByTime.replace(/^\-/,'');
-
-      if ($scope.sortByTime.startsWith('-')) {
-        $scope.query = {
-          'sort-by': $scope.sortByTimeField,
-          'reverse': 1
-        }
-      } else {
-        $scope.query = {
-          'sort-by': $scope.sortByTimeField
-        }
-      };
 
       $scope.setService = function(s) {
         if (s) {
@@ -329,6 +314,31 @@ angular.module('alerta')
       };
 
       $scope.audio = config.audio;
+
+      $scope.columns = config.columns;
+
+      $scope.sortByTime = config.sort_by || 'lastReceiveTime';
+      $scope.sortByTimeField = $scope.sortByTime.replace(/^\-/,'');
+
+      if ($scope.sortByTime.startsWith('-')) {
+        $scope.query = {
+          'sort-by': $scope.sortByTimeField,
+          'reverse': 1
+        }
+      } else {
+        $scope.query = {
+          'sort-by': $scope.sortByTimeField
+        }
+      };
+
+      $scope.predicate = [$scope.reverseSeverityCode, $scope.sortByTime];
+      $scope.reverse = true;
+
+      $scope.toggleSort = function(col) {
+        $scope.predicate = col;
+        $scope.reverse = !$scope.reverse;
+      };
+
       $scope.$watch('alerts', function(current, old) {
         if (current.length > old.length && $scope.status.value.indexOf('open') > -1) {
           $scope.play = true;
