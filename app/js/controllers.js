@@ -571,6 +571,19 @@ angular.module('alerta')
         });
       };
 
+      $scope.actions = config.actions;
+
+      $scope.actionAlert = function(id, action) {
+        Alert.action({
+          id: id
+        }, {
+          action: action,
+          text: action + byUser
+        }, function(data) {
+          $route.reload();
+        });
+      };
+
       $scope.tagged = function(tags, tagged) {
         angular.forEach(tags, function(tag) {
           if (tag == tagged) {

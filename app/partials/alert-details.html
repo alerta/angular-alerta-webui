@@ -31,6 +31,11 @@
   <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-primary"
           ng-click="ackAlert(alert.id)"
           ng-disabled="alert.status == 'ack'"><i class="glyphicon glyphicon-ok-circle"></i> Ack</button>
+
+  <span ng-repeat="action in actions">
+    <button ng-click="actionAlert(alert.id, action)" type="button" class="btn btn-default"><i class="glyphicon glyphicon-wrench"></i> {{ action | splitcaps }}</button>
+  </span>
+
   <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-warning"
           ng-click="closeAlert(alert.id)"
           ng-disabled="alert.status == 'closed'"><i class="glyphicon glyphicon-remove-circle"></i> Close</button>
