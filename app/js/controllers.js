@@ -1228,6 +1228,7 @@ angular.module('alerta')
 
       $scope.perms = [];
       $scope.perm = '';
+      $scope.scope = '';
       $scope.match = '';
 
       $scope.createPerm = function(scope, match) {
@@ -1292,31 +1293,14 @@ angular.module('alerta')
     function($scope, $route, $timeout, $auth, config, Keys) {
 
       $scope.keys = [];
-      $scope.type = {
-        name: 'read-only',
-        scopes: ['read']
-      };
+      $scope.scope = ''
       $scope.text = '';
 
-      $scope.types = [{
-          name: 'admin',
-          scopes: ['read', 'write', 'admin']
-        },
-        {
-          name: 'read-write',
-          scopes: ['read', 'write']
-        },
-        {
-          name: 'read-only',
-          scopes: ['read']
-        }
-      ];
-
-      $scope.createKey = function(type, customer, text) {
+      $scope.createKey = function(scope, customer, text) {
         var login = $auth.getPayload().preferred_username || $auth.getPayload().login;
         Keys.save({}, {
           user: login,
-          scopes: type.scopes,
+          scopes: scope.split(' '),
           customer: customer,
           text: text
         }, function(data) {
