@@ -45,6 +45,31 @@
           <td><button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-default btn-sm" ng-click="deleteUser(user.id);"><i class="glyphicon glyphicon-trash"></i> Revoke</button></td>
         </tr>
       </table>
+
+      <div>
+        <form name="form" class="form-inline css-form" novalidate autocomplete="off">
+          <div class="row">
+          <div class="form-group col-md-2 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="input-name" placeholder="Name" ng-model="name" name="name" required autofocus autocomplete="off"/>
+          </div>
+          <div class="form-group col-md-3 col-sm-4 col-xs-4">
+            <div class="input-group">
+              <div class="input-group-addon">@</div>
+              <input type="email" class="form-control" id="input-email" ng-model="email" placeholder="Email" required autocomplete="off">
+            </div>
+          </div>
+        <div class="form-group col-md-2 col-sm-4 col-xs-4">
+          <input type="password" class="form-control" id="input-password" ng-model="password" placeholder="Password" required autocomplete="new-password">
+        </div>
+        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+          <input type="text" class="form-control" id="input-description" ng-model="text" placeholder="Description" autocomplete="off">
+        </div>
+
+          <button ng-disabled="!hasPermission('admin:users')" type="button" class="btn btn-primary" ng-click="createUser(name, email, password, text)">Create new user</button>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 
