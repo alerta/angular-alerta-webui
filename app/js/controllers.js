@@ -1003,6 +1003,17 @@ angular.module('alerta')
         });
       };
 
+      $scope.createUser = function(name, email, password, text) {
+        Users.save({}, {
+          name: name,
+          email: email,
+          password: password,
+          text: text
+        }, function(data) {
+          $route.reload();
+        });
+      };
+
       $scope.deleteUser = function(user) {
         Users.delete({
           user: user
