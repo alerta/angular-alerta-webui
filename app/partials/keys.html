@@ -33,21 +33,18 @@
       </table>
 
       <div>
-      <form name="form" class="form-inline css-form" novalidate>
-        <div class="row">
-        <div class="form-group col-md-5 col-sm-4 col-xs-4">
-              <input type="text" class="form-control" id="text" placeholder="Application requiring API Key" ng-model="text" name="text" required />
+        <div class="form-group row">
+        <div class="col-xs-2">
+              <input type="text" class="form-control" id="text" placeholder="Application" ng-model="text" name="text" required />
         </div>
-        <div class="form-group col-md-2 col-sm-2 col-xs-2">
+        <div class="col-xs-4">
+          <input class="form-control" id="input-scopes" placeholder="Scopes eg. admin write read:alerts admin:keys" ng-model="scope" name="scope" required />
+        </div>
+        <div class="col-xs-2">
               <input type="text" class="form-control" id="customer" placeholder="Customer (optional)" ng-model="customer" name="customer" />
         </div>
-        <div class="col-md-1 col-sm-1 col-xs-1">
-          <select class="form-control input-md" ng-options="key as key.name for key in types track by key.name" ng-model="type"></select>
-          </select>
+        <button ng-disabled="!hasPermission('write:keys')" type="button" class="btn btn-primary" ng-click="createKey(scope, customer, text)">Create new API Key</button>
         </div>
-        <button ng-disabled="!hasPermission('write:keys')" type="button" class="btn btn-primary" ng-click="createKey(type, customer, text)">Create new API Key</button>
-        </div>
-      </form>
       </div>
 
     </div>
