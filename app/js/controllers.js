@@ -598,8 +598,8 @@ angular.module('alerta')
     }
   ])
 
-  .controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'Count', 'Environment', 'Service', 'Alert', 'Top10',
-    function($scope, $location, $timeout, Count, Environment, Service, Alert, Top10) {
+  .controller('AlertTop10Controller', ['$scope', '$location', '$timeout', 'config', 'Count', 'Environment', 'Service', 'Alert', 'Top10',
+    function($scope, $location, $timeout, config, Count, Environment, Service, Alert, Top10) {
 
       $scope.autoRefresh = true;
       $scope.refreshText = 'Auto Update';
@@ -713,13 +713,6 @@ angular.module('alerta')
           if (response.status == 'ok') {
             $scope.offenders = response.top10;
           }
-          $scope.message = response.status + ' - ' + response.message;
-          $scope.autoRefresh = response.autoRefresh;
-          if ($scope.autoRefresh) {
-            $scope.refreshText = 'Auto Update';
-          } else {
-            $scope.refreshText = 'Refresh';
-          }
         });
         Top10.flapping($scope.query, function(response) {
           if (response.status == 'ok') {
@@ -730,6 +723,13 @@ angular.module('alerta')
           if (response.status == 'ok') {
             $scope.standing = response.top10;
           }
+          $scope.message = response.status + ' - ' + response.message;
+          $scope.autoRefresh = response.autoRefresh;
+          if ($scope.autoRefresh) {
+            $scope.refreshText = 'Auto Update';
+          } else {
+            $scope.refreshText = 'Refresh';
+          }
         });
       };
       var refreshWithTimeout = function() {
@@ -738,7 +738,7 @@ angular.module('alerta')
         }
         timer = $timeout(refreshWithTimeout, config.refresh_interval || 5000);
       };
-      var timer = $timeout(refresh, 200);
+      var timer = $timeout(refreshWithTimeout, 200);
 
       $scope.$on('$destroy', function() {
         if (timer) {
