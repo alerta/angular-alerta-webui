@@ -105,7 +105,7 @@
       <div class="form-group">
         <input class="form-control" type="text" id="text" placeholder="Reason" ng-model="text" name="text" required />
       </div>
-      <button ng-disabled="!hasPermission('write:blackouts')" type="button" class="btn btn-primary" ng-click="createBlackout(env || environment,service,resource,event,group,tags,customer,start,end,text)">Blackout</button>
+      <button ng-disabled="!hasPermission('write:blackouts') && authRequired" type="button" class="btn btn-primary" ng-click="createBlackout(env || environment,service,resource,event,group,tags,customer,start,end,text)">Blackout</button>
         </div>
     </form>
   </div>
