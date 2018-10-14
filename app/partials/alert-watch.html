@@ -1,36 +1,85 @@
 
+
 <div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <select class="form-control input-sm" ng-model="option" ng-change="setService(option)"
+        ng-options="s as s.service group by s.environment for s in services | orderBy:['environment','service']">
+          <option value="" ng-model="option" ng-change="setService(null)">Service</option>
+        </select>
+    </div>
+    <div class="col-md-5 col-sm-5 col-xs-12">
+      <input class="form-control input" ng-model="search" size="8" placeholder="Search">
+    </div>
+    <div class="col-md-2 col-sm-2 col-xs-12">
+      <select class="form-control input-sm" ng-options="item as item.name for item in show track by item.name" ng-model="status" ng-change="update()"></select>
+    </div>
+    <div class="col-md-2 col-sm-2 col-xs-12">
+      <button type="button" class="btn btn-primary btn-block" ng-click="refresh()" ng-disabled="autoRefresh">{{ refreshText }}</button>
+    </div>
+  </div> <!-- row -->
+
+  <div class="row">
+    <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <li ng-class="{active: !environment}"><a data-toggle="tab" ng-click="setEnv(null)">ALL&nbsp;<span class="badge">{{ total || 0 }}</span></a></li>
+      <li ng-class="{active: environment == e.environment}" ng-repeat="e in environments"><a data-toggle="tab" ng-click="setEnv(e.environment)">{{ e.environment }}&nbsp;<span class="badge">{{ e.count || 0 }}</span></a></li>
+    </ul>
+    </div>
+  </div> <!-- row -->
+
+  <audio ng-if="play" ng-src="{{ audio.new }}" autoplay></audio>
+
   <div class="row">
     <div class="col-md-12">
       <table class="table">
-        <tr ng-init="predicate = [reverseSeverityCode,'lastReceiveTime']">
-          <th class="hidden-xs"><a href="" ng-click="predicate = severityCode; reverse=!reverse">Severity&nbsp;<span ng-hide="predicate != severityCode"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'status'; reverse=!reverse">Status&nbsp;<span ng-hide="predicate != 'status'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="visible-lg"><a href="" ng-click="predicate = 'lastReceiveTime'; reverse=!reverse">Last Receive Time&nbsp;<span ng-hide="predicate != 'lastReceiveTime'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="visible-lg"><a href="" ng-click="predicate = 'duplicateCount'; reverse=!reverse">Dupl.&nbsp;<span ng-hide="predicate != 'duplicateCount'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'environment'; reverse=!reverse">Environment&nbsp;<span ng-hide="predicate != 'environment'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'service'; reverse=!reverse">Service&nbsp;<span ng-hide="predicate != 'service'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class=""><a href="" ng-click="predicate = 'resource'; reverse=!reverse">Resource&nbsp;<span ng-hide="predicate != 'resource'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class=""><a href="" ng-click="predicate = 'event'; reverse=!reverse">Event&nbsp;<span ng-hide="predicate != 'event'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'value'; reverse=!reverse">Value&nbsp;<span ng-hide="predicate != 'value'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
-          <th class="hidden-xs"><a href="" ng-click="predicate = 'text'; reverse=!reverse">Text&nbsp;<span ng-hide="predicate != 'text'"><span ng-show="!reverse">^</span><span ng-show="reverse">v</span></span></a></th>
+        <tr>
+          <th ng-repeat="col in columns">
+            <a href="" ng-click="toggleSort(col)">
+              <span ng-show="col == 'duplicateCount'">Dupl. </span>
+              <span ng-show="col == 'customer' && isCustomerViews()">Customer </span>
+              <span ng-show="col != 'duplicateCount' && col != 'customer'">{{ col | splitcaps }} </span>
+              <span ng-hide="predicate != col"><span ng-show="!reverse">v</span><span ng-show="reverse">^</span></span>
+            </a>
+          </th>
         </tr>
 
-        <tr ng-repeat="alert in watches | orderBy:predicate:reverse"
+        <tr ng-repeat="alert in watches | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
             ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? colors.highlight : colors.severity[alert.severity] || 'silver' }"
             ng-click="click($event,alert);">
-          <td class="hidden-xs"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i>&nbsp;<span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></td>
-          <td class="hidden-xs"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></td>
-          <td class="hidden-lg">{{ alert.lastReceiveTime | date:shortTime }}</td>
-          <td class="visible-lg">{{ alert.lastReceiveTime | date:mediumDate }}</td>
-          <td class="visible-lg">{{ alert.duplicateCount }}</td>
-          <td class="hidden-xs">{{ alert.environment }}</td>
-          <td class="hidden-xs">{{ alert.service.join(', ') }}</td>
-          <td class="">{{ alert.resource }}</td>
-          <td class="">{{ alert.event }}</td>
-          <td class="hidden-xs">{{ alert.value }}</td>
-          <td class="hidden-xs">{{ alert.text }}</td>
+          <td ng-repeat="col in columns">
+            <span ng-if="col == 'id'">{{ alert.id | shortid }}</span>
+            <span ng-if="col == 'resource'">{{ alert.resource }}</span>
+            <span ng-if="col == 'event'">{{ alert.event }}</span>
+            <span ng-if="col == 'environment'">{{ alert.environment }}</span>
+            <span ng-if="col == 'severity'">
+              <span style="white-space: nowrap"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i> <span class="label label-{{ alert.severity }}">{{ alert.severity | capitalize }}</span></span>
+            </span>
+            <span ng-if="col == 'correlate'">{{ alert.correlate.join(', ') }}</span>
+            <span ng-if="col == 'status'"><span class="label label-{{ alert.status }}">{{ alert.status | capitalize }}</span></span>
+            <span ng-if="col == 'service'">{{ alert.service.join(', ') }}</span>
+            <span ng-if="col == 'group'">{{ alert.group }}</span>
+            <span ng-if="col == 'value'">{{ alert.value }}</span>
+            <span ng-if="col == 'text'"><span ng-bind-html="alert.text | linky:'_blank'"></span></span>
+            <span ng-if="col == 'tags'"><span ng-repeat="tag in alert.tags"><span class="label label-primary">{{ tag }}</span> </span></span>
+            <span ng-if="alert.attributes.hasOwnProperty(col)"><span ng-bind-html="alert.attributes[col]"></span></span>
+            <span ng-if="col == 'origin'">{{ alert.origin }}</span>
+            <span ng-if="col == 'type'"><span class="label">{{ alert.type | splitcaps }}</span></span>
+            <span ng-if="col == 'createTime'">{{ alert.createTime | date:mediumDate }}</span>
+            <span ng-if="col == 'timeout'">{{ alert.timeout }}</span>
+            <!-- rawData not supported -->
+            <span ng-if="col == 'customer' && isCustomerViews()">{{ alert.customer }}</span>
+
+            <span ng-if="col == 'duplicateCount'">{{ alert.duplicateCount }}</span>
+            <span ng-if="col == 'repeat'"><span class="label">{{ alert.repeat | capitalize }}</span></span>
+            <span ng-if="col == 'previousSeverity'"><span class="label label-{{ alert.previousSeverity }}">{{ alert.previousSeverity | capitalize }}</span></span>
+            <span ng-if="col == 'trendIndication'"><i class="glyphicon glyphicon-{{ alert.trendIndication | arrow }}"></i></span>
+            <span ng-if="col == 'receiveTime'">{{ alert.receiveTime | date:mediumDate }}</span>
+            <span ng-if="col == 'lastReceiveId'">{{ alert.lastReceiveId | shortid }}</span>
+            <span ng-if="col == 'lastReceiveTime'">{{ alert.lastReceiveTime | date:mediumDate }}</span>
+            <!-- history not supported -->
+          </td>
         </tr>
       </table>
 
@@ -45,7 +94,7 @@
     </div>
   </div> <!-- row -->
 
-  <div class="row" ng-show="alerts">
+  <div class="row" ng-show="watches">
     <div class="col-md-12">
     <button type="button" class="btn btn-default full-width" ng-click="alertLimit = alertLimit + 20">{{(watches|filter:search).length | showing:alertLimit }}</button>
   </div>
@@ -56,11 +105,14 @@
   <div class="row" ng-show="bulkAlerts.length > 0">
     <div class="col-md-12">
     <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-success"
-            ng-click="bulkOpenAlert(bulkAlerts)"
+            ng-click="bulkUnackAlert(bulkAlerts)"
             ng-disabled="status.indexOf('open') > -1"><i class="glyphicon glyphicon-arrow-up"></i> Open</button>
+    <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-default"
+            ng-click="bulkOpenTabAlert(bulkAlerts)"
+            ng-disabled="status.indexOf('open') > -1"><i class="glyphicon glyphicon-plus"></i> Open in new Tab</button>
     <!-- button ng-disabled"!hasPermission('write:alerts')" type="button" class="btn btn-default"
             ng-click="bulkTagAlert(alert.id, ['foo'])">Tag</button -->
-    <button ng-disabled"!hasPermission('write:alerts')" type="button" class="btn btn-default"
+    <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-default"
             ng-click="bulkWatchAlert(bulkAlerts, user)"
             ng-disabled="!isAuthenticated();"><i class="glyphicon glyphicon-eye-open"></i> Watch</button>
     <button ng-disabled="!hasPermission('write:alerts')" type="button" class="btn btn-default"

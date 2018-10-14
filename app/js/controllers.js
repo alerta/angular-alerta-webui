@@ -749,8 +749,8 @@ angular.module('alerta')
     }
   ])
 
-  .controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth', 'config', 'Alert',
-    function($scope, $route, $location, $timeout, $auth, config, Alert) {
+  .controller('AlertWatchController', ['$scope', '$route', '$location', '$timeout', '$auth', 'config', 'Count', 'Environment', 'Service', 'Alert',
+    function($scope, $route, $location, $timeout, $auth, config, Count, Environment, Service, Alert) {
 
       var byUser = '';
       if ($auth.isAuthenticated()) {
@@ -764,41 +764,163 @@ angular.module('alerta')
         return $auth.isAuthenticated();
       };
 
-      var defaults = {
+      var colorDefaults = {
         severity: {
+          security: 'blue',
           critical: 'red',
           major: 'orange',
           minor: 'yellow',
           warning: '#1E90FF',
-          indeterminate: 'silver',
+          indeterminate: 'lightblue',
           cleared: '#00CC00',
           normal: '#00CC00',
           ok: '#00CC00',
           informational: '#00CC00',
           debug: '#7554BF',
-          security: 'black',
+          trace: '#7554BF',
           unknown: 'silver'
         },
         text: 'black',
         highlight: 'skyblue '
       };
 
-      $scope.colors = angular.merge(defaults, config.colors);
+      $scope.colors = angular.merge(colorDefaults, config.colors);
+
+      $scope.autoRefresh = true;
+      $scope.refreshText = 'Auto Update';
+
+      var search = $location.search();
+      if (search.environment) {
+        $scope.environment = search.environment;
+      }
+      if (search.service) {
+        $scope.service = search.service;
+      }
+
+      $scope.show = [{
+          name: 'Open',
+          value: ['open', 'unknown']
+        },
+        {
+          name: 'Active',
+          value: ['open', 'ack', 'assign']
+        },
+        {
+          name: 'Shelved',
+          value: ['shelved']
+        },
+        {
+          name: 'Closed',
+          value: ['closed', 'expired']
+        },
+        {
+          name: 'Blackout',
+          value: ['blackout']
+        }
+      ];
+
+      if (search.status) {
+        $scope.status = {
+          name: '',
+          value: search.status
+        };
+      } else {
+        $scope.status = $scope.show[0];
+      }
 
       $scope.watches = [];
+      $scope.alertLimit = 20;
+
+      $scope.setService = function(s) {
+        if (s) {
+          $scope.environment = s.environment;
+          $scope.service = s.service;
+        } else {
+          $scope.environment = null;
+          $scope.service = null;
+        }
+        updateQuery();
+        refresh();
+      };
+
+      $scope.setEnv = function(environment) {
+        $scope.environment = environment;
+        updateQuery();
+        refresh();
+      };
+
+      $scope.update = function() {
+        updateQuery();
+        refresh();
+      };
+
+      $scope.refresh = function() {
+        refresh();
+      };
+
+      var updateQuery = function() {
+        $scope.query['tags'] = 'watch:' + $auth.getPayload().name
+        if ($scope.service) {
+          $scope.query['service'] = $scope.service
+        } else {
+          delete $scope.query['service'];
+        }
+        if ($scope.environment) {
+          $scope.query['environment'] = $scope.environment
+        } else {
+          delete $scope.query['environment'];
+        }
+        if ($scope.status) {
+          $scope.query['status'] = $scope.status.value;
+        } else {
+          delete $scope.query['status'];
+        }
+        $location.search($scope.query);
+      };
+
+      Service.all({
+        status: $scope.status.value
+      }, function(response) {
+        $scope.services = response.services;
+      });
 
       var refresh = function() {
-        Alert.query({
-          'tags': 'watch:' + $auth.getPayload().name
+        $scope.refreshText = 'Refreshing...';
+        Count.query({
+          status: $scope.status.value
         }, function(response) {
+          $scope.total = response.total;
+          $scope.statusCounts = response.statusCounts;
+        });
+        // Service.all({status: $scope.status.value}, function(response) {
+        //   $scope.services = response.services;
+        // });
+        Environment.all({
+          status: $scope.status.value
+        }, function(response) {
+          $scope.environments = response.environments;
+        });
+        updateQuery();
+        Alert.query($scope.query, function(response) {
           if (response.status == 'ok') {
             $scope.watches = response.alerts;
           }
           $scope.message = response.status + ' - ' + response.message;
+          $scope.autoRefresh = response.autoRefresh;
+          if ($scope.autoRefresh) {
+            $scope.refreshText = 'Auto Update';
+          } else {
+            $scope.refreshText = 'Refresh';
+          }
         });
-        timer = $timeout(refresh, 5000);
       };
-      var timer = $timeout(refresh, 200);
+      var refreshWithTimeout = function() {
+        if ($scope.autoRefresh) {
+          refresh();
+        }
+        timer = $timeout(refreshWithTimeout, config.refresh_interval || 5000);
+      };
+      var timer = $timeout(refreshWithTimeout, 200);
 
       $scope.$on('$destroy', function() {
         if (timer) {
@@ -806,6 +928,65 @@ angular.module('alerta')
         }
       });
 
+      var severityCodeDefaults = {
+        security: 0,
+        critical: 1,
+        major: 2,
+        minor: 3,
+        warning: 4,
+        indeterminate: 5,
+        cleared: 5,
+        normal: 5,
+        ok: 5,
+        informational: 6,
+        debug: 7,
+        trace: 8,
+        unknown: 9
+      };
+
+      var severityCodes = angular.merge(severityCodeDefaults, config.severity);
+
+      $scope.reverseSeverityCode = function(alert) {
+        return -severityCodes[alert.severity];
+      };
+
+      $scope.severityCode = function(alert) {
+        return severityCodes[alert.severity];
+      };
+
+      $scope.audio = config.audio;
+
+      $scope.columns = config.columns;
+
+      $scope.sortByTime = config.sort_by || 'lastReceiveTime';
+      $scope.sortByTimeField = $scope.sortByTime.replace(/^\-/,'');
+
+      if ($scope.sortByTime.startsWith('-')) {
+        $scope.query = {
+          'sort-by': $scope.sortByTimeField,
+          'reverse': 1
+        }
+      } else {
+        $scope.query = {
+          'sort-by': $scope.sortByTimeField
+        }
+      };
+
+      $scope.predicate = [$scope.reverseSeverityCode, $scope.sortByTime];
+      $scope.reverse = true;
+
+      $scope.toggleSort = function(col) {
+        $scope.predicate = col;
+        $scope.reverse = !$scope.reverse;
+      };
+
+      $scope.$watch('watches', function(current, old) {
+        if (old && current && current.length > old.length && $scope.status.value.indexOf('open') > -1) {
+          $scope.play = true;
+        } else {
+          $scope.play = false;
+        }
+      });
 
       $scope.bulkAlerts = [];
 
@@ -817,8 +998,10 @@ angular.module('alerta')
           } else {
             $scope.bulkAlerts.push(alert.id);
           }
-        } else {
+        } else if (!$event.ctrlKey) {
           $location.url('/alert/' + alert.id);
+        } else if ($event.ctrlKey) {
+          window.open('/#/alert' + alert.id, '_blank');
         }
       };
 
