@@ -31,10 +31,10 @@ angular.element(document).ready(function() {
   };
 
   $.getJSON('config.json').done(function(localConfig) {
-    alerta.setConfig(localConfig);
+    alerta.loadLocalConfig(localConfig);
   }).always(function(localConfig) {
     $.getJSON(localConfig.endpoint + '/config').done(function(remoteConfig) {
-      alerta.setConfig(remoteConfig);
+      alerta.loadRemoteConfig(remoteConfig);
     })
     .then(function() {
       configJsCheck();
@@ -43,9 +43,16 @@ angular.element(document).ready(function() {
   });
 });
 
-alerta.setConfig = function(data) {
+alerta.loadLocalConfig = function(data) {
   angular.module('alerta')
     .config(['configProvider', function(configProvider) {
-      configProvider.setConfig(data);
+      configProvider.setLocalConfig(data);
+    }]);
+};
+
+alerta.loadRemoteConfig = function(data) {
+  angular.module('alerta')
+    .config(['configProvider', function(configProvider) {
+      configProvider.setRemoteConfig(data);
     }]);
 };
