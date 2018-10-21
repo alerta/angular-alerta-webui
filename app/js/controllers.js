@@ -22,6 +22,13 @@ angular.module('alerta')
         return viewLocation === $location.path();
       };
 
+      $scope.isSearchable = function() {
+        var searchableViews = [
+          '/alerts',
+        ];
+        return searchableViews.indexOf($location.path()) > -1;
+      };
+
       $scope.isAuthenticated = function() {
         return $auth.isAuthenticated();
       };

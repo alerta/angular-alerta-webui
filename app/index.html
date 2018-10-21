@@ -35,7 +35,7 @@
           <li ng-show="hasPermission('read:alerts') && isAuthenticated()" ng-class="{active: isActive('/watch')}"><a href="#/watch">Watch</a></li>
         </ul>
 
-        <form class="nav navbar-form navbar-left" id="search-box" style="width:35%" role="search" ng-submit="updateSearch(q)">
+        <form class="nav navbar-form navbar-left" id="search-box" ng-show="isSearchable()" style="width:35%" role="search" ng-submit="updateSearch(q)">
         <div class="input-group" style="width:100%">
             <input type="text" class="form-control" style="width:100%" name="q" id="q" ng-model="q" ng-model-options="{updateOn: 'submit'}" placeholder="Search...">
             <div class="input-group-btn" id="search-button">
