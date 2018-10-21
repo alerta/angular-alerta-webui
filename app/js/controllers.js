@@ -35,6 +35,7 @@ angular.module('alerta')
       };
 
       $scope.hasPermission = function(perm) {
+        if (!$scope.authRequired) { return true; }
         function isInScope(scope) {
           var scopes = $auth.isAuthenticated() ? ($auth.getPayload().scope || '').split(' ') : [];
           if (scopes.includes(scope) || scopes.includes(scope.split(':')[0])) {
