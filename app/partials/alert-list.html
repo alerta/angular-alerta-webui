@@ -10,7 +10,7 @@
         </select>
     </div>
     <div class="col-md-5 col-sm-5 col-xs-12">
-      <input class="form-control input" ng-model="search" size="8" placeholder="Search">
+      <input class="form-control input" ng-model="filter" size="8" placeholder="Find an alert...">
     </div>
     <div class="col-md-2 col-sm-2 col-xs-12">
       <select class="form-control input-sm" ng-options="item as item.name for item in show track by item.name" ng-model="status" ng-change="update()"></select>
@@ -24,7 +24,7 @@
     <div class="col-md-12">
     <ul class="nav nav-tabs">
       <li ng-class="{active: !environment}"><a data-toggle="tab" ng-click="setEnv(null)">ALL&nbsp;<span class="badge">{{ total || 0 }}</span></a></li>
-      <li ng-class="{active: environment == e.environment}" ng-repeat="e in environments"><a data-toggle="tab" ng-click="setEnv(e.environment)">{{ e.environment }}&nbsp;<span class="badge">{{ e.count || 0 }}</span></a></li>
+      <li ng-class="{active: environment == e.environment}" ng-repeat="e in environments"><a data-toggle="tab" ng-click="setEnv(e.environment)">{{ e.environment || 'unknown' }}&nbsp;<span class="badge">{{ envCounts[e.environment] || 0 }}</span></a></li>
     </ul>
     </div>
   </div> <!-- row -->
@@ -45,7 +45,7 @@
           </th>
         </tr>
 
-        <tr ng-repeat="alert in alerts | filter:search | orderBy:predicate:reverse | limitTo:alertLimit"
+        <tr ng-repeat="alert in alerts | filter:filter | orderBy:predicate:reverse | limitTo:alertLimit"
             ng-style="{ 'color':  colors.severity[alert.severity] == 'black' ? 'white' : colors.text, 'background-color': (bulkAlerts.indexOf(alert.id) > -1) ? colors.highlight : colors.severity[alert.severity] || 'silver' }"
             ng-click="click($event,alert);">
           <td ng-repeat="col in columns">
