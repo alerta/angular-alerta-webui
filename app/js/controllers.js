@@ -25,6 +25,7 @@ angular.module('alerta')
       $scope.isSearchable = function() {
         var searchableViews = [
           '/alerts',
+          '/watch',
         ];
         return searchableViews.indexOf($location.path()) > -1;
       };
@@ -882,6 +883,11 @@ angular.module('alerta')
         refresh();
       };
 
+      $scope.$on('search:q', function(evt, q) {
+        $scope.q = q;
+        refresh();
+      });
+
       var updateQuery = function() {
         $scope.query['tags'] = 'watch:' + $auth.getPayload().name
         if ($scope.service) {
@@ -899,6 +905,11 @@ angular.module('alerta')
         } else {
           delete $scope.query['status'];
         }
+        if ($scope.q) {
+          $scope.query['q'] = $scope.q;
+        } else {
+          delete $scope.query['q'];
+        }
         $location.search($scope.query);
       };
 
@@ -910,9 +921,8 @@ angular.module('alerta')
 
       var refresh = function() {
         $scope.refreshText = 'Refreshing...';
-        Count.query({
-          status: $scope.status.value
-        }, function(response) {
+        updateQuery();
+        Count.query($scope.query, function(response) {
           $scope.total = response.total;
           $scope.statusCounts = response.statusCounts;
         });
@@ -924,7 +934,9 @@ angular.module('alerta')
         }, function(response) {
           $scope.environments = response.environments;
         });
-        updateQuery();
+        Environment.all($scope.query, function(response) {
+          $scope.envCounts = response.environments.reduce((c, e) => { c[e.environment] = e.count; return c; }, {});
+        });
         Alert.query($scope.query, function(response) {
           if (response.status == 'ok') {
             $scope.watches = response.alerts;
@@ -938,6 +950,7 @@ angular.module('alerta')
           }
         });
       };
+
       var refreshWithTimeout = function() {
         if ($scope.autoRefresh) {
           refresh();
