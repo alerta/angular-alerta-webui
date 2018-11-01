@@ -22,6 +22,8 @@ angular.module('alerta')
         return viewLocation === $location.path();
       };
 
+      $scope.isKiosk = window.location.search.indexOf('kiosk') > 0;
+
       $scope.isSearchable = function() {
         var searchableViews = [
           '/alerts',
@@ -136,6 +138,8 @@ angular.module('alerta')
       $scope.isAuthenticated = function() {
         return $auth.isAuthenticated();
       };
+
+      $scope.isKiosk = window.location.search.indexOf('kiosk') > 0;
 
       var colorDefaults = {
         severity: {
