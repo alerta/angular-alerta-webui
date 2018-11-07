@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
 
-  <div class="row">
+  <div class="row" ng-hide="isKiosk">
     <div class="col-md-3 col-sm-3 col-xs-12">
         <select class="form-control input-sm" ng-model="option" ng-change="setService(option)"
         ng-options="s as s.service group by s.environment for s in services | orderBy:['environment','service']">
@@ -20,7 +20,7 @@
     </div>
   </div> <!-- row -->
 
-  <div class="row">
+  <div class="row" ng-hide="isKiosk">
     <div class="col-md-12">
     <ul class="nav nav-tabs">
       <li ng-class="{active: !environment}"><a data-toggle="tab" ng-click="setEnv(null)">ALL&nbsp;<span class="badge">{{ total || 0 }}</span></a></li>
@@ -34,7 +34,7 @@
   <div class="row">
     <div class="col-md-12">
       <table class="table">
-        <tr>
+        <tr ng-hide="isKiosk">
           <th ng-repeat="col in columns">
             <a href="" ng-click="toggleSort(col)">
               <span ng-show="col == 'duplicateCount'">Dupl. </span>
@@ -94,7 +94,7 @@
     </div>
   </div> <!-- row -->
 
-  <div class="row" ng-show="alerts">
+  <div class="row" ng-show="!isKiosk && alerts">
     <div class="col-md-12">
     <button type="button" class="btn btn-default full-width" ng-click="alertLimit = alertLimit + 20">{{(alerts|filter:search).length | showing:alertLimit }}</button>
   </div>
