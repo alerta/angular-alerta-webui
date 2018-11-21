@@ -23,7 +23,7 @@
           <th class="hidden-xs">Comment</th>
           <th>Access</th>
         </tr>
-        <tr ng-repeat="user in users">
+        <tr ng-repeat="user in users track by user.id">
           <td>{{ user.name }}</td>
           <td>{{ user.login || user.email }}</td>
           <td ng-show="user.email_verified"><i class="glyphicon glyphicon-envelope"></i> <i class="glyphicon glyphicon-ok"></i></td>
@@ -35,7 +35,7 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li ng-repeat="role in roles"><a href="#/users" ng-click="updateRole(user.id, role);">{{ role }}</a></li>
+                <li ng-repeat="role in roles track by $index"><a href="#/users" ng-click="updateRole(user.id, role);">{{ role }}</a></li>
               </ul>
             </div>
           </td>
