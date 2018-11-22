@@ -1,6 +1,12 @@
 
 <div class="container-fluid">
 
+  <div class="row">
+    <div class="col-md-5 col-sm-5 col-xs-12">
+      <input class="form-control input" ng-model="filter" size="8" placeholder="Find a role...">
+    </div>
+  </div> <!-- row -->
+
   <div class="row-fluid">
     <div class="span12">
 
@@ -10,7 +16,7 @@
           <th>Scopes</th>
           <th></th>
         </tr>
-        <tr ng-repeat="perm in perms">
+        <tr ng-repeat="perm in perms | filter:filter">
           <td><tt>{{ perm.match }}</tt></td>
           <td><span ng-repeat="scope in perm.scopes"><span class="label label-primary">{{ scope }}</span> </span></td>
           <td><button ng-disabled="!hasPermission('admin:perms')" type="button" class="btn btn-default btn-sm" ng-click="deletePerm(perm.id);"><i class="glyphicon glyphicon-trash"></i> Delete</button></td>
