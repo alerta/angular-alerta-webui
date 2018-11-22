@@ -1,17 +1,17 @@
 
 <div class="container-fluid">
 
-  <div class="row-fluid">
-    <div class="span12">
-
-      <div>
-        <table class="table">
-          <tr>
-            <td><b>Allowed E-mail Domains: </b>{{domains.join(', ') }}</td>
-          </tr>
-        </table>
+    <div class="row">
+      <div class="col-md-5 col-sm-5 col-xs-12">
+        <input class="form-control input" ng-model="filter" size="8" placeholder="Find a user...">
       </div>
-
+      <div class="col-md-3 col-sm-3 col-xs-12">
+          <b>Allowed E-mail Domains: </b>{{domains.join(', ') }}
+      </div>
+    </div> <!-- row -->
+    
+    <div class="row">
+      <div class="col-md-12">
       <table class="table">
         <tr>
           <th>Name</th>
@@ -23,7 +23,7 @@
           <th class="hidden-xs">Comment</th>
           <th>Access</th>
         </tr>
-        <tr ng-repeat="user in users track by user.id">
+        <tr ng-repeat="user in users | filter:filter">
           <td>{{ user.name }}</td>
           <td>{{ user.login || user.email }}</td>
           <td ng-show="user.email_verified"><i class="glyphicon glyphicon-envelope"></i> <i class="glyphicon glyphicon-ok"></i></td>
