@@ -3,10 +3,22 @@ Alerta Web UI 6.0
 
 Version 6.0 of the Alerta dashboard is an [AngularJS](http://angularjs.org/) web app that uses client-side templating.
 
-Example
--------
-
 ![dashboard](/docs/images/alerta-webui-v3.png?raw=true&v=1)
+
+AngularJS is EOL
+----------------
+
+As of July 1, 2018 active development of AngularJS has stopped and version 1.7
+has entered in to a [Long Term Support Period which will last 3 years](https://blog.angular.io/stable-angularjs-and-long-term-support-7e077635ee9c).
+
+Alerta Web UI uses AngularJS 1.5 which was last updated in January 2017 and is
+not an LTS version so will not receive any security patches or updates.
+
+Migrating this application directly to Angular (2+) is not possible as Angular
+is a significantly different framework. A [rewrite of the web UI is in progress](https://github.com/alerta/beta.alerta.io)
+and as such, this version is now in "maintenance mode" and no further feature
+enhancements will be accepted. Only security patches or critical bug fixes
+will be considered from January 31, 2019.
 
 Installation
 ------------
