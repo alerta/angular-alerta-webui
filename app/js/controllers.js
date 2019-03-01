@@ -393,12 +393,12 @@ angular.module('alerta')
         }
       };
 
-      $scope.bulkOpenAlert = function(ids) {
+      $scope.bulkUnackAlert = function(ids) {
         angular.forEach(ids, function(id) {
-          Alert.status({
+          Alert.action({
             id: id
           }, {
-            status: 'open',
+            action: 'unack',
             text: 'bulk status change via console' + byUser
           }, function(data) {
             // $route.reload();
@@ -441,10 +441,10 @@ angular.module('alerta')
 
       $scope.bulkAckAlert = function(ids) {
         angular.forEach(ids, function(id) {
-          Alert.status({
+          Alert.action({
             id: id
           }, {
-            status: 'ack',
+            action: 'ack',
             text: 'bulk status change via console' + byUser
           }, function(data) {
             // $route.reload();
@@ -455,10 +455,10 @@ angular.module('alerta')
 
       $scope.bulkCloseAlert = function(ids) {
         angular.forEach(ids, function(id) {
-          Alert.status({
+          Alert.action({
             id: id
           }, {
-            status: 'closed',
+            action: 'close',
             text: 'bulk status change via console' + byUser
           }, function(data) {
             // $route.reload();
@@ -1046,12 +1046,12 @@ angular.module('alerta')
         }
       };
 
-      $scope.bulkOpenAlert = function(ids) {
+      $scope.bulkUnackAlert = function(ids) {
         angular.forEach(ids, function(id) {
-          Alert.status({
+          Alert.action({
             id: id
           }, {
-            status: 'open',
+            action: 'unack',
             text: 'bulk status change via console' + byUser
           }, function(data) {
             // $route.reload();
@@ -1094,10 +1094,10 @@ angular.module('alerta')
 
       $scope.bulkAckAlert = function(ids) {
         angular.forEach(ids, function(id) {
-          Alert.status({
+          Alert.action({
             id: id
           }, {
-            status: 'ack',
+            action: 'ack',
             text: 'bulk status change via console' + byUser
           }, function(data) {
             // $route.reload();
@@ -1108,10 +1108,10 @@ angular.module('alerta')
 
       $scope.bulkCloseAlert = function(ids) {
         angular.forEach(ids, function(id) {
-          Alert.status({
+          Alert.action({
             id: id
           }, {
-            status: 'closed',
+            action: 'close',
             text: 'bulk status change via console' + byUser
           }, function(data) {
             // $route.reload();
