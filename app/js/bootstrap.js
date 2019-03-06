@@ -33,6 +33,13 @@ angular.element(document).ready(function() {
   $.getJSON('config.json').done(function(localConfig) {
     alerta.loadLocalConfig(localConfig);
   }).always(function(localConfig) {
+    if (!localConfig.endpoint) {
+      alert(
+        'ERROR: Unable to connect to Alerta API - missing or invalid config.json file. ' +
+        'Please confirm a config.json file exists, contains an "endpoint" setting and ' +
+        'is in the same directory as the application index.html file.'
+      );
+    };
     $.getJSON(localConfig.endpoint + '/config').done(function(remoteConfig) {
       alerta.loadRemoteConfig(remoteConfig);
     })
