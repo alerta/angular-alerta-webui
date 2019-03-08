@@ -36,6 +36,16 @@ alerta.loadAuth = function() {
           url: config.endpoint + '/auth/google',
           clientId: config.client_id
         });
+
+        $authProvider.oauth2({
+          name: 'azure',
+          url: config.endpoint + '/auth/azure',
+          redirectUri: window.location.origin,
+          clientId: config.client_id,
+          authorizationEndpoint: 'https://login.microsoftonline.com/' + config.azure_tenant + '/oauth2/authorize',
+          display: 'popup',
+          popupOptions: {width: 1020, height: 618}
+        });
         $authProvider.github({
           url: config.endpoint + '/auth/github',
           clientId: config.client_id,
