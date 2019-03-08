@@ -69,6 +69,19 @@ alerta.loadAuth = function() {
           authorizationEndpoint: config.keycloak_url + '/auth/realms/' + config.keycloak_realm + '/protocol/openid-connect/auth'
         });
         $authProvider.oauth2({
+          name: 'openid',
+          url: config.endpoint + '/auth/openid',
+          redirectUri: window.location.origin,
+          clientId: config.client_id,
+          authorizationEndpoint: config.oidc_auth_url,
+          requiredUrlParams: ['scope'],
+          optionalUrlParams: ['display', 'state'],
+          scope: 'openid+profile+email',
+          display: 'popup',
+          popupOptions: {width: 1020, height: 618},
+          state: 'STATE'
+        });
+        $authProvider.oauth2({
           name: 'pingfederate',
           url: config.endpoint + '/auth/pingfederate',
           redirectUri: window.location.origin + '/',
