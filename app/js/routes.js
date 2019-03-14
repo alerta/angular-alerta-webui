@@ -27,7 +27,8 @@ alerta.loadRoutes = function() {
         })
         .when('/watch', {
           templateUrl: 'partials/alert-watch.html',
-          controller: 'AlertWatchController'
+          controller: 'AlertWatchController',
+          reloadOnSearch: false
         })
         .when('/blackouts', {
           templateUrl: 'partials/blackouts.html',
