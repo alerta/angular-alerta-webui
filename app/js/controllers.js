@@ -273,19 +273,15 @@ angular.module('alerta')
       var refresh = function() {
         $scope.refreshText = 'Refreshing...';
         updateQuery();
-        Count.query($scope.query, function(response) {
+        Count.query({status: $scope.status.value}, function(response) {
           $scope.total = response.total;
           $scope.statusCounts = response.statusCounts;
         });
         // Service.all({status: $scope.status.value}, function(response) {
         //   $scope.services = response.services;
         // });
-        Environment.all({
-          status: $scope.status.value
-        }, function(response) {
+        Environment.all({status: $scope.status.value}, function(response) {
           $scope.environments = response.environments;
-        });
-        Environment.all($scope.query, function(response) {
           $scope.envCounts = response.environments.reduce((c, e) => { c[e.environment] = e.count; return c; }, {});
         });
         Alert.query($scope.query, function(response) {
@@ -926,19 +922,15 @@ angular.module('alerta')
       var refresh = function() {
         $scope.refreshText = 'Refreshing...';
         updateQuery();
-        Count.query($scope.query, function(response) {
+        Count.query({status: $scope.status.value, tags: 'watch:' + $auth.getPayload().name}, function(response) {
           $scope.total = response.total;
           $scope.statusCounts = response.statusCounts;
         });
         // Service.all({status: $scope.status.value}, function(response) {
         //   $scope.services = response.services;
         // });
-        Environment.all({
-          status: $scope.status.value
-        }, function(response) {
+        Environment.all({status: $scope.status.value, tags: 'watch:' + $auth.getPayload().name}, function(response) {
           $scope.environments = response.environments;
-        });
-        Environment.all($scope.query, function(response) {
           $scope.envCounts = response.environments.reduce((c, e) => { c[e.environment] = e.count; return c; }, {});
         });
         Alert.query($scope.query, function(response) {
