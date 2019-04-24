@@ -80,11 +80,11 @@ angular.module('alerta')
       };
 
       $scope.isBasicAuth = function() {
-        return config.provider == 'basic';
+        return config.provider == 'basic' || config.provider == 'ldap';
       };
 
       $scope.authenticate = function() {
-        if (config.provider == 'basic') {
+        if ($scope.isBasicAuth) {
           $location.path('/login');
         } else if (config.provider == 'saml2') {
           let auth_win;
