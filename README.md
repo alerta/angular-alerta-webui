@@ -1,7 +1,9 @@
-Alerta Web UI 6.0
+Alerta Web UI 6.0 (DEPRECATED)
 =================
 
-Version 6.0 of the Alerta dashboard is an [AngularJS](http://angularjs.org/) web app that uses client-side templating.
+Version 6.0 of the Alerta dashboard is an [AngularJS](http://angularjs.org/) web app that uses client-side templating **is no longer supported and has now been archived**.
+
+The latest version of the web UI can be found at https://github.com/alerta/alerta-webui
 
 ![dashboard](/docs/images/alerta-webui-v3.png?raw=true&v=1)
 
